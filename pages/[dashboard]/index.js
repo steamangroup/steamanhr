@@ -1,5 +1,6 @@
 import { userMenu } from "@/components/config/navigation";
 import EmployeeProfile from "@/components/dashboard/EmployeeProfile";
+import EmployeeForm from "@/components/employees/NewEmployee/Form";
 import Layout from "@/components/layout";
 import LeaveOverView from "@/components/leave/LeaveOverView";
 import { VStack } from "@chakra-ui/react";

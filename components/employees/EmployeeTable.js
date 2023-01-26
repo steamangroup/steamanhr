@@ -11,24 +11,29 @@ import {
   Image,
 } from "@chakra-ui/react";
 
-import NewEmployeeAction from "./NewEmployee/NewEmployeeAction";
+import { useQuery, useQueryClient } from "react-query";
+import { deleteUser, getUser, getUsers, updateUser } from "@/lib/helper";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from "@chakra-ui/react";
-import UpdateEmployeeForm from "./NewEmployee/UpdateEmployeeForm";
-import { useState } from "react";
+  toggleChangeAction,
+  updateAction,
+  deleteAction,
+} from "../../redux/reducer";
+import EmployeeAction from "./NewEmployee/EmployeeActions";
+import { useRouter } from "next/router";
+import DeleteModal from "./DeleteModal";
+
 export default function EmployeeTable({ children }) {
   //const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isLoading, isError, data, error } = useQuery("employees", getUsers);
+
+  if (isLoading) return <div>Loading......</div>;
+  if (isError) return <div>Got error</div>;
 
   return (
     <Box mt="0.5rem">
-      <NewEmployeeAction />
+      <EmployeeAction />
+
       <VStack
         spacing={2}
         sx={{
@@ -56,34 +61,39 @@ EmployeeTable.Heading = function () {
         fontSize: "0.75rem",
       }}
     >
-      <Box flex={2}></Box>
+      <Box flex={1}></Box>
       <Box flex={6}>
-        <Text fontSize={15} fontWeight="400">
+        <Text fontSize={14} fontWeight="400">
           Full name
         </Text>
       </Box>
-      <Box flex={6}>
-        <Text fontSize={15} fontWeight="400">
+      <Box flex={5}>
+        <Text fontSize={14} fontWeight="400">
           Employee Type
         </Text>
       </Box>
-      <Box flex={8}>
-        <Text fontSize={15} fontWeight="400">
+      <Box flex={6}>
+        <Text fontSize={14} fontWeight="400">
           Work Email
         </Text>
       </Box>
-      <Box flex={6}>
-        <Text fontSize={15} fontWeight="400">
+      <Box flex={5}>
+        <Text fontSize={14} fontWeight="400">
+          employment Status
+        </Text>
+      </Box>
+      <Box flex={4}>
+        <Text fontSize={14} fontWeight="400">
           Phone
         </Text>
       </Box>
       <Box flex={6}>
-        <Text fontSize={15} fontWeight="400">
+        <Text fontSize={14} fontWeight="400">
           Business Unit
         </Text>
       </Box>
-      <Box flex={3}>
-        <Text fontSize={15} fontWeight="400">
+      <Box flex={2}>
+        <Text fontSize={14} fontWeight="400">
           Actions
         </Text>
       </Box>
@@ -100,75 +110,62 @@ EmployeeTable.Row = function ({
   contactNumber,
   employmentStatus,
   employmentStatusColor,
+  _id,
 }) {
-  const [newEmployee, setNewEmployee] = useState({
-    workProfile: {
-      profilePicture: "",
-      title: "",
-      fullName: "",
-      businessUnit: "",
-      employmentType: "",
-      workEmail: "",
-      jobTitle: "",
-      //teams: [],
-      department: "",
-      officeLocation: "",
-      employmentStatus: "",
-      employmentStartDate: "",
-      dateOfBirth: "",
-      gender: "",
-      maritalStatus: "",
-      contactNumber: "",
-      placeOfResidence: "",
-      educationalLevel: "",
-      snnit: "",
-      nationaldNumber: "",
-      tin: "",
-      numberOfDependents: "",
-      nextOfKinName: "",
-      nextOfKinNumber: "",
-      emergencyContactName: "",
-      emergencyContactNumber: "",
-      employeeBankName: "",
-      accountHolder: "",
-      accountNumber: "",
-      healthCondition: "",
-      onMedication: "",
-      extraInformation: "",
-    },
-  });
-
   const toast = useToast();
+  //return delete id
+  const deleteId = useSelector((state) => state.app.client.deleteId);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log(`Mine delete ${deleteId}`);
+  const router = useRouter();
+  const queryClient = useQueryClient();
 
-  //const toast = useToast();
-  const handleUpdateEmployee = (e) => {
-    const formData = newEmployee.workProfile;
-    //const formLength = Object.values(formData).length;
-    e.preventDefault();
-    if (formData.fullName || formData.title || formData.employmentType === "") {
-      return toast({
-        title: "Unsuccesful",
-        description: "Creation of employee unsucessful ",
-        status: "error",
-        position: "top-right",
-        duration: 1200,
-        isClosable: true,
-      });
-    } else {
-      return toast({
-        title: "Employee added",
-        description: "New employee has been added successfully",
-        status: "success",
-        position: "top-right",
-        duration: 1200,
-        isClosable: true,
-      });
+  const visible = useSelector((state) => state.app.client.showAddForm);
+  //console.log("Update vaBlue");
+  //console.log(visible);
+  //console.log(_id);
+  //executing action using dispatch
+  const dispatch = useDispatch();
+
+  const OpenUpdateForm = () => {
+    //updating value of the state
+    dispatch(toggleChangeAction(_id));
+    router.push("employees/add");
+
+    if (visible) {
+      dispatch(updateAction(_id));
     }
-
-    //alert(newEmployee);
   };
+
+  const onDelete = () => {
+    //if form is not visible execute delete action
+    //if (!visible) {
+    dispatch(deleteAction(_id));
+    console.log(`Delete id is ${_id}`);
+
+    //}
+  };
+
+  //Delete function
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    //console.log("delete");
+    if (deleteId) {
+      await deleteUser(deleteId);
+      await queryClient.prefetchQuery("employees", getUsers);
+      await dispatch(deleteAction(null));
+      //router.push("/employees");
+    }
+    toast({
+      title: "Success",
+      description: "Employee record deleted successfully",
+      status: "success",
+      duration: 1200,
+      isClosable: true,
+      position: "top-right",
+    });
+  };
+
   return (
     <Flex
       sx={{
@@ -179,61 +176,44 @@ EmployeeTable.Row = function ({
         fontSize: "0.875rem",
       }}
     >
-      <Flex flex={2}>
-        <Image src={profilePicture || "#"} borderRadius="full" boxSize="50px" />
+      <Flex>
+        <Image src={profilePicture || "#"} borderRadius="full" boxSize="30px" />
+        {/**<Text>{_id}</Text>*/}
       </Flex>
 
-      <Flex flex={6}>
-        <Text whiteSpace="nowrap">{fullName}</Text>
+      <Flex flex={3.5}>
+        <Text whiteSpace="nowrap" fontSize={13}>
+          {fullName}
+        </Text>
       </Flex>
-      <Box flex={6}>
+      <Box fontSize={13} flex={2}>
         <Text>{employmentType || "Unknown"}</Text>
       </Box>
 
-      <Box flex={8}>
+      <Box flex={4} whiteSpace="nowrap" fontSize={13}>
         <Text>{workEmail}</Text>
       </Box>
-      <Box flex={6}>
+      <Box flex={1} mx={5}>
+        <Text
+          borderRadius="30px"
+          color="white"
+          textAlign="center"
+          fontSize={13}
+          bgColor={`${employmentStatus === "active" ? "#5DBB63" : "red"}`}
+        >
+          {employmentStatus || "Unknown"}
+        </Text>
+      </Box>
+
+      <Box flex={3} whiteSpace="nowrap" textAlign="center">
         <Text>{contactNumber}</Text>
       </Box>
-      <Box flex={6}>
+      <Box flex={4} whiteSpace="nowrap" fontSize={13}>
         <Text>{businessUnit}</Text>
       </Box>
-
-      {/******
- *  <Box flex={6}>
-        <Badge mx="0.625rem" colorScheme={employmentStatusColor}>
-          {employmentStatus}
-        </Badge>
-      </Box>
- * 
- */}
-      <Flex flex={3} gap={5}>
-        <DeleteIcon onClick={() => alert("Delete")} />
-
-        <EditIcon onClick={onOpen} />
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Update information</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <UpdateEmployeeForm
-                newEmployee={newEmployee}
-                setNewEmployee={setNewEmployee}
-              />
-            </ModalBody>
-
-            <ModalFooter>
-              <Button colorScheme="red" mr={3} onClick={onClose}>
-                Back
-              </Button>
-              <Button colorScheme="green" onClick={handleUpdateEmployee}>
-                Save
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
+      <Flex flex={1} gap={5}>
+        <EditIcon onClick={OpenUpdateForm} />
+        <DeleteModal deletehandler={handleDelete} onDelete={onDelete} />
       </Flex>
     </Flex>
   );

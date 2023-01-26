@@ -20,7 +20,7 @@ function LeaveRequestForm({ newLeaveRequest, setNewLeaveRequest }) {
         <FormLabel>Leave Type</FormLabel>
         <Select
           size="sm"
-          isRequired
+          isrequired
           onChange={(e) => {
             setNewLeaveRequest((prevState) => ({
               ...prevState,
@@ -45,7 +45,7 @@ function LeaveRequestForm({ newLeaveRequest, setNewLeaveRequest }) {
           size="sm"
           type="date"
           //defaultValue="Date of Birth"
-          isRequired
+          isrequired
           onChange={(e) => {
             setNewLeaveRequest((prevState) => ({
               ...prevState,
@@ -61,7 +61,7 @@ function LeaveRequestForm({ newLeaveRequest, setNewLeaveRequest }) {
         <Input
           size="sm"
           type="date"
-          isRequired
+          isrequired
           onChange={(e) => {
             setNewLeaveRequest((prevState) => ({
               ...prevState,
@@ -75,7 +75,7 @@ function LeaveRequestForm({ newLeaveRequest, setNewLeaveRequest }) {
         <FormLabel>Reason</FormLabel>
         <Textarea
           size="sm"
-          isRequired
+          isrequired
           onChange={(e) => {
             setNewLeaveRequest((prevState) => ({
               ...prevState,
@@ -90,7 +90,7 @@ function LeaveRequestForm({ newLeaveRequest, setNewLeaveRequest }) {
         <FormLabel>Handing over note</FormLabel>
         <Textarea
           size="sm"
-          isRequired
+          isrequired
           onChange={(e) => {
             setNewLeaveRequest((prevState) => ({
               ...prevState,

@@ -10,12 +10,13 @@ const NavLink = (props) => {
 
   let activeBgStyle = "";
   if (router.pathname === href) {
-    activeBgStyle = "lightgray";
+    activeBgStyle = "#089d8d";
   }
 
   const linkStyles = {
     px: "0.5rem",
-    py: "0.375rem",
+    color: "white",
+    py: "0.385rem",
     fontSize: "0.875rem",
     fontWeight: 500,
     borderRadius: "0.25rem",
@@ -25,7 +26,7 @@ const NavLink = (props) => {
   };
 
   const linkHoverStyles = {
-    bg: "lightgray",
+    bg: "#089d8d",
   };
 
   return (

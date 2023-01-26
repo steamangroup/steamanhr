@@ -3,6 +3,8 @@ import { Schema, models, model } from "mongoose";
 
 //new instance of the schema class
 const userSchema = new Schema({
+  id: Number,
+  title: String,
   jobTitle: String,
   fullName: String,
   businessUnit: String,
@@ -32,8 +34,12 @@ const userSchema = new Schema({
   accountNumber: String,
   healthCondition: String,
   onMedication: String,
-  extraInformation: String,
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  //  extraInformation: String,
 });
 
-const Users = models.user || model("user", userSchema);
+const Users = models.user || model("employee", userSchema);
 export default Users;

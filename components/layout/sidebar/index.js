@@ -6,7 +6,7 @@ import NavLink from "./NavLink";
 
 export default function SideBar() {
   return (
-    <VStack spacing={10}>
+    <VStack spacing={10} position="fixed">
       <Box pb="1.875rem">
         <Logo />
       </Box>

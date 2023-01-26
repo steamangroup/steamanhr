@@ -1,9 +1,9 @@
-import { Heading } from "@chakra-ui/react";
+import { Heading, Image } from "@chakra-ui/react";
 
 const Logo = () => {
   return (
-    <Heading size="17px" fontWeight={800}>
-      SteamanHR
+    <Heading>
+      <Image src="/logo.png" alt="SreamanHR" w={150} maxH={100} />
     </Heading>
   );
 };

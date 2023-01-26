@@ -1,13 +1,21 @@
 import "@/styles/globals.css";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { QueryClientProvider, QueryClient } from "react-query";
+import { store } from "../redux/store";
+import { Provider } from "react-redux";
 
-//require("dotenv").config();
+//create a client
+const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }) {
   const theme = extendTheme({});
   return (
     <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
+      </QueryClientProvider>
     </ChakraProvider>
   );
 }
