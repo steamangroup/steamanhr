@@ -19,16 +19,11 @@ export default function EmployeeAction() {
   };
 
   return (
-    <Flex justifyContent="space-between" w="50vw">
+    <Flex justifyContent="flex-end">
       <Box></Box>
 
       <Box>
-        <Button
-          onClick={OpenForm}
-          colorScheme="green"
-          size="sm"
-          rightIcon={<AddIcon />}
-        >
+        <Button onClick={OpenForm} colorScheme="green" size="sm">
           Add Employee
         </Button>
       </Box>

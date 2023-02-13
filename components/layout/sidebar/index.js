@@ -23,32 +23,6 @@ export default function SideBar() {
             </NavLink>
           ))}
         </VStack>
-        {/******
-        <VStack spacing={0} alignItems="start">
-          {Object.values(hrMenu).map((item, idx) => (
-            <NavLink
-              // @ts-ignore
-              w="100%"
-              href={item.path}
-              key={`${item.title}-${idx}`}
-            >
-              {item.title}
-            </NavLink>
-          ))}
-        </VStack>
-        *** */}
-      </VStack>
-      <VStack spacing={0} alignItems="start">
-        {/* <NavLink
-                    w='100%'
-                    href='/setup'
-                    cursor='not-allowed'
-                >
-                    Setup
-                </NavLink> 
-        <AccountMenu />
-        <ReportIssue />
-        */}
       </VStack>
     </VStack>
   );

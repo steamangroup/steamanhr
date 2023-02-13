@@ -5,6 +5,7 @@ const initialState = {
   client: {
     showAddForm: false,
     formId: undefined,
+    userId: undefined,
     deleteId: null,
   },
 };
@@ -25,9 +26,12 @@ export const ReducerSlice = createSlice({
     deleteAction: (state, action) => {
       state.client.deleteId = action.payload;
     },
+    userAction: (state, action) => {
+      state.client.userId = action.payload;
+    },
   },
 });
 
-export const { toggleChangeAction, updateAction, deleteAction } =
+export const { toggleChangeAction, updateAction, deleteAction, userAction } =
   ReducerSlice.actions;
 export default ReducerSlice.reducer;

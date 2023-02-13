@@ -11,6 +11,7 @@ import {
   Text,
   useDisclosure,
   Box,
+  Tooltip,
 } from "@chakra-ui/react";
 import React from "react";
 
@@ -18,8 +19,15 @@ export default function DeleteModal({ deletehandler, onDelete }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Box bg="yellow" h="18px" onClick={onDelete}>
-        <DeleteIcon onClick={onOpen} mt="-4px" />
+      <Box h="18px" onClick={onDelete} mt="-3px">
+        <Tooltip label="delete record">
+          <DeleteIcon
+            onClick={onOpen}
+            mt="-4px"
+            color="red.500"
+            cursor="pointer"
+          />
+        </Tooltip>
       </Box>
 
       <Modal isOpen={isOpen} onClose={onClose}>

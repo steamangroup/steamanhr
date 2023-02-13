@@ -1,8 +1,9 @@
 //controllers
-import Users from "@/model/user";
+import Employees from "@/model/employees";
+import Users from "@/model/employees";
 
 //post: http://localhost:3000/api/users
-export async function postUser(req, res) {
+export async function addEmployee(req, res) {
   try {
     //storing data in the variable formData
     const formData = req.body;
@@ -19,10 +20,10 @@ export async function postUser(req, res) {
 }
 
 //get: http://localhost:3000/api/users
-export async function getUsers(req, res) {
+export async function getEmployees(req, res) {
   try {
     //accessing data of mongo db
-    const users = await Users.find({});
+    const users = await Employees.find({});
     if (!users) return res.status(404).send({ error: "Data not found" });
 
     //outputing users
@@ -33,13 +34,13 @@ export async function getUsers(req, res) {
 }
 
 //get: http://localhost:3000/api/users/id
-export async function getUser(req, res) {
+export async function getEmployee(req, res) {
   try {
     //getting user id
-    const { userId } = req.query;
+    const { employeeId } = req.query;
 
-    if (userId) {
-      const user = await Users.findById(userId);
+    if (employeeId) {
+      const user = await Employees.findById(employeeId);
       res.status(200).json(user);
     }
 
@@ -50,15 +51,15 @@ export async function getUser(req, res) {
 }
 
 //update: http://localhost:3000/api/users/id
-export async function updateUser(req, res) {
+export async function updateEmployee(req, res) {
   try {
     //retrieving user id
-    const { userId } = req.query;
+    const { employeeId } = req.query;
     const formData = req.body;
 
     //checking if user id and form data is available and update it
-    if (userId && formData) {
-      const user = await Users.findByIdAndUpdate(userId, formData);
+    if (employeeId && formData) {
+      const user = await Employees.findByIdAndUpdate(employeeId, formData);
       res.status(200).json(user);
     }
     res.status(404).json({ error: "Error not selected" });
@@ -67,13 +68,13 @@ export async function updateUser(req, res) {
   }
 }
 
-export async function deleteUser(req, res) {
+export async function deleteEmployee(req, res) {
   try {
     //getting user id
-    const { userId } = req.query;
+    const { employeeId } = req.query;
 
-    if (userId) {
-      const user = await Users.findByIdAndDelete(userId);
+    if (employeeId) {
+      const user = await Employees.findByIdAndDelete(employeeId);
       return res.status(200).json(user);
     }
     return res.status(404).json({ error: "User not selected....." });

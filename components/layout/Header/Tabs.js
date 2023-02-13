@@ -16,10 +16,10 @@ export default function Tabs({ tablist }) {
   return (
     <Box
       sx={{
-        pt: "2rem",
+        pt: "1.5rem",
         pb: "1rem",
         borderBottomWidth: "1px",
-        mb: "1.25rem",
+        mb: "1rem",
       }}
     >
       {tablist && tablist.length > 0 ? (

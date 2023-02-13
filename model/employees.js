@@ -2,8 +2,8 @@
 import { Schema, models, model } from "mongoose";
 
 //new instance of the schema class
-const userSchema = new Schema({
-  id: Number,
+const EmployeeSchema = new Schema({
+  //id: Number,
   title: String,
   jobTitle: String,
   fullName: String,
@@ -41,5 +41,5 @@ const userSchema = new Schema({
   //  extraInformation: String,
 });
 
-const Users = models.user || model("employee", userSchema);
-export default Users;
+const Employees = models.employees || model("employees", EmployeeSchema);
+export default Employees;

@@ -1,4 +1,4 @@
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Flex,
   VStack,
@@ -9,10 +9,12 @@ import {
   useDisclosure,
   useToast,
   Image,
+  Tooltip,
+  CircularProgress,
 } from "@chakra-ui/react";
 
 import { useQuery, useQueryClient } from "react-query";
-import { deleteUser, getUser, getUsers, updateUser } from "@/lib/helper";
+import { deleteEmployee, getEmployees, getUsers } from "@/lib/helper/employee";
 import { useDispatch, useSelector } from "react-redux";
 import {
   toggleChangeAction,
@@ -25,9 +27,12 @@ import DeleteModal from "./DeleteModal";
 
 export default function EmployeeTable({ children }) {
   //const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isLoading, isError, data, error } = useQuery("employees", getUsers);
+  const { isLoading, isError, data, error } = useQuery(
+    "employees",
+    getEmployees
+  );
 
-  if (isLoading) return <div>Loading......</div>;
+  if (isLoading) return <CircularProgress isIndeterminate color="green.300" />;
   if (isError) return <div>Got error</div>;
 
   return (
@@ -127,6 +132,16 @@ EmployeeTable.Row = function ({
   //executing action using dispatch
   const dispatch = useDispatch();
 
+  const viewEmployeeRecord = () => {
+    //updating value of the state
+    dispatch(toggleChangeAction(_id));
+    router.push("employees/view");
+
+    if (!visible) {
+      dispatch(updateAction(_id));
+    }
+  };
+
   const OpenUpdateForm = () => {
     //updating value of the state
     dispatch(toggleChangeAction(_id));
@@ -151,8 +166,8 @@ EmployeeTable.Row = function ({
     e.preventDefault();
     //console.log("delete");
     if (deleteId) {
-      await deleteUser(deleteId);
-      await queryClient.prefetchQuery("employees", getUsers);
+      await deleteEmployee(deleteId);
+      await queryClient.prefetchQuery("employees", getEmployees);
       await dispatch(deleteAction(null));
       //router.push("/employees");
     }
@@ -182,7 +197,7 @@ EmployeeTable.Row = function ({
       </Flex>
 
       <Flex flex={3.5}>
-        <Text whiteSpace="nowrap" fontSize={13}>
+        <Text whiteSpace="nowrap" fontSize={14}>
           {fullName}
         </Text>
       </Flex>
@@ -190,7 +205,7 @@ EmployeeTable.Row = function ({
         <Text>{employmentType || "Unknown"}</Text>
       </Box>
 
-      <Box flex={4} whiteSpace="nowrap" fontSize={13}>
+      <Box flex={4} whiteSpace="nowrap" fontSize={14}>
         <Text>{workEmail}</Text>
       </Box>
       <Box flex={1} mx={5}>
@@ -199,20 +214,30 @@ EmployeeTable.Row = function ({
           color="white"
           textAlign="center"
           fontSize={13}
-          bgColor={`${employmentStatus === "active" ? "#5DBB63" : "red"}`}
+          bgColor={`${employmentStatus === "active" ? "#5DBB63" : "#CC9900"}`}
         >
           {employmentStatus || "Unknown"}
         </Text>
       </Box>
 
-      <Box flex={3} whiteSpace="nowrap" textAlign="center">
+      <Box flex={3} whiteSpace="nowrap" textAlign="center" fontSize={14}>
         <Text>{contactNumber}</Text>
       </Box>
-      <Box flex={4} whiteSpace="nowrap" fontSize={13}>
+      <Box flex={4} whiteSpace="nowrap" fontSize={14}>
         <Text>{businessUnit}</Text>
       </Box>
       <Flex flex={1} gap={5}>
-        <EditIcon onClick={OpenUpdateForm} />
+        <Tooltip label="View record">
+          <ExternalLinkIcon onClick={viewEmployeeRecord} />
+        </Tooltip>
+        <Tooltip label="update record">
+          <EditIcon
+            onClick={OpenUpdateForm}
+            color="blue.500"
+            cursor="pointer"
+          />
+        </Tooltip>
+
         <DeleteModal deletehandler={handleDelete} onDelete={onDelete} />
       </Flex>
     </Flex>

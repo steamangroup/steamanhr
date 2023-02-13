@@ -1,10 +1,12 @@
 export const userMenu = {
   dashboard: {
+    //props:`{userId}`
     title: "Dashboard",
-    path: "/[username]",
+    path: "/user/[username]",
     tabs: [
-      { title: "Overview", path: "/[]username" },
-      { title: "Leave", path: "/[username]/leave" },
+      { title: "Overview", path: `/user/[username]` },
+      { title: "Leave", path: "/leaves" },
+      { title: "Add Profile", path: "/employees/add" },
     ],
   },
   /*****    feed: {

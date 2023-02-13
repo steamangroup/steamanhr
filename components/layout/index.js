@@ -22,16 +22,17 @@ export default function Layout({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Flex>
-        <Box w="15vw" h="320vh" bg="#0b665c" p={10}>
+        <Box w="15vw" minH="100vh" bg="#0b665c" p={10}>
           <SideBar />
         </Box>
 
-        <Box p={10} w="80vw" maxH="100vh">
+        <Box p={10} w="80vw">
           <NavBar heading={navHeading} />
           <Tabs tablist={pageTabs} />
-          <Container maxW="1200px">{children}</Container>
-
-          <Footer />
+          <Container maxW="1200px" minH="100vh">
+            {children}
+          </Container>
+          {/***  <Footer />* */}
         </Box>
       </Flex>
     </Fragment>
