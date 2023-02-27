@@ -4,6 +4,7 @@ import Layout from "@/components/layout";
 import EmployeeForm from "@/components/employees/NewEmployee/Form";
 import { useState } from "react";
 import EmployeeAction from "@/components/employees/NewEmployee/EmployeeActions";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,12 +14,15 @@ export default function Home() {
   const handler = () => {
     setVisible(!visible);
   };
+  const router = useRouter();
+
+  useEffect(() => {
+    setTimeout(() => router.push("/login"), 1000);
+  }, []);
+
   return (
     <>
-      <Layout>
-        {/***** <EmployeeAction handleClick={handler} />* */}
-        {visible ? <EmployeeForm></EmployeeForm> : <></>}
-      </Layout>
+      <Layout></Layout>
     </>
   );
 }
