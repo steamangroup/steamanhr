@@ -1,9 +1,5 @@
-import { Box } from "@chakra-ui/react";
+//import { Box } from "@chakra-ui/react";
 
-export default function Footer() {
-  return (
-    <Box h={100} bg="red">
-      footer is here
-    </Box>
-  );
-}
+//export default function Footer() {
+//return <Box>footer is here</Box>;
+//}
