@@ -9,15 +9,10 @@ import { useRouter } from "next/router";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  //Toggle the form
-  // const [visible, setVisible] = useState(false);
-  //const handler = () => {
-  // setVisible(!visible);
-  //};
   const router = useRouter();
 
   useEffect(() => {
-    setTimeout(() => router.push("/login"), 1000);
+    setTimeout(() => router.push("/auth/login"), 1000);
   }, []);
 
   return (
