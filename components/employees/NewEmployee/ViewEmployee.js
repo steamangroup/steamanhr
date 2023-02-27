@@ -81,7 +81,7 @@ export default function DashboardPage() {
   } = data;
 
   console.log(email);
-  console.log("This is the information ");
+  console.log("This is employee information ");
   console.log(empInfor);
   const menu = userMenu.dashboard.tabs;
   return (
@@ -100,7 +100,7 @@ export default function DashboardPage() {
         <FormLabel>Title</FormLabel>
         <RadioGroup
           isrequired
-          defaultChecked={title}
+          defaultChecked={empInfor.title}
           //onChange={setFormData}
           name="title"
         >
@@ -128,7 +128,7 @@ export default function DashboardPage() {
         <Input
           size="sm"
           type="text"
-          defaultValue={workEmail}
+          defaultValue={email}
           name="workEmail"
           // onChange={setFormData}
         />

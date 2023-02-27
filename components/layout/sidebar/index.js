@@ -43,7 +43,7 @@ export default function SideBar() {
               fontSize="0.875rem"
               fontWeight="500"
               borderRadius="0.25rem"
-              color="white"
+              color="#633209"
               cursor="default"
               href="/user/[username]"
             >

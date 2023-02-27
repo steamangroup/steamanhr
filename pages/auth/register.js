@@ -137,7 +137,12 @@ export default function Register() {
         bg="white"
       >
         <VStack pb={10} mb={5}>
-          <Image src="/hr_logo.png" boxSize="150px" objectFit="contain" />
+          <Image
+            src="/hr_logo.png"
+            boxSize="150px"
+            objectFit="contain"
+            alt=""
+          />
 
           <FormControl>
             <HStack>

@@ -1,3 +1,17 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules":{
+    "react/display-name":"off",
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off"
+
+  },
+  "scripts": {
+   // "start": "react-scripts start",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
+    //"test": "react-scripts test"
+  }
+
 }
+
+

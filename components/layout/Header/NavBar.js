@@ -28,6 +28,7 @@ import { useSelector } from "react-redux";
 import { useQuery } from "react-query";
 import { getUser } from "@/lib/helper/user";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 export default function NavBar({ heading }) {
   const toast = useToast();
   const router = useRouter();
@@ -97,6 +98,7 @@ export default function NavBar({ heading }) {
                   isClosable: true,
                   position: "top-right",
                 });
+                Cookies.remove("userId");
                 router.push("/auth/login");
               }}
             >
@@ -118,7 +120,7 @@ export default function NavBar({ heading }) {
             </MenuItem>
             <MenuItem
               onClick={() => {
-                router.push("/leaves");
+                router.push(`/leaves/${data.email}`);
               }}
             >
               My Leave

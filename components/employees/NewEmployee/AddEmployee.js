@@ -196,19 +196,6 @@ function AddEmployeeForm({ formData, setFormData }) {
           </Select>
         </FormControl>
 
-        {/******        <FormControl>
-          <FormLabel>Upload profile picture (Max.size:5MB)</FormLabel>
-          <Input
-            type="file"
-            name="profilePicture"
-            onChange={(e) => {
-              uploadImage(e.target.files);
-            }}
-            isrequired="true"
-          />
-        </FormControl>
-*** */}
-
         <FormControl>
           <FormLabel>Work Email Address</FormLabel>
           <Input

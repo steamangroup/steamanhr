@@ -116,7 +116,12 @@ export default function Login() {
         bg="white"
       >
         <VStack pb={10}>
-          <Image src="/hr_logo.png" boxSize="150px" objectFit="contain" />
+          <Image
+            src="/hr_logo.png"
+            boxSize="150px"
+            objectFit="contain"
+            alt=""
+          />
           <FormControl>
             <FormLabel>Email</FormLabel>
             <Input
