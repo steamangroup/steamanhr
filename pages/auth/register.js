@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 const BASE_URL = "http://localhost:3000/";
+const NETLIFY_URL = "https://steamanhr.netlify.app";
 
 export default function Register() {
   const router = useRouter();
@@ -82,7 +83,7 @@ export default function Register() {
       //position: "top-right",
       //});
 
-      await fetch(`${BASE_URL}api/auth/register`, {
+      await fetch(`${NETLIFY_URL}api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
