@@ -1,4 +1,4 @@
-import { Schema, models, model } from "mongoose";
+import mongoose, { Schema, models, model } from "mongoose";
 const bcrypt = require("bcrypt");
 import { roles } from "@/utils/constants";
 
@@ -39,7 +39,8 @@ userSchema.pre("save", async function (next) {
 
       if (
         this.email === "admin@steamangroup.com" ||
-        this.email === "py@steamangroup.com"
+        this.email === "py.bediako@steamangroup.com" ||
+        this.email === "manager@steamangroup.com"
       ) {
         this.role = roles.admin;
       }

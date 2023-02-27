@@ -1,5 +1,9 @@
 import connectMongo from "@/database/connect";
-import { getEmployeeData } from "@/database/controllers/users";
+import {
+  deleteLeave,
+  getLeave,
+  updateLeave,
+} from "@/database/controllers/leaves";
 
 export default async function handler(req, res) {
   //catching error in the database
@@ -11,18 +15,18 @@ export default async function handler(req, res) {
   const { method } = req;
   switch (method) {
     case "GET":
-      getEmployeeData(req, res);
+      getLeave(req, res);
       break;
 
-    /****case "PUT":
-      updateUser(req, res);
+    case "PUT":
+      updateLeave(req, res);
       break;
     case "DELETE":
-      deleteUser(req, res);
+      deleteLeave(req, res);
       break;
-      **/
+
     default:
       res.setHeader("ALLOW", ["GET", "POST", "PUT", "DELETE"]);
-      res.status(405).end(`Method${method} Not Allowed`);
+      res.status(405).end(`Method ${method} Not Allowed`);
   }
 }

@@ -4,7 +4,7 @@ import {
   deleteEmployee,
   getEmployee,
   updateEmployee,
-} from "../../../database/controllers/employees";
+} from "../../../../database/controllers/employees";
 
 export default async function handler(req, res) {
   //catching error in the database

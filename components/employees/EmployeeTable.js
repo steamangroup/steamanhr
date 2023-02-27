@@ -11,6 +11,7 @@ import {
   Image,
   Tooltip,
   CircularProgress,
+  Avatar,
 } from "@chakra-ui/react";
 
 import { useQuery, useQueryClient } from "react-query";
@@ -114,7 +115,6 @@ EmployeeTable.Row = function ({
   workEmail,
   contactNumber,
   employmentStatus,
-  employmentStatusColor,
   _id,
 }) {
   const toast = useToast();
@@ -192,8 +192,15 @@ EmployeeTable.Row = function ({
       }}
     >
       <Flex>
-        <Image src={profilePicture || "#"} borderRadius="full" boxSize="30px" />
-        {/**<Text>{_id}</Text>*/}
+        <Avatar
+          size="sm"
+          name={fullName}
+          bg="lightgray"
+          color="black"
+          // src='https://via.placeholder.com/200'
+        />
+        {/** <Image src={profilePicture || "#"} borderRadius="full" boxSize="30px" />
+        <Text>{_id}</Text>*/}
       </Flex>
 
       <Flex flex={3.5}>
@@ -202,7 +209,7 @@ EmployeeTable.Row = function ({
         </Text>
       </Flex>
       <Box fontSize={13} flex={2}>
-        <Text>{employmentType || "Unknown"}</Text>
+        <Text>{employmentType}</Text>
       </Box>
 
       <Box flex={4} whiteSpace="nowrap" fontSize={14}>
@@ -214,9 +221,9 @@ EmployeeTable.Row = function ({
           color="white"
           textAlign="center"
           fontSize={13}
-          bgColor={`${employmentStatus === "active" ? "#5DBB63" : "#CC9900"}`}
+          bgColor={`${employmentStatus === "active" ? "#5DBB63" : "#ff6100"}`}
         >
-          {employmentStatus || "Unknown"}
+          {employmentStatus}
         </Text>
       </Box>
 

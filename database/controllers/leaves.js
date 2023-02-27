@@ -1,5 +1,8 @@
 //controllers
 import Leaves from "@/model/leaves";
+import mongoose from "mongoose";
+const empId = mongoose.Types.ObjectId;
+
 //post: http://localhost:3000/api/users
 export async function addLeave(req, res) {
   try {
@@ -21,7 +24,10 @@ export async function addLeave(req, res) {
 export async function getLeaves(req, res) {
   try {
     //accessing data of mongo db
-    const leaves = await Leaves.find({});
+    const leaves = await Leaves.find({}).populate({
+      path: "employees",
+      select: ["fullName"],
+    });
     if (!leaves) return res.status(404).send({ error: "Data not found" });
 
     //outputing users
@@ -38,7 +44,10 @@ export async function getLeave(req, res) {
     const { id } = req.query;
 
     if (id) {
-      const leave = await Leaves.findById(id);
+      const leave = await Leaves.findById(id).populate({
+        path: "employees",
+        select: ["fullName"],
+      });
       res.status(200).json(leave);
     }
 
@@ -78,5 +87,31 @@ export async function deleteLeave(req, res) {
     return res.status(404).json({ error: "Leave not selected....." });
   } catch (error) {
     res.status(404).json({ error: "Error while deleting the leave" });
+  }
+}
+
+export async function getEmployeeLeaves(req, res) {
+  try {
+    // const { empId } = req.params;
+    if (req.params.empId) {
+      req.params.empId = empId(req.params.empId);
+      const leave = await Leaves.findById(req.params.leaves);
+      leave.empId = req.params.empId;
+      leave.save();
+      return res.json(leave);
+    }
+    // if (empId) {
+    //empId = empId(empId);
+    // console.log("Employee Leave Id");
+    //console.log(empId);
+    //const leaves = await Leaves.findById(empId);
+    //leaves.empId = empId;
+    //leaves.save();
+    //res.json(leaves);
+    //return console.log(leaves);
+    //}
+    return res.status(404).json({ error: "Employee leave not selected....." });
+  } catch (error) {
+    res.status(404).json({ error: "Error retrieving employee leave" });
   }
 }

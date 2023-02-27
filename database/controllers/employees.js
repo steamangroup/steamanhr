@@ -1,7 +1,10 @@
 //controllers
 import Employees from "@/model/employees";
 import Users from "@/model/employees";
+import Leaves from "@/model/leaves";
+import mongoose from "mongoose";
 
+const empId = mongoose.SchemaTypes.ObjectId;
 //post: http://localhost:3000/api/users
 export async function addEmployee(req, res) {
   try {
@@ -41,6 +44,7 @@ export async function getEmployee(req, res) {
 
     if (employeeId) {
       const user = await Employees.findById(employeeId);
+      //const user_leave=await Leaves.findOne({})
       res.status(200).json(user);
     }
 
@@ -78,6 +82,21 @@ export async function deleteEmployee(req, res) {
       return res.status(200).json(user);
     }
     return res.status(404).json({ error: "User not selected....." });
+  } catch (error) {
+    res.status(404).json({ error: "Error while deleting the user" });
+  }
+}
+
+export async function getEmployeeLeave(req, res) {
+  try {
+    const { leaveId } = req.query;
+    console.log(leaveId);
+
+    if (leaveId) {
+      const user_leave = await Leaves.findById({ leaveId });
+      return res.status(200).json(user_leave);
+    }
+    return res.status(404).json({ error: "leave id not selected....." });
   } catch (error) {
     res.status(404).json({ error: "Error while deleting the user" });
   }

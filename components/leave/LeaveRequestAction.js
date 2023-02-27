@@ -1,85 +1,31 @@
-import React, { useState } from "react";
-import {
-  HStack,
-  Text,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  Box,
-  Flex,
-  Button,
-  Spacer,
-} from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
-import LeaveRequestForm from "./RequestLeaveForm";
-//import AddEmployeeForm from "./AddEmployeeForm";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
-function NewLeaveRequest() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [newLeaveRequest, setNewLeaveRequest] = useState({
-    leaveType: "",
-    leaveStartDate: "",
-    leaveEndDate: "",
-    leaveReason: "",
-    handingOverNotes: "",
-  });
+export default function LeaveAction() {
+  const router = useRouter();
+  const visible = useSelector((state) => state.app.client.showAddForm);
 
-  const handleAddEmployee = () => {
-    alert("new leave requested");
-    console.log(newLeaveRequest);
+  //const dispatch = useDispatch();
+  const OpenForm = () => {
+    //updating value of the state
+    //dispatch(toggleChangeAction());
+
+    console.log(visible);
+    router.push("leaves/add");
   };
 
   return (
-    <Flex justifyContent="space-between" w="50vw">
-      <Box>
-        <Text></Text>
-      </Box>
+    <Flex justifyContent="flex-end">
+      <Box></Box>
 
       <Box>
-        <Button
-          onClick={onOpen}
-          colorScheme="green"
-          size="sm"
-          rightIcon={<AddIcon />}
-        >
-          New leave request
+        <Button onClick={OpenForm} colorScheme="green" size="sm">
+          Request Leave
         </Button>
       </Box>
-
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        size="lg"
-        closeOnOverlayClick={false}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Leave request</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <LeaveRequestForm
-              newLeaveRequest={newLeaveRequest}
-              setNewLeaveRequest={setNewLeaveRequest}
-            />
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="red" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme="green" onClick={handleAddEmployee}>
-              Save
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </Flex>
   );
 }
-
-export default NewLeaveRequest;

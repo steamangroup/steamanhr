@@ -115,21 +115,18 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
         </FormControl>
         <FormControl>
           <FormLabel>Title</FormLabel>
-          <RadioGroup
-            isrequired
-            defaultChecked={title}
+          <Select
+            size="sm"
+            defaultValue={title}
+            name=" title"
             onChange={setFormData}
-            name="title"
+            placeholder={title}
           >
-            name="onMedication"
-            <HStack spacing="24px">
-              <Radio value="mr.">Mr.</Radio>
-              <Radio value="ms.">Ms.</Radio>
-              <Radio value="mrs.">Mrs.</Radio>
-              <Radio value="dr.">Dr.</Radio>
-              <Radio value="other">Other</Radio>
-            </HStack>
-          </RadioGroup>
+            <option value="mr.">Mr.</option>
+            <option value="mrs.">Mrs.</option>
+            <option value="ms.">Ms.</option>
+            <option value="dr.">Dr.</option>
+          </Select>
         </FormControl>
 
         <FormControl>
@@ -154,6 +151,7 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
             defaultValue={employmentType}
             name=" employmentType"
             onChange={setFormData}
+            placeholder={employmentType}
           >
             <option value="Full time">Full time</option>
             <option value="Part time">Part time</option>
@@ -170,6 +168,7 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
             defaultValue={businessUnit}
             name="businessUnit"
             onChange={setFormData}
+            placeholder={businessUnit}
           >
             <option value="E-clinicals">E-Clinicals</option>
             <option value="E-commerce">E-commerce</option>
@@ -222,6 +221,7 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
             name="employmentStatus"
             isrequired
             onChange={setFormData}
+            placeholder={employmentStatus}
           >
             <option value="active">Active</option>
             <option value="joining">Joining</option>
@@ -262,6 +262,7 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
             name="gender"
             isrequired
             onChange={setFormData}
+            placeholder={gender}
           >
             <option value="male">Male</option>
             <option value="female">Female</option>
@@ -277,6 +278,7 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
             name="educationalLevel"
             isrequired
             onChange={setFormData}
+            placeholder={maritalStatus}
           >
             <option value="married">Married</option>
             <option value="single">Single</option>
@@ -314,6 +316,7 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
             name="educationalLevel"
             isrequired
             onChange={setFormData}
+            placeholder={educationalLevel}
           >
             <option value="O level">O Level</option>
             <option value="Junior high school">Junior High School</option>
@@ -473,6 +476,7 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
             name="onMedication"
             isrequired
             onChange={setFormData}
+            placeholder={onMedication}
           >
             <option value="yes">Yes</option>
             <option value="no">No</option>

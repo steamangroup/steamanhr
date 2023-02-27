@@ -11,9 +11,23 @@ import {
   VStack,
   Textarea,
 } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import { useQuery } from "react-query";
 
 function LeaveRequestForm({ newLeaveRequest, setNewLeaveRequest }) {
   const initialRef = useRef(null);
+  const userId = useSelector((state) => state.app.client.userId);
+  console.log(`This  ${userId}`);
+
+  const { isLoading, isError, data, error } = useQuery(["users", userId], () =>
+    getUser(userId)
+  );
+
+  if (isLoading) return <div>Loading...........</div>;
+  //if (isError) return <div>Erorr............</div>;
+  console.log(data);
+  const role = data.role;
+  console.log(role);
   return (
     <Stack>
       <FormControl>
@@ -100,6 +114,29 @@ function LeaveRequestForm({ newLeaveRequest, setNewLeaveRequest }) {
           value={newLeaveRequest.handingOverNotes}
         />
       </FormControl>
+
+      {role === "ADMIN" ? (
+        <FormControl>
+          <FormLabel>Leave Status</FormLabel>
+          <Select
+            size="sm"
+            isrequired
+            onChange={(e) => {
+              setNewLeaveRequest((prevState) => ({
+                ...prevState,
+                leaveStatus: e.target.value,
+              }));
+            }}
+            value={newLeaveRequest.leaveStatus}
+          >
+            <option value="pending">Pending</option>
+            <option value="approve">Approve</option>
+            <option value="maternityleave">Reject</option>
+          </Select>
+        </FormControl>
+      ) : (
+        <></>
+      )}
     </Stack>
   );
 }

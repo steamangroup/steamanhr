@@ -1,6 +1,7 @@
 import connectMongo from "@/database/connect";
 import {
   deleteLeave,
+  getEmployeeLeaves,
   getLeave,
   updateLeave,
 } from "@/database/controllers/leaves";
@@ -15,13 +16,7 @@ export default async function handler(req, res) {
   const { method } = req;
   switch (method) {
     case "GET":
-      getLeave(req, res);
-      break;
-    case "PUT":
-      updateLeave(req, res);
-      break;
-    case "DELETE":
-      deleteLeave(req, res);
+      getEmployeeLeaves(req, res);
       break;
 
     default:

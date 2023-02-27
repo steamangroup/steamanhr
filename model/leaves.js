@@ -1,11 +1,12 @@
 //specifying structure of the schema
-import { Schema, models, model } from "mongoose";
+import mongoose, { Schema, models, model, Mongoose } from "mongoose";
 
 //new instance of the schema class
 const LeaveSchema = new Schema({
   leaveType: {
     type: String,
     required: true,
+    default: "annual",
   },
 
   startDate: {
@@ -13,7 +14,7 @@ const LeaveSchema = new Schema({
     required: true,
   },
 
-  endtDate: {
+  endDate: {
     type: String,
     required: true,
   },
@@ -25,12 +26,21 @@ const LeaveSchema = new Schema({
     type: String,
     required: true,
   },
+  leaveStatus: {
+    type: String,
+    default: "pending",
+  },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: () => Date.now(),
   },
+  employees: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "Employees",
+  },
+
   //  extraInformation: String,
 });
 
-const Leaves = models.leaves || model("leaves", LeaveSchema);
+const Leaves = models.Leaves || model("Leaves", LeaveSchema);
 export default Leaves;

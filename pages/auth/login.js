@@ -14,6 +14,7 @@ import {
   useToast,
   Flex,
 } from "@chakra-ui/react";
+
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -87,6 +88,7 @@ export default function Login() {
         .then((data) => {
           const { email, id } = data;
           dispatch(userAction(id));
+
           if (email == undefined /***&& isAuth*/) {
             router.push("/auth/login");
           } else {

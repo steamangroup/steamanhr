@@ -1,7 +1,7 @@
 import { userMenu } from "@/components/config/navigation";
 import EmployeeTable from "@/components/employees/EmployeeTable";
 import Layout from "@/components/layout";
-import { getUsers } from "@/lib/helper/employee";
+import { getEmployees } from "@/lib/helper/employee";
 import { CircularProgress } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 
@@ -11,7 +11,10 @@ export default function EmployeePage() {
   //console.log(getUser());
   //getUser().then((res) => console.log(res));
   //using react query to cache our data, so we return data from our memory
-  const { isLoading, isError, data, error } = useQuery("employees", getUsers);
+  const { isLoading, isError, data, error } = useQuery(
+    "employees",
+    getEmployees
+  );
 
   if (isLoading)
     return (

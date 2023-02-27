@@ -20,33 +20,29 @@ import { userMenu } from "@/components/config/navigation";
 import Layout from "@/components/layout";
 import { useSelector } from "react-redux";
 import { getUser } from "@/lib/helper/user";
-
-/****
-const formReducer = (state, event) => {
-  return {
-    ...state,
-    [event.target.name]: event.target.value,
-  };
-};
-**/
+import { roles } from "@/utils/constants";
+import Axios from "axios";
 
 function AddEmployeeForm({ formData, setFormData }) {
   const toast = useToast();
   const router = useRouter();
-  const queryClient = useQueryClient();
+
+  /***
+  const uploadImage = (files) => {
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "ml_default");
+    //console.log(files[0]);
+    Axios.post(
+      "http://api/cloudinary.com/v1_1/dryckzo2l/image/upload",
+      formData
+    ).then((Response)=>{
+
+    })
+  };
+  * */
+  //const queryClient = useQueryClient();
   // const [formData, setFormData] = useReducer(formReducer, {});
-  const userId = useSelector((state) => state.app.client.userId);
-  console.log(`userId  ${userId}`);
-
-  const { isLoading, isError, data, error } = useQuery(["users", userId], () =>
-    getUser(userId)
-  );
-  if (isLoading) return <div>Loading...........</div>;
-  if (isError) return <div>Erorr............</div>;
-  const { role } = data;
-  console.log(role);
-
-  //posting data to the backend
   const addMutation = useMutation(addEmployee, {
     onSuccess: () => {
       toast({
@@ -60,12 +56,24 @@ function AddEmployeeForm({ formData, setFormData }) {
     },
   });
 
+  const userId = useSelector((state) => state.app.client.userId);
+  console.log(`userId  ${userId}`);
+
+  const { isLoading, isError, data, error } = useQuery(["users", userId], () =>
+    getUser(userId)
+  );
+  if (isLoading) return <div>Loading...........</div>;
+  if (isError) return <div>Erorr............</div>;
+  const { role } = data;
+  console.log(role);
+
+  //posting data to the backend
+
   const handleAddEmployee = (e) => {
     e.preventDefault();
     const formLength = Object.keys(formData).length;
     console.log(formLength);
     if (formLength == 0) return alert("No data");
-    console.log(formData);
 
     //acessing values from form data and posting them in the db
     let {
@@ -99,6 +107,11 @@ function AddEmployeeForm({ formData, setFormData }) {
       healthCondition,
       onMedication,
     } = formData;
+    console.log("Employee Data here");
+    console.log(formData);
+    console.log(employmentType);
+    console.log(businessUnit);
+    console.log(educationalLevel);
 
     const model = {
       title: title ?? "Other",
@@ -146,6 +159,7 @@ function AddEmployeeForm({ formData, setFormData }) {
         isClosable: true,
         position: "top-right",
       });
+
     if (role == "STAFF") {
       router.push("/user/[username]");
     } else {
@@ -154,7 +168,7 @@ function AddEmployeeForm({ formData, setFormData }) {
   };
   const menu = userMenu.employees.tabs;
   return (
-    <Layout pageTabs={menu} navHeading="Employee Information Form">
+    <Layout navHeading="Employee Information Form">
       <Stack>
         <FormControl>
           <FormLabel>Full Name</FormLabel>
@@ -182,15 +196,18 @@ function AddEmployeeForm({ formData, setFormData }) {
           </Select>
         </FormControl>
 
-        <FormControl>
+        {/******        <FormControl>
           <FormLabel>Upload profile picture (Max.size:5MB)</FormLabel>
           <Input
             type="file"
             name="profilePicture"
-            onChange={setFormData}
+            onChange={(e) => {
+              uploadImage(e.target.files);
+            }}
             isrequired="true"
           />
         </FormControl>
+*** */}
 
         <FormControl>
           <FormLabel>Work Email Address</FormLabel>
@@ -206,10 +223,11 @@ function AddEmployeeForm({ formData, setFormData }) {
           <FormLabel>Employment Type</FormLabel>
           <Select
             size="sm"
-            name=" employmentType"
-            onChange={setFormData}
+            name="employmentType"
             isrequired="true"
-            defaultValue="Full time"
+            placeholder="select employement type"
+            onChange={setFormData}
+            //defaultValue="Full time"
           >
             <option value="Full time">Full time</option>
             <option value="Part time">Part time</option>
@@ -226,7 +244,8 @@ function AddEmployeeForm({ formData, setFormData }) {
             isrequired="true"
             name="businessUnit"
             onChange={setFormData}
-            defaultValue="E-commerce"
+            //defaultValue="E-commerce"
+            placeholder="select business unit"
           >
             <option value="E-clinicals">E-Clinical</option>
             <option value="E-commerce">E-commerce</option>
@@ -274,10 +293,11 @@ function AddEmployeeForm({ formData, setFormData }) {
           <FormLabel>Employment Status</FormLabel>
           <Select
             size="sm"
-            name=" employmentStatus"
+            name="employmentStatus"
             onChange={setFormData}
             isrequired="true"
             defaultValue="active"
+            //placeholder="select employement status"
           >
             <option value="active">Active</option>
             <option value="joining">Joining</option>
@@ -311,10 +331,11 @@ function AddEmployeeForm({ formData, setFormData }) {
           <FormLabel>Gender</FormLabel>
           <Select
             size="sm"
-            name=" gender"
+            name="gender"
             onChange={setFormData}
             isrequired="true"
-            defaultValue="male"
+            //defaultValue="male"
+            placeholder="select gender"
           >
             <option value="male">male</option>
             <option value="female">female</option>
@@ -326,7 +347,7 @@ function AddEmployeeForm({ formData, setFormData }) {
           <FormLabel>Marital Status</FormLabel>
           <Select
             size="sm"
-            name=" maritalStatus"
+            name="maritalStatus"
             onChange={setFormData}
             isrequired="true"
             defaultValue="single"
@@ -394,9 +415,10 @@ function AddEmployeeForm({ formData, setFormData }) {
           <Input
             size="sm"
             type="text"
-            name=" nationalIDNumber"
+            name="nationalIDNumber"
             onChange={setFormData}
             isrequired="true"
+            placeholder="GHA-0001-0202"
           />
         </FormControl>
 
@@ -512,9 +534,10 @@ function AddEmployeeForm({ formData, setFormData }) {
           <FormLabel>Medication</FormLabel>
           <Select
             size="sm"
-            defaultValue={onMedication}
+            type="text"
+            //defaultValue={onMedication}
             name="onMedication"
-            isrequired
+            isrequire="true"
             onChange={setFormData}
           >
             <option value="yes">Yes</option>
@@ -524,10 +547,25 @@ function AddEmployeeForm({ formData, setFormData }) {
         </FormControl>
 
         <Stack direction="row" spacing={4} flex="end">
-          <Button colorScheme="green" onClick={handleAddEmployee}>
+          <Button
+            bg="green.600"
+            _hover={{
+              bg: "green.600",
+            }}
+            color="white"
+            onClick={handleAddEmployee}
+          >
             Save
           </Button>
-          <Button colorScheme="red">Exit</Button>
+          <Button
+            bg="red.600"
+            _hover={{
+              bg: "red.600",
+            }}
+            color="white"
+          >
+            Exit
+          </Button>
         </Stack>
       </Stack>
     </Layout>

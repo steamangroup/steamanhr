@@ -1,3 +1,6 @@
+import { roles } from "@/utils/constants";
+
+roles;
 export const userMenu = {
   dashboard: {
     //props:`{userId}`
@@ -16,6 +19,7 @@ export const userMenu = {
 
     },
      */
+
   employees: {
     title: "Employees",
     path: "/employees",

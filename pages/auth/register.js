@@ -110,13 +110,15 @@ export default function Register() {
               isClosable: true,
               position: "top-right",
             });
-            const json = response.json();
-            return json;
+
+            // const json = response.json();
+            //console.log(json);
+            return router.push("/auth/register");
           }
         })
         .then((data) => {
           console.log(data);
-          router.push("/auth/login");
+          if (data) return router.push("/auth/login");
         })
         .catch((error) => {
           console.log("Error", error);

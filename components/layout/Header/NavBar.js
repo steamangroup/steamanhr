@@ -104,7 +104,7 @@ export default function NavBar({ heading }) {
             </MenuItem>
             <MenuItem
               onClick={() => {
-                router.push("/employees/view");
+                router.push("/employees/profile");
               }}
             >
               View profile
@@ -116,7 +116,13 @@ export default function NavBar({ heading }) {
             >
               Add Employee information
             </MenuItem>
-            <MenuItem onClick={() => {}}>My Leave</MenuItem>
+            <MenuItem
+              onClick={() => {
+                router.push("/leaves");
+              }}
+            >
+              My Leave
+            </MenuItem>
           </MenuList>
         </Menu>
       </Box>

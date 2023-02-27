@@ -2,7 +2,6 @@ import signAcessToken from "@/lib/helper/jwt_helper";
 import authSchema from "@/lib/helper/validation_schema";
 import Employees from "@/model/employees";
 import User from "@/model/users";
-import { useRouter } from "next/router";
 
 //import {authSchema} from '@/lib/helper/validation_schema'
 export async function createUser(req, res) {
@@ -33,7 +32,7 @@ export async function createUser(req, res) {
   } catch (error) {
     if (error.isJoi === true) error.status = 422;
     const { message } = error;
-    res.send(message);
+    res.status(404).send(error);
   }
 }
 
@@ -41,6 +40,7 @@ export async function loginUser(req, res) {
   try {
     const { email, password } = req.body;
     const result = await authSchema.validateAsync(req.body);
+    if (!result) return res.status(404).json("Error there");
     const user = await User.findOne({ email: result.email });
     if (!user) return res.status(404).json({ status: "User not registered" });
 

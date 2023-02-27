@@ -1,15 +1,24 @@
 //specifying structure of the schema
-import { Schema, models, model } from "mongoose";
+import { required } from "joi";
+import mongoose, { Schema, models, model, Mongoose } from "mongoose";
+import Leaves from "./leaves";
 
 //new instance of the schema class
 const EmployeeSchema = new Schema({
   //id: Number,
-  title: String,
+  title: {
+    type: String,
+  },
+
   jobTitle: String,
   fullName: String,
   businessUnit: String,
   employmentType: String,
-  workEmail: String,
+  workEmail: {
+    type: String,
+    unique: true,
+    require: true,
+  },
   profilePicture: String,
   //teams: [],
   department: String,
@@ -33,13 +42,24 @@ const EmployeeSchema = new Schema({
   accountHolder: String,
   accountNumber: String,
   healthCondition: String,
-  onMedication: String,
+  onMedication: {
+    type: String,
+    default: "no",
+  },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: () => Date.now(),
   },
+
+  leave: [
+    {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "Leaves",
+    },
+  ],
+
   //  extraInformation: String,
 });
 
-const Employees = models.employees || model("employees", EmployeeSchema);
+const Employees = models.Employees || model("Employees", EmployeeSchema);
 export default Employees;
