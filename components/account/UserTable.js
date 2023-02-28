@@ -1,9 +1,5 @@
 import { Flex, VStack, Box, Text, useToast, Avatar } from "@chakra-ui/react";
 
-import { useQuery, useQueryClient } from "react-query";
-
-import { useRouter } from "next/router";
-
 export default function UserAccountTable({ children }) {
   return (
     <Box mt="0.5rem">
