@@ -6,11 +6,13 @@
     "@next/next/no-page-custom-font": "off"
 
   },
-  "scripts": {
-  
-    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build"
-   
+  "parserOptions":{
+    "scripts": {
+      "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build"
+     
+    }
   }
+  
 
 }
 
