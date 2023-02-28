@@ -13,7 +13,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    setTimeout(() => router.push("/auth/login"), 100);
+    setTimeout(() => router.push("/auth/login"), 10);
   }, []);
 
   return (
