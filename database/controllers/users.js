@@ -21,7 +21,7 @@ export async function createUser(req, res) {
     const accessToken = await signAcessToken(savedUser.id);
 
     //console.log(`Access token is ${accessToken}`);
-    res.status(200).json({
+    return res.status(200).json({
       accessToken,
       _id: savedUser.id,
       email: savedUser.email,
@@ -32,7 +32,7 @@ export async function createUser(req, res) {
   } catch (error) {
     if (error.isJoi === true) error.status = 422;
     const { message } = error;
-    res.status(404).send(error);
+    res.status(404).json(error);
   }
 }
 
@@ -52,7 +52,7 @@ export async function loginUser(req, res) {
 
     //returning the token of the user
     const accessToken = await signAcessToken(user.id);
-    res.status(200).json({
+    return res.status(200).json({
       accessToken: accessToken,
       id: user.id,
       email: user.email,
@@ -64,7 +64,7 @@ export async function loginUser(req, res) {
 
     //res.send(result);
   } catch (error) {
-    res.status(404).send({ status: "Error logging in " });
+    return res.status(404).json({ status: "Error logging in " });
   }
 }
 
@@ -76,9 +76,9 @@ export async function getUsers(req, res) {
     if (!users) return res.status(404).send({ error: "Data not found" });
 
     //outputing users
-    res.status(200).json(users);
+    return res.status(200).json(users);
   } catch (error) {
-    res.status(404).send({ error: "Eror feteching data" });
+    return res.status(404).json({ error: "Eror feteching data" });
   }
 }
 //get: http://localhost:3000/api/auth/id
@@ -89,12 +89,12 @@ export async function getUser(req, res) {
 
     if (userId) {
       const user = await User.findById(userId);
-      res.status(200).json(user);
+      return res.status(200).json(user);
     }
 
-    res.status(404).json({ error: "User not selected" });
+    return res.status(404).json({ error: "User not selected" });
   } catch (error) {
-    res.status(404).json({ error: "Cannot get the user" });
+    return res.status(404).json({ error: "Cannot get the user" });
   }
 }
 
@@ -104,9 +104,9 @@ export async function getEmployeeData(req, res) {
     //find employee with work email matching the email provided
     const user = await Employees.findOne({ workEmail: email });
     if (user) {
-      res.status(200).json(user);
+      return res.status(200).json(user);
     } else {
-      res.status(404).json("Could not get employee data");
+      return res.status(404).json("Could not get employee data");
       //console.log("Could not get employee data");
     }
   } catch (error) {

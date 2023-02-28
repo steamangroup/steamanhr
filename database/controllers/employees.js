@@ -27,12 +27,12 @@ export async function getEmployees(req, res) {
   try {
     //accessing data of mongo db
     const users = await Employees.find({});
-    if (!users) return res.status(404).send({ error: "Data not found" });
+    if (!users) return res.status(404).json({ error: "Data not found" });
 
     //outputing users
     res.status(200).json(users);
   } catch (error) {
-    res.status(404).send({ error: "Eror feteching data" });
+    return res.status(404).send({ error: "Eror feteching data" });
   }
 }
 
@@ -45,12 +45,12 @@ export async function getEmployee(req, res) {
     if (employeeId) {
       const user = await Employees.findById(employeeId);
       //const user_leave=await Leaves.findOne({})
-      res.status(200).json(user);
+      return res.status(200).json(user);
     }
 
-    res.status(404).json({ error: "User not selected" });
+    return res.status(404).json({ error: "User not selected" });
   } catch (error) {
-    res.status(404).json({ error: "Cannot get the user" });
+    return res.status(404).json({ error: "Cannot get the user" });
   }
 }
 
@@ -64,11 +64,13 @@ export async function updateEmployee(req, res) {
     //checking if user id and form data is available and update it
     if (employeeId && formData) {
       const user = await Employees.findByIdAndUpdate(employeeId, formData);
-      res.status(200).json(user);
+      return res.status(200).json(user);
     }
     res.status(404).json({ error: "Error not selected" });
   } catch (error) {
-    res.status(404).json({ error: "Error while updating the data....." });
+    return res
+      .status(404)
+      .json({ error: "Error while updating the data....." });
   }
 }
 
@@ -83,7 +85,7 @@ export async function deleteEmployee(req, res) {
     }
     return res.status(404).json({ error: "User not selected....." });
   } catch (error) {
-    res.status(404).json({ error: "Error while deleting the user" });
+    return res.status(404).json({ error: "Error while deleting the user" });
   }
 }
 
@@ -98,6 +100,6 @@ export async function getEmployeeLeave(req, res) {
     }
     return res.status(404).json({ error: "leave id not selected....." });
   } catch (error) {
-    res.status(404).json({ error: "Error while deleting the user" });
+    return res.status(404).json({ error: "Error while deleting the user" });
   }
 }

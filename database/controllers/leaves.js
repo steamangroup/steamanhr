@@ -16,7 +16,7 @@ export async function addLeave(req, res) {
       return res.status(200).json(data);
     });
   } catch (error) {
-    return res.status(404).send({ error: "Error posting data" });
+    return res.status(404).json({ error: "Error posting data" });
   }
 }
 
@@ -28,12 +28,12 @@ export async function getLeaves(req, res) {
       path: "employees",
       select: ["fullName"],
     });
-    if (!leaves) return res.status(404).send({ error: "Data not found" });
+    if (!leaves) return res.status(404).json({ error: "Data not found" });
 
     //outputing users
     res.status(200).json(leaves);
   } catch (error) {
-    res.status(404).send({ error: "Error feteching data" });
+    res.status(404).json({ error: "Error feteching data" });
   }
 }
 
