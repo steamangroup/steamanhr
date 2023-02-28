@@ -83,7 +83,7 @@ export default function Register() {
       //position: "top-right",
       //});
 
-      await fetch(`${NETLIFY_URL}api/auth/register`, {
+      await fetch(`${NETLIFY_URL}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
