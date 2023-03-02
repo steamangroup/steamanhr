@@ -9,7 +9,7 @@ const initialState = {
     userId: Cookies.get("userId"),
     deleteId: null,
     email: undefined,
-    employeeId: undefined,
+    employeeId: Cookies.get("employeeId"),
     business: undefined,
     job: undefined,
     leaveDuration: undefined,

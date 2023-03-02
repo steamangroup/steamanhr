@@ -1,10 +1,5 @@
 import connectMongo from "@/database/connect";
-import {
-  deleteLeave,
-  getEmployeeLeaves,
-  getLeave,
-  updateLeave,
-} from "@/database/controllers/leaves";
+import { getEmployeeLeaves } from "@/database/controllers/leaves";
 
 export default async function handler(req, res) {
   //catching error in the database

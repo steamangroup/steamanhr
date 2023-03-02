@@ -25,6 +25,12 @@ const userSchema = new Schema({
     enum: [roles.admin, roles.staff],
     default: roles.staff,
   },
+  leave: [
+    {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "Leaves",
+    },
+  ],
 });
 
 //called before saving a user
@@ -59,5 +65,5 @@ userSchema.methods.isValidPassword = async function (password) {
   }
 };
 
-const User = models.users || model("users", userSchema);
+const User = models.Users || model("Users", userSchema);
 export default User;

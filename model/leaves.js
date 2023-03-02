@@ -34,9 +34,10 @@ const LeaveSchema = new Schema({
     type: Date,
     default: () => Date.now(),
   },
-  employees: {
+
+  user: {
     type: mongoose.SchemaTypes.ObjectId,
-    ref: "Employees",
+    ref: "Users",
   },
 
   //  extraInformation: String,

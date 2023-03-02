@@ -81,6 +81,10 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
     onMedication,
   } = data;
 
+  const exitHandler = () => {
+    console.log("Clicked me");
+  };
+
   const handleUpdateEmployeeData = async (e) => {
     e.preventDefault();
     //overiding the data value with our form data
@@ -488,7 +492,9 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
           <Button colorScheme="yellow" onClick={handleUpdateEmployeeData}>
             Update
           </Button>
-          <Button colorScheme="red">Exit</Button>
+          <Button colorScheme="red" onClick={exitHandler}>
+            Exit
+          </Button>
         </Stack>
       </Stack>
     </Layout>

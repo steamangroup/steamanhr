@@ -16,7 +16,7 @@ export async function addLeave(req, res) {
       return res.status(200).json(data);
     });
   } catch (error) {
-    return res.status(404).send({ error: "Error posting data" });
+    return res.status(404).json({ error: "Error posting data" });
   }
 }
 
@@ -24,16 +24,14 @@ export async function addLeave(req, res) {
 export async function getLeaves(req, res) {
   try {
     //accessing data of mongo db
-    const leaves = await Leaves.find({}).populate({
-      path: "employees",
-      select: ["fullName"],
-    });
+    const leaves = await Leaves.find({}).populate("user");
+
     if (!leaves) return res.status(404).send({ error: "Data not found" });
 
     //outputing users
-    res.status(200).json(leaves);
+    return res.status(200).json(leaves);
   } catch (error) {
-    res.status(404).send({ error: "Error feteching data" });
+    res.status(404).json({ error: "Error feteching data" });
   }
 }
 
@@ -44,11 +42,8 @@ export async function getLeave(req, res) {
     const { id } = req.query;
 
     if (id) {
-      const leave = await Leaves.findById(id).populate({
-        path: "employees",
-        select: ["fullName"],
-      });
-      res.status(200).json(leave);
+      const leave = await Leaves.findById(id).populate("user");
+      return res.status(200).json(leave);
     }
 
     res.status(404).json({ error: "Leave not selected" });
@@ -67,7 +62,7 @@ export async function updateLeave(req, res) {
     //checking if user id and form data is available and update it
     if (id && formData) {
       const leave = await Leaves.findByIdAndUpdate(id, formData);
-      res.status(200).json(leave);
+      return res.status(200).json(leave);
     }
     res.status(404).json({ error: "Error not selected" });
   } catch (error) {
@@ -92,25 +87,18 @@ export async function deleteLeave(req, res) {
 
 export async function getEmployeeLeaves(req, res) {
   try {
-    // const { empId } = req.params;
-    if (req.params.empId) {
-      req.params.empId = empId(req.params.empId);
-      const leave = await Leaves.findById(req.params.leaves);
-      leave.empId = req.params.empId;
-      leave.save();
-      return res.json(leave);
+    const { id } = req.query;
+    //find employee with work email matching the email provided
+    const user_leave = await Leaves.find({ user: id }).populate({
+      path: "user",
+      select: "firstname",
+    });
+    if (user_leave) {
+      res.status(200).json(user_leave);
+    } else {
+      return res.status(404).json("Could not get employee leave data");
+      //console.log("Could not get employee data");
     }
-    // if (empId) {
-    //empId = empId(empId);
-    // console.log("Employee Leave Id");
-    //console.log(empId);
-    //const leaves = await Leaves.findById(empId);
-    //leaves.empId = empId;
-    //leaves.save();
-    //res.json(leaves);
-    //return console.log(leaves);
-    //}
-    return res.status(404).json({ error: "Employee leave not selected....." });
   } catch (error) {
     res.status(404).json({ error: "Error retrieving employee leave" });
   }

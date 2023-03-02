@@ -14,7 +14,7 @@ export default function LeaveAction() {
     //dispatch(toggleChangeAction());
 
     console.log(visible);
-    router.push("leaves/add");
+    router.push("/leaves/add");
   };
 
   return (

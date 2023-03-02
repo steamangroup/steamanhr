@@ -8,43 +8,83 @@ import { CircularProgress } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
+import UsersPage from "../account";
 
 //const tab = [];
 
 export default function LeavePage() {
   const [element, setElement] = useState({});
+  const [user, setUser] = useState();
+  const [name, setName] = useState();
   const dispatch = useDispatch();
   const empId = useSelector((state) => state.app.client.employeeId);
-  console.log("Leave Page");
-  console.log(`Employee id ${empId}`);
+  // console.log("Leave Page");
+  //console.log(`Employee id ${empId}`);
+  //const userId = useSelector((state) => state.app.client.userId);
+
   //console.log(menu);
   const duration = useSelector((state) => state.app.client.leaveDuration);
   console.log(duration);
 
   useEffect(() => {
     if (data) {
-      data.forEach((element, i) => {
-        console.log("Use state here");
-        const { employees } = element;
+      console.log(data);
+      data.map(
+        (element, i) => {
+          //console.log(element);
+          console.log("This is the element");
+          const user = element.user;
+          if (user) {
+            const { firstname } = user;
+            // console.log(firstname);
+            // setUser(user);
+            setName(firstname);
+            Object.values(user).forEach(function (key) {
+              // console.log(key);
+              setUser(key);
 
-        setElement(employees);
+              console.log("We are live here oooo");
+              for (let i = 0; i < key.length; i++) {
+                const dat = key;
 
-        data.forEach((element) => {
-          const [year, month, day] = element.startDate.split("-");
-          console.log(month);
-          console.log(day);
-          console.log(year);
-          const [y, m, d] = element.endDate.split("-");
-          console.log(month);
-          console.log(day);
-          console.log(year);
-          const days = d - day;
-          // console.log("The days");
-          //console.log(days);
+                console.log(dat);
+              }
+            });
 
-          dispatch(leaveDurationAction(days));
-        });
-      }, []);
+            // console.log(user);
+          }
+
+          if (user) {
+            //  console.log("Use state here");
+            //console.log(user.firstname);
+            //const { firstname, lastname } = user;
+            //const employee_name = `${firstname}` + " " + `${lastname}`;
+            //console.log("Employees name");
+            //setName(employee_name);
+            //console.log(employee_name);
+            //console.log("First data here");
+            //console.log(firstname);
+            //console.log(lastname);
+          }
+        },
+
+        //  data.forEach((element) => {
+        //  const [year, month, day] = element.startDate.split("-");
+        // console.log(month);
+        //console.log(day);
+        //console.log(year);
+        //const [y, m, d] = element.endDate.split("-");
+        //console.log(month);
+        //console.log(day);
+        //console.log(year);
+        //const days = d - day;
+        // console.log("The days");
+        //console.log(days);
+
+        //  dispatch(leaveDurationAction(days));
+        //});
+        []
+      );
     } else {
       console.log("Data not available");
     }
@@ -64,15 +104,10 @@ export default function LeavePage() {
     );
   if (isError) return <div>Got Error {error}</div>;
 
-  console.log("Leave information");
+  //console.log("Data here");
+  //console.log(data);
 
-  console.log("Function leave here");
-  console.log(duration);
-  //const { fullName } = ele;
-  console.log("Element is here");
-  const { fullName } = element;
-  console.log(element);
-  console.log(fullName);
+  //const { firstname } = user[1];
   return (
     <Layout navHeading="Leave">
       <LeaveTable>
@@ -80,7 +115,7 @@ export default function LeavePage() {
           <LeaveTable.Row
             key={i}
             _id={leaveData._id}
-            employee={fullName}
+            employee={name}
             leaveType={leaveData.leaveType}
             //leaveTypeColor=""
             leaveStatus={leaveData.leaveStatus}

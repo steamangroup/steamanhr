@@ -14,14 +14,11 @@ export async function createUser(req, res) {
     const user = new User(result);
     const savedUser = await user.save();
     console.log("User data here");
-    //res.status(200).json(savedUser);
-    // res.status(200).json({ name: "Data saved" });
-    //res.send(savedUser);
 
     const accessToken = await signAcessToken(savedUser.id);
 
     //console.log(`Access token is ${accessToken}`);
-    res.status(200).json({
+    return res.status(200).json({
       accessToken,
       _id: savedUser.id,
       email: savedUser.email,
@@ -32,7 +29,7 @@ export async function createUser(req, res) {
   } catch (error) {
     if (error.isJoi === true) error.status = 422;
     const { message } = error;
-    res.status(404).send(error);
+    res.status(404).json(error);
   }
 }
 
@@ -64,7 +61,7 @@ export async function loginUser(req, res) {
 
     //res.send(result);
   } catch (error) {
-    res.status(404).send({ status: "Error logging in " });
+    res.status(404).json({ status: "Error logging in " });
   }
 }
 
@@ -76,9 +73,9 @@ export async function getUsers(req, res) {
     if (!users) return res.status(404).send({ error: "Data not found" });
 
     //outputing users
-    res.status(200).json(users);
+    return res.status(200).json(users);
   } catch (error) {
-    res.status(404).send({ error: "Eror feteching data" });
+    res.status(404).json({ error: "Eror feteching data" });
   }
 }
 //get: http://localhost:3000/api/auth/id
@@ -89,10 +86,10 @@ export async function getUser(req, res) {
 
     if (userId) {
       const user = await User.findById(userId);
-      res.status(200).json(user);
+      return res.status(200).json(user);
     }
 
-    res.status(404).json({ error: "User not selected" });
+    return res.status(404).json({ error: "User not selected" });
   } catch (error) {
     res.status(404).json({ error: "Cannot get the user" });
   }
@@ -104,41 +101,12 @@ export async function getEmployeeData(req, res) {
     //find employee with work email matching the email provided
     const user = await Employees.findOne({ workEmail: email });
     if (user) {
-      res.status(200).json(user);
+      return res.status(200).json(user);
     } else {
-      res.status(404).json("Could not get employee data");
+      return res.status(404).json("Could not get employee data");
       //console.log("Could not get employee data");
     }
   } catch (error) {
     console.log(error);
   }
 }
-/****export default async function userLogin(req, res) {
-    try {
-      const {email, password}= req.body
-      if(!email || !password) return res.json({status:"User doesn't exist"})
-      const user = await User.findOne({email, password})
-      if(!user){
-        return res.json({status:'User not found'})
-      }
-      else{
-        res.redirect('/home')
-      }
-    } catch (error) {
-     
-    }
-  //}
-  
-export default async function getUsers(req, res) {
-    try {
-      const user = await User.create(req.body);
-      res.redirect("/");
-      if (!user) {
-        return res.json({ code: "User not created" });
-      }
-    } catch (error) {
-      res.json(400).json({ status: "Not able to create a new user" });
-    }
-  
-}
-**/

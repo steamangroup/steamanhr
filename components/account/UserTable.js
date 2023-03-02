@@ -27,20 +27,21 @@ UserAccountTable.Heading = function () {
   return (
     <Flex
       sx={{
-        px: "0.75rem",
-        //py: "0.1rem",
+        p: "0.5rem",
+
         color: "gray",
         gap: "0.1rem",
         fontSize: "0.75rem",
+        bg: "#e0f1ea",
       }}
     >
       <Box flex={0.2}></Box>
-      <Box flex={0.5}>
+      <Box flex={0.7}>
         <Text fontSize={14} fontWeight="400">
           First name
         </Text>
       </Box>
-      <Box flex={1}>
+      <Box flex={0.7}>
         <Text fontSize={14} fontWeight="400" textAlign="center">
           Last name
         </Text>
@@ -56,7 +57,7 @@ UserAccountTable.Heading = function () {
         </Text>
       </Box>
 
-      <Box flex={1}>
+      <Box flex={0.7}>
         <Text fontSize={14} fontWeight="400" textAlign="center">
           Actions
         </Text>
@@ -74,6 +75,13 @@ UserAccountTable.Row = function ({ firstName, lastName, workEmail, role }) {
         gap: "0.625rem",
         borderTopWidth: "1px",
         fontSize: "0.875rem",
+        bg: "#fbfdfd",
+        //
+        _hover: {
+          bg: "#e0f1ea",
+
+          cursor: "pointer",
+        },
       }}
     >
       <Flex>
@@ -89,7 +97,7 @@ UserAccountTable.Row = function ({ firstName, lastName, workEmail, role }) {
       </Flex>
 
       <Flex flex={2}>
-        <Text whiteSpace="nowrap" fontSize={14} textAlign="center">
+        <Text whiteSpace="nowrap" fontSize={14}>
           {firstName}
         </Text>
       </Flex>

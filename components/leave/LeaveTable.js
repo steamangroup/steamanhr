@@ -51,45 +51,47 @@ LeaveTable.Heading = function () {
   return (
     <Flex
       sx={{
-        px: "0.75rem",
-        py: "0.125rem",
+        p: "0.5rem",
+        //px: "0.75rem",
+        //py: "0.2rem",
         color: "gray",
         gap: "0.625rem",
         fontSize: "0.75rem",
+        bg: "#e0f1ea",
       }}
     >
       <Box flex={2}>
-        <Text fontSize={15} fontWeight="bold" color="black">
+        <Text fontSize={15} fontWeight="400">
           Employee
         </Text>
       </Box>
       <Box flex={2}>
-        <Text fontSize={15} fontWeight="bold" color="black">
+        <Text fontSize={15} fontWeight="400">
           Leave Type
         </Text>
       </Box>
       <Box flex={2}>
-        <Text fontSize={15} fontWeight="bold" color="black">
+        <Text fontSize={15} fontWeight="400">
           Leave Status
         </Text>
       </Box>
       <Box flex={2}>
-        <Text fontSize={15} fontWeight="bold" color="black">
+        <Text fontSize={15} fontWeight="400">
           Start Date
         </Text>
       </Box>
       <Box flex={2}>
-        <Text fontSize={15} fontWeight="bold" color="black">
+        <Text fontSize={15} fontWeight="400">
           End Date
         </Text>
       </Box>
       <Box flex={1.5}>
-        <Text fontSize={15} fontWeight="bold" color="black">
+        <Text fontSize={15} fontWeight="400">
           Duration
         </Text>
       </Box>
       <Box flex={2}>
-        <Text fontSize={15} fontWeight="bold" color="black">
+        <Text fontSize={15} fontWeight="400">
           Actions
         </Text>
       </Box>
@@ -177,6 +179,12 @@ LeaveTable.Row = function ({
         gap: "0.625rem",
         borderTopWidth: "1px",
         fontSize: "0.875rem",
+
+        bg: "#fbfdfd",
+        _hover: {
+          bg: "#e0f1ea",
+          cursor: "pointer",
+        },
       }}
     >
       <Flex flex={1.2}>
@@ -187,7 +195,7 @@ LeaveTable.Row = function ({
       </Flex>
       <Flex
         //textAlign="center"
-        flex={0.5}
+        flex={0.3}
         mr={10}
         //whiteSpace="nowrap"
         color="white"

@@ -46,7 +46,7 @@ export default function EmployeeTable({ children }) {
           borderWidth: "1px",
           borderRadius: "0.375rem",
           alignItems: "stretch",
-          mt: "1rem",
+          mt: "0.7rem",
         }}
       >
         <EmployeeTable.Heading />
@@ -60,46 +60,48 @@ EmployeeTable.Heading = function () {
   return (
     <Flex
       sx={{
-        px: "0.75rem",
-        //py: "0.1rem",
+        p: "0.5rem",
+        // px: "0.75rem",
+        //py: "0.5rem",
         color: "gray",
         gap: "0.1rem",
         fontSize: "0.75rem",
+        bg: "#e0f1ea",
       }}
     >
       <Box flex={1}></Box>
-      <Box flex={6}>
-        <Text fontSize={14} fontWeight="400">
+      <Box flex={4.7}>
+        <Text fontSize={15} fontWeight="400">
           Full name
         </Text>
       </Box>
-      <Box flex={5}>
-        <Text fontSize={14} fontWeight="400">
+      <Box flex={4}>
+        <Text fontSize={15} fontWeight="400">
           Employee Type
         </Text>
       </Box>
-      <Box flex={6}>
-        <Text fontSize={14} fontWeight="400">
+      <Box flex={4}>
+        <Text fontSize={15} fontWeight="400">
           Work Email
         </Text>
       </Box>
       <Box flex={5}>
-        <Text fontSize={14} fontWeight="400">
-          employment Status
+        <Text fontSize={15} fontWeight="400">
+          Employment Status
         </Text>
       </Box>
-      <Box flex={4}>
-        <Text fontSize={14} fontWeight="400">
+      <Box flex={3}>
+        <Text fontSize={15} fontWeight="400">
           Phone
         </Text>
       </Box>
       <Box flex={6}>
-        <Text fontSize={14} fontWeight="400">
+        <Text fontSize={15} fontWeight="400">
           Business Unit
         </Text>
       </Box>
       <Box flex={2}>
-        <Text fontSize={14} fontWeight="400">
+        <Text fontSize={15} fontWeight="400">
           Actions
         </Text>
       </Box>
@@ -189,7 +191,16 @@ EmployeeTable.Row = function ({
         gap: "0.625rem",
         borderTopWidth: "1px",
         fontSize: "0.875rem",
+        bg: "#fbfdfd",
+        //
+        _hover: {
+          //bg: "#f8fcfa",
+          bg: "#e0f1ea",
+
+          cursor: "pointer",
+        },
       }}
+      // onClick={viewEmployeeRecord}
     >
       <Flex>
         <Avatar
@@ -203,16 +214,16 @@ EmployeeTable.Row = function ({
         <Text>{_id}</Text>*/}
       </Flex>
 
-      <Flex flex={3.5}>
+      <Flex flex={2.5}>
         <Text whiteSpace="nowrap" fontSize={14}>
           {fullName}
         </Text>
       </Flex>
-      <Box fontSize={13} flex={2}>
+      <Box fontSize={13} flex={1.5}>
         <Text>{employmentType}</Text>
       </Box>
 
-      <Box flex={4} whiteSpace="nowrap" fontSize={14}>
+      <Box flex={3} whiteSpace="nowrap" fontSize={14}>
         <Text>{workEmail}</Text>
       </Box>
       <Box flex={1} mx={5}>
@@ -227,10 +238,10 @@ EmployeeTable.Row = function ({
         </Text>
       </Box>
 
-      <Box flex={3} whiteSpace="nowrap" textAlign="center" fontSize={14}>
+      <Box flex={2} whiteSpace="nowrap" fontSize={14}>
         <Text>{contactNumber}</Text>
       </Box>
-      <Box flex={4} whiteSpace="nowrap" fontSize={14}>
+      <Box flex={3} whiteSpace="nowrap" fontSize={14}>
         <Text>{businessUnit}</Text>
       </Box>
       <Flex flex={1} gap={5}>

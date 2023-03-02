@@ -563,6 +563,9 @@ function AddEmployeeForm({ formData, setFormData }) {
               bg: "red.600",
             }}
             color="white"
+            onClick={() => {
+              router.push("/user/[username]");
+            }}
           >
             Exit
           </Button>

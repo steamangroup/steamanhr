@@ -51,13 +51,6 @@ const EmployeeSchema = new Schema({
     default: () => Date.now(),
   },
 
-  leave: [
-    {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: "Leaves",
-    },
-  ],
-
   //  extraInformation: String,
 });
 
