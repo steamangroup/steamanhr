@@ -14,6 +14,11 @@ import {
   userEmail,
 } from "@/redux/reducer";
 import Cookies from "js-cookie";
+import {
+  getApprovedLeaves,
+  getPendingLeaves,
+  getRejectedLeaves,
+} from "@/lib/helper/leave";
 
 export default function DashboardPage() {
   const dispatch = useDispatch();
@@ -73,20 +78,37 @@ export default function DashboardPage() {
     Cookies.set("userId", userId ? userId : undefined);
   }, []);
 
-  const { isLoading, isError, data, error, status } = useQuery(
-    ["users", userId],
-    () => getUser(userId)
+  const { isLoading, isError, data } = useQuery(["users", userId], () =>
+    getUser(userId)
   );
-  // const {
-  // isLoading: Loading,
-  //isError: Error,
-  //data: emp_data,
-  //} = useQuery(["users", user_email], () => getEmployeeData(user_email));
+
+  const {
+    isLoading: approveLoading,
+    isError: approveError,
+    data: approved_leave_data,
+  } = useQuery(["leaves", userId], () => getApprovedLeaves(userId));
+
+  const {
+    isLoading: pendingLoading,
+    isError: pendingError,
+    data: pending_leave_data,
+  } = useQuery(["leaves", userId], () => getPendingLeaves);
+
+  const {
+    isLoading: rejectLoading,
+    isError: rejectError,
+    data: rejected_leave_data,
+  } = useQuery(["leaves", userId], () => getRejectedLeaves(userId));
 
   if (isLoading) return <div>Loading...........</div>;
   if (isError) return <div>Erorr............</div>;
-  //if (Loading) return <div>Loading...........</div>;
-  // if (Error) return <div>Erorr............</div>;
+  if (pendingLoading) return <div>Loading...........</div>;
+  if (pendingError) return <div>Erorr............</div>;
+  if (rejectLoading) return <div>Loading...........</div>;
+  if (rejectError) return <div>Erorr............</div>;
+  if (approveLoading) return <div>Loading............</div>;
+
+  if (approveError) return <div>Erorr............</div>;
 
   //const email = data.email;
 
@@ -120,6 +142,11 @@ export default function DashboardPage() {
   console.log(job);
   console.log(business);
 
+  console.log("Leave statuses");
+  console.log(pending_leave_data);
+  console.log(approved_leave_data);
+  console.log(rejected_leave_data);
+
   return (
     <Layout navHeading="Your profile">
       <VStack spacing="2.5rem" alignItems="stretch">
@@ -127,11 +154,12 @@ export default function DashboardPage() {
           fullName={username === "undefined" ? null : username}
           workEmail={data.email}
           jobTitle={job === "undefined" ? null : job}
-          businessUnit={business}
+          businessUnit={business === "undefined" ? null : business}
         />
         <LeaveOverView
-          pendingLeaveTime={0}
-          approvedLeaveTime={0}
+          pendingLeaveTime={pending_leave_data}
+          approvedLeaveTime={approved_leave_data}
+          rejectedLeaveTime={rejected_leave_data}
           remainingLeaveTime={20}
           totalLeaveTime={20}
         />

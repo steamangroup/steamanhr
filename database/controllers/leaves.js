@@ -88,7 +88,7 @@ export async function deleteLeave(req, res) {
 export async function getEmployeeLeaves(req, res) {
   try {
     const { id } = req.query;
-    //find employee with work email matching the email provided
+    //find employee with id matching the email provided
     const user_leave = await Leaves.find({ user: id }).populate({
       path: "user",
       select: "firstname",
@@ -101,5 +101,65 @@ export async function getEmployeeLeaves(req, res) {
     }
   } catch (error) {
     res.status(404).json({ error: "Error retrieving employee leave" });
+  }
+}
+
+export async function getPendingLeaves(req, res) {
+  try {
+    const { id } = req.query;
+    //find employee with id matching the email provided
+    const pending_leaves = await Leaves.find({
+      user: id,
+      leaveStatus: "pending",
+    }).count();
+
+    if (pending_leaves) {
+      return res.status(200).json(pending_leaves);
+    } else {
+      return res.status(404).json("Could not get employee leave status data");
+      //console.log("Could not get employee data");
+    }
+  } catch (error) {
+    res.status(404).json({ error: "Error retrieving employee leave status" });
+  }
+}
+
+export async function getApprovedLeaves(req, res) {
+  try {
+    const { id } = req.query;
+
+    const approved_leaves = await Leaves.find({
+      user: id,
+      leaveStatus: "approve",
+    }).count();
+
+    if (approved_leaves) {
+      return res.status(200).json(approved_leaves);
+    } else {
+      return res.status(404).json("Could not get employee leave status data");
+      //console.log("Could not get employee data");
+    }
+  } catch (error) {
+    res.status(404).json({ error: "Error retrieving employee leave status" });
+  }
+}
+
+export async function getRejectedLeaves(req, res) {
+  try {
+    const { id } = req.query;
+    //find employee with id matching the email provided
+    const rejected_leaves = await Leaves.find({
+      user: id,
+      leaveStatus: "reject",
+    }).count();
+
+    if (rejected_leaves) {
+      return res.status(200).json(rejected_leaves);
+    } else {
+      return res.status(404).json("Could not get employee leave status data");
+      //console.log("Could not get employee data");
+    }
+  } catch (error) {
+    res.status(404).json({ error: "Error retrieving employee leave status" });
   }
 }

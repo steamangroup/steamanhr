@@ -13,6 +13,7 @@ import {
   Link,
   useToast,
   Flex,
+  Box,
 } from "@chakra-ui/react";
 
 import { useRouter } from "next/router";
@@ -106,39 +107,81 @@ export default function Login() {
   };
 
   return (
-    <Flex bg="#F5F5F5" minH="100vh">
+    <Flex bg="white" minH="100vh">
       <Center
         m="7% auto"
         h={400}
-        border="1px solid #dddd"
+        // w={100}
+        // border="1px solid #dddd"
         borderRadius={10}
         px={10}
-        bg="white"
+        //bg="white"
       >
         <VStack pb={10}>
           <Image src="/hr_logo.png" boxSize="150px" objectFit="contain" />
+
           <FormControl>
-            <FormLabel>Email</FormLabel>
+            <FormLabel>
+              Email{" "}
+              <span
+                style={{
+                  color: "red",
+                }}
+              >
+                *
+              </span>
+            </FormLabel>
             <Input
               type="email"
-              width={320}
+              width={420}
+              h={50}
+              mb={7}
               onChange={handleChange}
               //placeholder="admin@steamangroup.com"
               name="email"
               value={userData.email}
+              bg="#F5F5F5"
+              placeholder="Enter work email"
             />
-            <FormLabel>Password</FormLabel>
+            <FormLabel>
+              Password{" "}
+              <span
+                style={{
+                  color: "red",
+                }}
+              >
+                *
+              </span>
+            </FormLabel>
             <Input
               type="password"
               onChange={handleChange}
               value={userData.password}
               name="password"
+              width={420}
+              h={50}
+              bg="#F5F5F5"
+              mb={7}
+              placeholder="Enter password"
             />
           </FormControl>
-          <Button bg="#0b665c" color="white" width={320} onClick={handleSubmit}>
-            Login
-          </Button>
-          <Link href="/auth/register">New user ?Sign up</Link>
+          <Flex flexDirection="column" gap={5}>
+            <Button
+              bg="#0b665c"
+              color="white"
+              width={420}
+              h={50}
+              onClick={handleSubmit}
+              _hover={{
+                bg: "#0b665c",
+              }}
+            >
+              Login to steamanHR
+            </Button>
+            <Link href="/auth/register" textAlign="center">
+              New user ? Sign up
+            </Link>
+          </Flex>
         </VStack>
       </Center>
     </Flex>

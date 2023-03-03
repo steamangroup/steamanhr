@@ -63,45 +63,46 @@ EmployeeTable.Heading = function () {
         p: "0.5rem",
         // px: "0.75rem",
         //py: "0.5rem",
-        color: "gray",
+        color: "white",
         gap: "0.1rem",
         fontSize: "0.75rem",
-        bg: "#e0f1ea",
+        // bg: "#e0f1ea",
+        bg: "#419170",
       }}
     >
       <Box flex={1}></Box>
       <Box flex={4.7}>
-        <Text fontSize={15} fontWeight="400">
+        <Text fontSize={14} fontWeight="400">
           Full name
         </Text>
       </Box>
       <Box flex={4}>
-        <Text fontSize={15} fontWeight="400">
+        <Text fontSize={14} fontWeight="400">
           Employee Type
         </Text>
       </Box>
       <Box flex={4}>
-        <Text fontSize={15} fontWeight="400">
+        <Text fontSize={14} fontWeight="400">
           Work Email
         </Text>
       </Box>
-      <Box flex={5}>
-        <Text fontSize={15} fontWeight="400">
+      <Box flex={4}>
+        <Text fontSize={14} fontWeight="400">
           Employment Status
         </Text>
       </Box>
       <Box flex={3}>
-        <Text fontSize={15} fontWeight="400">
+        <Text fontSize={14} fontWeight="400">
           Phone
         </Text>
       </Box>
       <Box flex={6}>
-        <Text fontSize={15} fontWeight="400">
+        <Text fontSize={14} fontWeight="400">
           Business Unit
         </Text>
       </Box>
       <Box flex={2}>
-        <Text fontSize={15} fontWeight="400">
+        <Text fontSize={14} fontWeight="400">
           Actions
         </Text>
       </Box>
@@ -199,6 +200,9 @@ EmployeeTable.Row = function ({
 
           cursor: "pointer",
         },
+        "&:nth-child(even)": {
+          bg: "#eef7f3",
+        },
       }}
       // onClick={viewEmployeeRecord}
     >
@@ -238,7 +242,7 @@ EmployeeTable.Row = function ({
         </Text>
       </Box>
 
-      <Box flex={2} whiteSpace="nowrap" fontSize={14}>
+      <Box flex={2.5} whiteSpace="nowrap" textAlign="center" fontSize={14}>
         <Text>{contactNumber}</Text>
       </Box>
       <Box flex={3} whiteSpace="nowrap" fontSize={14}>

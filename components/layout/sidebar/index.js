@@ -28,13 +28,13 @@ export default function SideBar() {
   console.log("Mine role");
   console.log(role);
   return (
-    <VStack spacing={10} position="fixed">
+    <VStack spacing={5} position="fixed">
       <Box pb="1.875rem">
         <Logo />
       </Box>
       <VStack spacing={0} flex={1} alignItems="stretch">
         {role == "ADMIN" ? (
-          <VStack spacing={10} alignItems="start">
+          <VStack spacing={8} alignItems="start">
             <Text
               as={Link}
               _hover={linkHoverStyles}
@@ -62,6 +62,20 @@ export default function SideBar() {
               href="/employees"
             >
               Employees
+            </Text>
+            <Text
+              _hover={linkHoverStyles}
+              as={Link}
+              px="0.5rem"
+              py="0.385rem"
+              fontSize="0.875rem"
+              fontWeight="500"
+              borderRadius="0.25rem"
+              color="white"
+              cursor="default"
+              href="/account"
+            >
+              Users Account
             </Text>
             <Text
               as={Link}
@@ -92,6 +106,7 @@ export default function SideBar() {
             >
               Notifications
             </Text>
+
             <Text
               _hover={linkHoverStyles}
               as={Link}
@@ -104,7 +119,7 @@ export default function SideBar() {
               cursor="default"
               href="/account"
             >
-              Users
+              Assets
             </Text>
           </VStack>
         ) : (

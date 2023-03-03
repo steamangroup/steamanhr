@@ -8,6 +8,7 @@ import {
   CircularProgress,
   useToast,
   Tooltip,
+  Avatar,
 } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "react-query";
 import { deleteEmployee, getEmployees, getUsers } from "@/lib/helper/employee";
@@ -54,12 +55,13 @@ LeaveTable.Heading = function () {
         p: "0.5rem",
         //px: "0.75rem",
         //py: "0.2rem",
-        color: "gray",
+        color: "white",
         gap: "0.625rem",
         fontSize: "0.75rem",
-        bg: "#e0f1ea",
+        bg: "#419170",
       }}
     >
+      <Box flex={0.5}></Box>
       <Box flex={2}>
         <Text fontSize={15} fontWeight="400">
           Employee
@@ -90,7 +92,7 @@ LeaveTable.Heading = function () {
           Duration
         </Text>
       </Box>
-      <Box flex={2}>
+      <Box flex={1.8}>
         <Text fontSize={15} fontWeight="400">
           Actions
         </Text>
@@ -102,7 +104,7 @@ LeaveTable.Heading = function () {
 LeaveTable.Row = function ({
   employee,
   leaveType,
-
+  fullName,
   leaveStatus,
   startDate,
   endDate,
@@ -127,7 +129,7 @@ LeaveTable.Row = function ({
   const viewLeaveRecord = () => {
     //updating value of the state
     dispatch(toggleChangeAction(_id));
-    router.push("employees/view");
+    router.push("/employees/view");
 
     if (!visible) {
       dispatch(updateAction(_id));
@@ -137,7 +139,7 @@ LeaveTable.Row = function ({
   const OpenUpdateForm = () => {
     //updating value of the state
     dispatch(toggleChangeAction(_id));
-    router.push("leaves/add");
+    router.push("/leaves/add");
 
     if (visible) {
       dispatch(updateAction(_id));
@@ -179,14 +181,19 @@ LeaveTable.Row = function ({
         gap: "0.625rem",
         borderTopWidth: "1px",
         fontSize: "0.875rem",
-
         bg: "#fbfdfd",
         _hover: {
           bg: "#e0f1ea",
           cursor: "pointer",
         },
+        "&:nth-child(even)": {
+          bg: "#eef7f3",
+        },
       }}
     >
+      <Flex>
+        <Avatar size="sm" name={fullName} bg="lightgray" color="black" />
+      </Flex>
       <Flex flex={1.2}>
         <Text whiteSpace="nowrap">{employee}</Text>
       </Flex>
@@ -195,20 +202,26 @@ LeaveTable.Row = function ({
       </Flex>
       <Flex
         //textAlign="center"
-        flex={0.3}
-        mr={10}
+
+        // mr={10}
+        flex={1}
         //whiteSpace="nowrap"
-        color="white"
-        borderRadius={10}
-        bgColor={`${
-          leaveStatus === "approve"
-            ? "#5DBB63"
-            : leaveStatus === "pending"
-            ? "#ff6100"
-            : "red.500"
-        }`}
       >
-        <Text fontSize={13} whiteSpace="nowrap" px={4}>
+        <Text
+          fontSize={11}
+          color="white"
+          borderRadius={10}
+          bgColor={`${
+            leaveStatus === "approve"
+              ? "#5DBB63"
+              : leaveStatus === "pending"
+              ? "#ff6100"
+              : "red.500"
+          }`}
+          px={1}
+          textAlign="center"
+          height={5}
+        >
           {leaveStatus}
         </Text>
       </Flex>
@@ -222,7 +235,7 @@ LeaveTable.Row = function ({
         <Text>{leaveDuration}</Text>
       </Flex>
 
-      <Flex flex={1} gap={5}>
+      <Flex flex={1} gap={5} justifyContent="center">
         <Tooltip label="View record">
           <ExternalLinkIcon onClick={viewLeaveRecord} />
         </Tooltip>

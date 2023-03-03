@@ -86,7 +86,7 @@ function AddLeaveForm({ formData, setFormData }) {
       leaveReason: leaveReason,
       handingOverNotes: handingOverNotes,
       leaveStatus: leaveStatus ?? "pending",
-      employees: empId,
+      user: userId,
     };
 
     //adding new user ot db
@@ -102,11 +102,11 @@ function AddLeaveForm({ formData, setFormData }) {
         isClosable: true,
         position: "top-right",
       });
-    if (roles === "STAFF") {
-      router.push("/user/[username]");
-    } else {
-      router.push("/leaves");
-    }
+    // if (role === "STAFF") {
+    router.push("/user/[username]");
+    //} else {
+    // router.push("/leaves");
+    //}
   };
 
   const menu = userMenu.employees.tabs;
@@ -186,6 +186,7 @@ function AddLeaveForm({ formData, setFormData }) {
           >
             {role === "ADMIN" ? (
               <>
+                <option value="pending">Pending</option>
                 <option value="approve">Approve</option>
                 <option value="reject">Reject</option>
               </>

@@ -127,14 +127,14 @@ export default function Register() {
   };
 
   return (
-    <Flex maxH="100vh" bg="#F5F5F5">
+    <Flex maxH="100vh" bg="white">
       <Center
         m="7% auto"
         h={500}
-        border="1px solid #dddd"
+        //border="1px solid #dddd"
         borderRadius={10}
         px={10}
-        bg="white"
+        //bg="white"
       >
         <VStack pb={10} mb={5}>
           <Image src="/hr_logo.png" boxSize="150px" objectFit="contain" />
@@ -142,57 +142,123 @@ export default function Register() {
           <FormControl>
             <HStack>
               <VStack>
-                <FormLabel alignSelf="start">First name</FormLabel>
+                <FormLabel alignSelf="start">
+                  First name
+                  <span
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    *
+                  </span>
+                </FormLabel>
                 <Input
                   type="text"
-                  width={200}
+                  width={250}
                   onChange={handleChange}
                   //placeholder="admin@steamangroup.com"
                   name="firstname"
                   value={userData.firstname}
+                  bg="#F5F5F5"
+                  h={45}
+                  placeholder="Enter first name"
                 />
               </VStack>
               <VStack>
-                <FormLabel alignSelf="start">Last name</FormLabel>
+                <FormLabel alignSelf="start">
+                  Last name{" "}
+                  <span
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    *
+                  </span>
+                </FormLabel>
                 <Input
                   type="text"
-                  width={200}
+                  width={250}
                   onChange={handleChange}
                   //placeholder="admin@steamangroup.com"
                   name="lastname"
                   value={userData.lastname}
+                  bg="#F5F5F5"
+                  h={45}
+                  placeholder="Enter last name"
                 />
               </VStack>
             </HStack>
-            <FormLabel>Email</FormLabel>
+            <FormLabel mt={5}>
+              Email{" "}
+              <span
+                style={{
+                  color: "red",
+                }}
+              >
+                *
+              </span>
+            </FormLabel>
             <Input
               type="email"
-              width={400}
+              width={500}
               onChange={handleChange}
               //placeholder="admin@steamangroup.com"
               name="email"
               value={userData.email}
+              bg="#F5F5F5"
+              h={45}
+              mb={5}
+              placeholder="Enter work email"
             />
-            <FormLabel>Password</FormLabel>
+            <FormLabel>
+              Password{" "}
+              <span
+                style={{
+                  color: "red",
+                }}
+              >
+                *
+              </span>
+            </FormLabel>
             <Input
               type="password"
               onChange={handleChange}
               value={userData.password}
               name="password"
+              bg="#F5F5F5"
+              h={45}
+              mb={5}
+              placeholder="Enter password"
             />
-            <FormLabel>Confirm Password</FormLabel>
+            <FormLabel>
+              Confirm Password{" "}
+              <span
+                style={{
+                  color: "red",
+                }}
+              >
+                *
+              </span>
+            </FormLabel>
             <Input
               type="password"
               onChange={handleChange}
               value={userData.confirmPassword}
               name="confirmPassword"
+              bg="#F5F5F5"
+              h={45}
+              placeholder="Enter confirmed password"
             />
-            <VStack mt={5}>
+            <VStack mt={5} spacing={3}>
               <Button
                 bg="#0b665c"
-                width={400}
+                width={500}
                 onClick={handleSubmit}
                 color="white"
+                h={45}
+                _hover={{
+                  bg: "#0b665c",
+                }}
               >
                 Sign up
               </Button>

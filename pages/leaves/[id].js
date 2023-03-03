@@ -52,17 +52,19 @@ export default function EmployeeLeavePage() {
     );
   if (isError) return <div>Got Error {error}</div>;
 
-  console.log("Leave individual  information");
-  console.log(data);
-  console.log("Attributes here ");
-  console.log(leaveType);
-  console.log(leaveStatus);
-  console.log(startDate);
-  console.log(endDate);
-  console.log(user);
-  console.log(name);
-
-  //const { firstname } = user;
+  function getLeaveDuration(date1, date2) {
+    let start = new Date(date1);
+    let end = new Date(date2);
+    console.log("Leave information here ooooo");
+    console.log(start);
+    console.log(end);
+    let diff = Math.abs(end - start);
+    let days = diff / (1000 * 3600 * 24);
+    const duration = `${days} days`;
+    //console.log(start, end);
+    console.log(duration);
+    return duration;
+  }
 
   return (
     <Layout navHeading="Leaves">
@@ -71,11 +73,14 @@ export default function EmployeeLeavePage() {
           <LeaveTable.Row
             key={i}
             employee={name}
-            leaveType={leaveType}
-            leaveStatus={leaveStatus}
-            startDate={startDate}
-            endDate={endDate}
-            leaveDuration="3 days"
+            leaveType={leaveData.leaveType}
+            leaveStatus={leaveData.leaveStatus}
+            startDate={leaveData.startDate}
+            endDate={leaveData.endDate}
+            leaveDuration={getLeaveDuration(
+              leaveData.startDate,
+              leaveData.endDate
+            )}
           />
         ))}
       </LeaveTable>

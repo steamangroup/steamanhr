@@ -29,10 +29,10 @@ UserAccountTable.Heading = function () {
       sx={{
         p: "0.5rem",
 
-        color: "gray",
+        color: "white",
         gap: "0.1rem",
         fontSize: "0.75rem",
-        bg: "#e0f1ea",
+        bg: "#419170",
       }}
     >
       <Box flex={0.2}></Box>
@@ -82,6 +82,9 @@ UserAccountTable.Row = function ({ firstName, lastName, workEmail, role }) {
 
           cursor: "pointer",
         },
+        "&:nth-child(even)": {
+          bg: "#eef7f3",
+        },
       }}
     >
       <Flex>
@@ -110,7 +113,7 @@ UserAccountTable.Row = function ({ firstName, lastName, workEmail, role }) {
         <Text>{workEmail}</Text>
       </Box>
 
-      <Box flex={2} whiteSpace="nowrap" fontSize={14} textAlign="center">
+      <Box flex={2} whiteSpace="nowrap" fontSize={13} textAlign="center">
         <Text>{role}</Text>
       </Box>
 
