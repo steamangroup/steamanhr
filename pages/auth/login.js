@@ -123,6 +123,7 @@ export default function Login() {
             boxSize="150px"
             objectFit="contain"
             align=""
+            alt=""
           />
 
           <FormControl>
