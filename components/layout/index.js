@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import Footer from "./footer";
 import Head from "next/head";
 import SideBar from "./sidebar";
 import { Container, HStack, VStack, Box, Flex } from "@chakra-ui/react";
@@ -32,7 +31,6 @@ export default function Layout({
           <Container maxW="1200px" minH="100vh">
             {children}
           </Container>
-          {/***  <Footer />* */}
         </Box>
       </Flex>
     </Fragment>
