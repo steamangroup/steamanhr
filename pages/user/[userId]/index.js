@@ -25,10 +25,21 @@ import {
 import axios from "axios";
 
 export default function DashboardPage() {
+  /****
   const pending = "http://localhost:3000/api/leaves/status/pending/";
   const approved = "http://localhost:3000/api/leaves/status/approved/";
   const rejected = "http://localhost:3000/api/leaves/status/rejected/";
   const remaining = "http://localhost:3000/api/leaves/duration";
+  * */
+
+  const PENDING_API_URL =
+    "https://steamanhr.netlify.app/api/leaves/status/pending/";
+  const APPROVED_API_URL =
+    "https://steamanhr.netlify.app/api/leaves/status/approved/";
+  const REJECTED_API_URL =
+    "https://steamanhr.netlify.app/api/leaves/status/rejected/";
+  const REMAINING_DURATION_API_URL =
+    "https://steamanhr.netlify.app/api/leaves/duration";
 
   const dispatch = useDispatch();
   const [empData, setEmpData] = useState();
@@ -98,7 +109,7 @@ export default function DashboardPage() {
   useEffect(() => {
     if (userId) {
       axios
-        .get(`${pending}${userId}`, {
+        .get(`${PENDING_API_URL}${userId}`, {
           responseType: "json",
         })
         .then(function (res) {
@@ -117,7 +128,7 @@ export default function DashboardPage() {
     //approved api fetch
     if (userId) {
       axios
-        .get(`${approved}/${userId}`, {
+        .get(`${APPROVED_API_URL}/${userId}`, {
           responseType: "json",
         })
         .then(function (res) {
@@ -134,7 +145,7 @@ export default function DashboardPage() {
         });
       //rejected api fetch
       axios
-        .get(`${rejected}/${userId}`, {
+        .get(`${REJECTED_API_URL}/${userId}`, {
           responseType: "json",
         })
         .then(function (res) {
@@ -156,7 +167,7 @@ export default function DashboardPage() {
   //Remaining Leaves days fetch
   useEffect(() => {
     axios
-      .get(`${remaining}`, {
+      .get(`${REMAINING_DURATION_API_URL}`, {
         responseType: "json",
       })
       .then(function (res) {
