@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import {
   Stack,
   FormControl,
@@ -31,11 +31,7 @@ function UpdateLeaveForm({ formId, formData, setFormData }) {
   const toast = useToast();
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { isLoading, isError, data, error } = useQuery(["leaves", formId], () =>
-    getLeave(formId)
-  );
 
-  //updating our employee data
   const updateMutation = useMutation(
     (newData) => updateLeave(formId, newData),
     {
@@ -47,9 +43,33 @@ function UpdateLeaveForm({ formId, formData, setFormData }) {
       },
     }
   );
+
+  const { isLoading, isError, data, error } = useQuery(["leaves", formId], () =>
+    getLeave(formId)
+  );
+
+  //updating our employee data
+
   //console.log(formId);
   if (isLoading) return <div>Loading....</div>;
   if (isError) return <div>Error</div>;
+
+  //getting leave duration function
+  function getLeaveDuration(date1, date2) {
+    let start = new Date(date1);
+    let end = new Date(date2);
+    console.log("Leave information is here. Check out ");
+    console.log(start);
+    console.log(end);
+    let diff = Math.abs(end - start);
+    let days = diff / (1000 * 3600 * 24);
+
+    //const duration = `${days} days`;
+    console.log("This is the duration of the employee");
+    //console.log(days);
+    return days;
+  }
+
   const {
     leaveType,
     startDate,
@@ -58,12 +78,23 @@ function UpdateLeaveForm({ formId, formData, setFormData }) {
     handingOverNotes,
     leaveStatus,
   } = data;
+  const leaveDuration = getLeaveDuration(endDate, startDate);
+  console.log(leaveDuration);
+
+  // let model = {
+  //  leaveDuration: leaveDuration,
+  //};
+
+  //() => updateMutation.mutate(model);
+
   console.log("Leave data");
   console.log(data);
 
   const handleUpdateLeaveData = async (e) => {
     e.preventDefault();
+
     //overiding the data value with our form data
+
     let updated_data = Object.assign({}, data, formData);
     console.log("Updated data");
     console.log(updated_data);
@@ -160,8 +191,8 @@ function UpdateLeaveForm({ formId, formData, setFormData }) {
             //defaultValue={leaveStatus}
             placeholder={leaveStatus}
           >
-            <option value="approve">Approve</option>
-            <option value="reject">Reject</option>
+            <option value="approved">Approve</option>
+            <option value="rejected">Reject</option>
             <option value="pending">Pending</option>
           </Select>
         </FormControl>

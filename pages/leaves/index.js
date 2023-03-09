@@ -30,9 +30,9 @@ export default function LeavePage() {
       data.map(
         (element, i) => {
           //console.log(element);
-          console.log("This is the element");
+          //  console.log("This is the element");
           const user = element.user;
-          console.log(user);
+          //  console.log(user);
 
           if (user) {
             console.log("Data here");
@@ -43,12 +43,12 @@ export default function LeavePage() {
               const user = element.user;
 
               const firstname = user.firstname;
-              //setEmployee(firstname);
+              setEmployee(firstname);
               console.log(firstname);
 
-              console.log(element);
+              // console.log(element);
               const { startDate, endDate } = element;
-              console.log(startDate);
+              // console.log(startDate);
             }
           }
         },
@@ -73,28 +73,6 @@ export default function LeavePage() {
     );
   if (isError) return <div>Got Error {error}</div>;
 
-  function getLeaveDuration(date1, date2) {
-    let start = new Date(date1);
-    let end = new Date(date2);
-    console.log("Leave information here ooooo");
-    console.log(start);
-    console.log(end);
-    let diff = Math.abs(end - start);
-    let days = diff / (1000 * 3600 * 24);
-    const duration = `${days} days`;
-    //console.log(start, end);
-    console.log(duration);
-    return duration;
-  }
-
-  //const { firstname } = user[1];
-
-  //const leaveDuration = (date1, date2) => {
-  // return console.log(date1, date2);
-  //};
-
-  //leaveDuration(data.startDate, data.endDate);
-  //console.log(data);
   return (
     <Layout navHeading="Leave">
       <LeaveTable>
@@ -109,10 +87,7 @@ export default function LeavePage() {
             leaveStatus={leaveData.leaveStatus}
             startDate={leaveData.startDate}
             endDate={leaveData.endDate}
-            leaveDuration={getLeaveDuration(
-              leaveData.startDate,
-              leaveData.endDate
-            )}
+            leaveDuration={leaveData.leaveDuration}
           />
         ))}
       </LeaveTable>

@@ -1,7 +1,15 @@
 import { hrMenu, userMenu } from "@/components/config/navigation";
 import { getUser } from "@/lib/helper/user";
 import { roles } from "@/utils/constants";
-import { VStack, Box, Button, Text } from "@chakra-ui/react";
+import {
+  CalendarIcon,
+  ChatIcon,
+  EditIcon,
+  EmailIcon,
+  HamburgerIcon,
+  InfoOutlineIcon,
+} from "@chakra-ui/icons";
+import { VStack, Box, Button, Text, HStack } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 import { useQuery } from "react-query";
@@ -24,7 +32,7 @@ export default function SideBar() {
   if (isLoading) return <div>loading.......</div>;
   if (isError) return <div>Error.......</div>;
 
-  let { role } = data;
+  let { role, _id } = data;
   console.log("Mine role");
   console.log(role);
   return (
@@ -35,124 +43,167 @@ export default function SideBar() {
       <VStack spacing={0} flex={1} alignItems="stretch">
         {role == "ADMIN" ? (
           <VStack spacing={8} alignItems="start">
-            <Text
-              as={Link}
+            <HStack
               _hover={linkHoverStyles}
-              px="0.5rem"
+              px="0.7rem"
               py="0.385rem"
-              fontSize="0.875rem"
-              fontWeight="500"
               borderRadius="0.25rem"
-              color="white"
-              cursor="default"
-              href="/user/[username]"
+              spacing={4}
             >
-              Dashboard
-            </Text>
-            <Text
-              as={Link}
-              _hover={linkHoverStyles}
-              px="0.5rem"
-              py="0.385rem"
-              fontSize="0.875rem"
-              fontWeight="500"
-              borderRadius="0.25rem"
-              color="white"
-              cursor="default"
-              href="/employees"
-            >
-              Employees
-            </Text>
-            <Text
-              _hover={linkHoverStyles}
-              as={Link}
-              px="0.5rem"
-              py="0.385rem"
-              fontSize="0.875rem"
-              fontWeight="500"
-              borderRadius="0.25rem"
-              color="white"
-              cursor="default"
-              href="/account"
-            >
-              Users Account
-            </Text>
-            <Text
-              as={Link}
-              _hover={linkHoverStyles}
-              px="0.5rem"
-              py="0.385rem"
-              fontSize="0.875rem"
-              fontWeight="500"
-              borderRadius="0.25rem"
-              color="white"
-              cursor="default"
-              href="/leaves"
-            >
-              Leaves
-            </Text>
+              <HamburgerIcon color="white" />
+              <Text
+                as={Link}
+                fontSize="0.875rem"
+                fontWeight="500"
+                color="white"
+                cursor="default"
+                href="/user/[username]"
+              >
+                Dashboard
+              </Text>
+            </HStack>
 
-            <Text
-              as={Link}
+            <HStack
               _hover={linkHoverStyles}
-              px="0.5rem"
+              px="0.7rem"
               py="0.385rem"
-              fontSize="0.875rem"
-              fontWeight="500"
               borderRadius="0.25rem"
-              color="white"
-              cursor="default"
-              href="/notifications"
+              spacing={4}
             >
-              Notifications
-            </Text>
+              <ChatIcon color="white" />
+              <Text
+                as={Link}
+                fontSize="0.875rem"
+                fontWeight="500"
+                color="white"
+                cursor="default"
+                href="/employees"
+              >
+                Employees
+              </Text>
+            </HStack>
 
-            <Text
+            <HStack
               _hover={linkHoverStyles}
-              as={Link}
               px="0.5rem"
               py="0.385rem"
-              fontSize="0.875rem"
-              fontWeight="500"
               borderRadius="0.25rem"
-              color="white"
-              cursor="default"
-              href="/account"
+              spacing={4}
             >
-              Assets
-            </Text>
+              <InfoOutlineIcon color="white" />
+              <Text
+                as={Link}
+                fontSize="0.875rem"
+                fontWeight="500"
+                color="white"
+                cursor="default"
+                href="/account"
+              >
+                Users
+              </Text>
+            </HStack>
+
+            <HStack
+              _hover={linkHoverStyles}
+              px="0.5rem"
+              py="0.385rem"
+              borderRadius="0.25rem"
+              spacing={4}
+            >
+              <CalendarIcon color="white" />
+              <Text
+                as={Link}
+                fontSize="0.875rem"
+                fontWeight="500"
+                color="white"
+                cursor="default"
+                href="/leaves"
+              >
+                Leaves
+              </Text>
+            </HStack>
+
+            <HStack
+              _hover={linkHoverStyles}
+              px="0.5rem"
+              py="0.385rem"
+              borderRadius="0.25rem"
+              spacing={4}
+            >
+              <EmailIcon color="white" />
+              <Text
+                as={Link}
+                fontSize="0.875rem"
+                fontWeight="500"
+                color="white"
+                cursor="default"
+                href="/notifications"
+              >
+                Notifications
+              </Text>
+            </HStack>
+
+            <HStack
+              _hover={linkHoverStyles}
+              px="0.5rem"
+              py="0.385rem"
+              borderRadius="0.25rem"
+              spacing={4}
+            >
+              <EditIcon color="white" />
+              <Text
+                as={Link}
+                fontSize="0.875rem"
+                fontWeight="500"
+                color="white"
+                cursor="default"
+                href="/account"
+              >
+                Assets
+              </Text>
+            </HStack>
           </VStack>
         ) : (
           <VStack spacing={10} alignItems="start">
-            <Text
-              as={Link}
+            <HStack
               _hover={linkHoverStyles}
-              px="0.5rem"
+              px="0.7rem"
               py="0.385rem"
-              fontSize="0.875rem"
-              fontWeight="500"
               borderRadius="0.25rem"
-              color="white"
-              cursor="default"
-              href="/user/[username]"
+              spacing={4}
             >
-              Dashboard
-            </Text>
+              <HamburgerIcon color="white" />
+              <Text
+                as={Link}
+                fontSize="0.875rem"
+                fontWeight="500"
+                color="white"
+                cursor="default"
+                href="/user/[username]"
+              >
+                Dashboard
+              </Text>
+            </HStack>
 
-            <Text
-              as={Link}
+            <HStack
               _hover={linkHoverStyles}
               px="0.5rem"
               py="0.385rem"
-              fontSize="0.875rem"
-              fontWeight="500"
               borderRadius="0.25rem"
-              color="white"
-              cursor="default"
-              href="/notifications"
+              spacing={4}
             >
-              Notifications
-            </Text>
+              <EmailIcon color="white" />
+              <Text
+                as={Link}
+                fontSize="0.875rem"
+                fontWeight="500"
+                color="white"
+                cursor="default"
+                href="/notifications"
+              >
+                Notifications
+              </Text>
+            </HStack>
           </VStack>
         )}
       </VStack>

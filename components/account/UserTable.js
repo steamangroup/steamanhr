@@ -82,7 +82,7 @@ UserAccountTable.Row = function ({ firstName, lastName, workEmail, role }) {
 
           cursor: "pointer",
         },
-        "&:nth-child(even)": {
+        "&:nth-of-type(even)": {
           bg: "#eef7f3",
         },
       }}

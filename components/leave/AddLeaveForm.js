@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import {
   Stack,
   FormControl,
@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import { userMenu } from "@/components/config/navigation";
 import Layout from "@/components/layout";
 import { roles } from "@/utils/constants";
-import { addLeave } from "@/lib/helper/leave";
+import { addLeave, getLeavePeriod } from "@/lib/helper/leave";
 import { getUser } from "@/lib/helper/user";
 import { useSelector } from "react-redux";
 
@@ -23,19 +23,12 @@ function AddLeaveForm({ formData, setFormData }) {
   const toast = useToast();
   const router = useRouter();
   //const queryClient = useQueryClient();
-  // const [formData, setFormData] = useReducer(formReducer, {});
+  const [remainingLeaveDays, setRemainingLeaveDays] = useState(0);
+  const [disable, setDisable] = useState(false);
   const userId = useSelector((state) => state.app.client.userId);
   //console.log(`userId  ${userId}`);
   const empId = useSelector((state) => state.app.client.employeeId);
   console.log(`Employee Id in leave ${empId}`);
-
-  const { isLoading, isError, data, error } = useQuery(["users", userId], () =>
-    getUser(userId)
-  );
-  if (isLoading) return <div>Loading.......</div>;
-  if (isError) return <div>Loading.......</div>;
-
-  let { role } = data;
 
   const addMutation = useMutation(addLeave, {
     onSuccess: () => {
@@ -49,6 +42,60 @@ function AddLeaveForm({ formData, setFormData }) {
       });
     },
   });
+
+  useEffect(() => {
+    if (durationData) {
+      durationData.map((duration) => {
+        const { _id, total, remainingDays } = duration;
+        console.log(_id);
+        if (userId === _id) {
+          console.log("Leave duration data");
+          //setTotalLeaveDays(totalLeaveDays);
+          setRemainingLeaveDays(remainingDays);
+          console.log(total);
+          console.log(remainingDays);
+          if (remainingDays === 0 || remainingDays < 0) {
+            setDisable(true);
+          }
+        }
+        console.log(duration);
+        console.log("This is disbled button");
+        console.log(disable);
+      });
+    }
+  }, [remainingLeaveDays]);
+
+  const { isLoading, isError, data, error } = useQuery(["users", userId], () =>
+    getUser(userId)
+  );
+  const {
+    isLoading: durationLoading,
+    isError: durationError,
+    data: durationData,
+  } = useQuery("leaves", getLeavePeriod);
+
+  if (isLoading) return <div>Loading.......</div>;
+  if (isLoading) return <div>Loading.......</div>;
+  if (durationLoading) return <div>Loading.......</div>;
+  if (durationError) return <div>Error......</div>;
+
+  let { role, _id } = data;
+
+  //getting leave duration function
+  function getLeaveDuration(date1, date2) {
+    let start = new Date(date1);
+    let end = new Date(date2);
+    console.log("Leave information is here. Check out ");
+    console.log(start);
+    console.log(end);
+    let diff = Math.abs(end - start);
+    let days = diff / (1000 * 3600 * 24);
+
+    //const duration = `${days} days`;
+    console.log("This is the duration of the employee");
+    console.log(days);
+    return days;
+  }
 
   const handleAddLeave = (e) => {
     e.preventDefault();
@@ -75,9 +122,13 @@ function AddLeaveForm({ formData, setFormData }) {
     } = formData;
 
     console.log("Testing the data");
-    console.log(formData);
-    console.log(leaveType);
+    console.log(startDate);
+    console.log(endDate);
     console.log(leaveReason);
+
+    // console.log("This is the duration of the leave");
+    const leaveDuration = getLeaveDuration(endDate, startDate);
+    console.log(leaveDuration);
 
     const model = {
       leaveType: leaveType,
@@ -87,6 +138,7 @@ function AddLeaveForm({ formData, setFormData }) {
       handingOverNotes: handingOverNotes,
       leaveStatus: leaveStatus ?? "pending",
       user: userId,
+      leaveDuration: leaveDuration,
     };
 
     //adding new user ot db
@@ -102,14 +154,9 @@ function AddLeaveForm({ formData, setFormData }) {
         isClosable: true,
         position: "top-right",
       });
-    // if (role === "STAFF") {
-    router.push("/user/[username]");
-    //} else {
-    // router.push("/leaves");
-    //}
-  };
 
-  const menu = userMenu.employees.tabs;
+    router.push(`/leaves/${_id}`);
+  };
 
   return (
     <Layout navHeading="Leave Form">
@@ -187,8 +234,8 @@ function AddLeaveForm({ formData, setFormData }) {
             {role === "ADMIN" ? (
               <>
                 <option value="pending">Pending</option>
-                <option value="approve">Approve</option>
-                <option value="reject">Reject</option>
+                <option value="approved">Approve</option>
+                <option value="rejected">Reject</option>
               </>
             ) : (
               <option value="pending">Pending</option>
@@ -203,6 +250,7 @@ function AddLeaveForm({ formData, setFormData }) {
               bg: "green.600",
             }}
             onClick={handleAddLeave}
+            isDisabled={remainingLeaveDays < 0 ? true : false}
           >
             Save
           </Button>

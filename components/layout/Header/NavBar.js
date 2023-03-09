@@ -22,6 +22,7 @@ import {
   ModalCloseButton,
   useDisclosure,
   useToast,
+  Badge,
 } from "@chakra-ui/react";
 import { ChevronDownIcon, BellIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
@@ -48,6 +49,12 @@ export default function NavBar({ heading }) {
     <Flex
       sx={{
         justifyContent: "space-between",
+        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+        px: 10,
+        py: 4,
+        mt: "-1.5rem",
+        minW: "70vw",
+        borderRadius: 10,
       }}
     >
       {!!heading ? (
@@ -61,7 +68,25 @@ export default function NavBar({ heading }) {
           gap: 10,
         }}
       >
-        <BellIcon w={8} h={10} color="gray" onClick={onOpen} />
+        <Box>
+          <BellIcon
+            w={7}
+            h={9}
+            color="black"
+            onClick={onOpen}
+            cursor="pointer"
+          />
+          <Badge
+            m="-20px 0px 0px -15px"
+            bg="red.600"
+            color="white"
+            borderRadius={8}
+            fontSize={9}
+          >
+            0
+          </Badge>
+        </Box>
+
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
@@ -85,6 +110,12 @@ export default function NavBar({ heading }) {
             variant="outline"
             rightIcon={<ChevronDownIcon />}
           >
+            Hi{" "}
+            <span
+              style={{
+                marginLeft: "5px",
+              }}
+            ></span>
             {data.firstname}
           </MenuButton>
           <MenuList>
@@ -118,6 +149,7 @@ export default function NavBar({ heading }) {
             >
               Add Employee information
             </MenuItem>
+
             <MenuItem
               onClick={() => {
                 router.push(`/leaves/${data._id}`);

@@ -86,17 +86,17 @@ EmployeeTable.Heading = function () {
           Work Email
         </Text>
       </Box>
-      <Box flex={4}>
+      <Box flex={5}>
         <Text fontSize={14} fontWeight="400">
           Employment Status
         </Text>
       </Box>
-      <Box flex={3}>
+      <Box flex={4}>
         <Text fontSize={14} fontWeight="400">
           Phone
         </Text>
       </Box>
-      <Box flex={6}>
+      <Box flex={5.5}>
         <Text fontSize={14} fontWeight="400">
           Business Unit
         </Text>
@@ -200,7 +200,7 @@ EmployeeTable.Row = function ({
 
           cursor: "pointer",
         },
-        "&:nth-child(even)": {
+        "&:nth-of-type(even)": {
           bg: "#eef7f3",
         },
       }}

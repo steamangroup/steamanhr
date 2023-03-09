@@ -1,7 +1,7 @@
 //controllers
 import Leaves from "@/model/leaves";
 import mongoose from "mongoose";
-const empId = mongoose.Types.ObjectId;
+//const empId = mongoose.Types.ObjectId;
 
 //post: http://localhost:3000/api/users
 export async function addLeave(req, res) {
@@ -46,9 +46,9 @@ export async function getLeave(req, res) {
       return res.status(200).json(leave);
     }
 
-    res.status(404).json({ error: "Leave not selected" });
+    return res.status(404).json({ error: "Leave not selected" });
   } catch (error) {
-    res.status(404).json({ error: "Error while retrieving the leave" });
+    return res.status(404).json({ error: "Error while retrieving the leave" });
   }
 }
 
@@ -64,9 +64,11 @@ export async function updateLeave(req, res) {
       const leave = await Leaves.findByIdAndUpdate(id, formData);
       return res.status(200).json(leave);
     }
-    res.status(404).json({ error: "Error not selected" });
+    return res.status(404).json({ error: "Error not selected" });
   } catch (error) {
-    res.status(404).json({ error: "Error while updating the data....." });
+    return res
+      .status(404)
+      .json({ error: "Error while updating the data....." });
   }
 }
 
@@ -94,16 +96,17 @@ export async function getEmployeeLeaves(req, res) {
       select: "firstname",
     });
     if (user_leave) {
-      res.status(200).json(user_leave);
+      return res.status(200).json(user_leave);
     } else {
       return res.status(404).json("Could not get employee leave data");
       //console.log("Could not get employee data");
     }
   } catch (error) {
-    res.status(404).json({ error: "Error retrieving employee leave" });
+    return res.status(404).json({ error: "Error retrieving employee leave" });
   }
 }
 
+//leave status section
 export async function getPendingLeaves(req, res) {
   try {
     const { id } = req.query;
@@ -120,7 +123,9 @@ export async function getPendingLeaves(req, res) {
       //console.log("Could not get employee data");
     }
   } catch (error) {
-    res.status(404).json({ error: "Error retrieving employee leave status" });
+    return res
+      .status(404)
+      .json({ error: "Error retrieving employee leave status" });
   }
 }
 
@@ -130,7 +135,7 @@ export async function getApprovedLeaves(req, res) {
 
     const approved_leaves = await Leaves.find({
       user: id,
-      leaveStatus: "approve",
+      leaveStatus: "approved",
     }).count();
 
     if (approved_leaves) {
@@ -140,7 +145,9 @@ export async function getApprovedLeaves(req, res) {
       //console.log("Could not get employee data");
     }
   } catch (error) {
-    res.status(404).json({ error: "Error retrieving employee leave status" });
+    return res
+      .status(404)
+      .json({ error: "Error retrieving employee leave status" });
   }
 }
 
@@ -150,7 +157,7 @@ export async function getRejectedLeaves(req, res) {
     //find employee with id matching the email provided
     const rejected_leaves = await Leaves.find({
       user: id,
-      leaveStatus: "reject",
+      leaveStatus: "rejected",
     }).count();
 
     if (rejected_leaves) {
@@ -160,6 +167,42 @@ export async function getRejectedLeaves(req, res) {
       //console.log("Could not get employee data");
     }
   } catch (error) {
-    res.status(404).json({ error: "Error retrieving employee leave status" });
+    return res
+      .status(404)
+      .json({ error: "Error retrieving employee leave status" });
+  }
+}
+
+export async function getLeaveDuration(req, res) {
+  try {
+    const { id } = req.query;
+    //find employee with id matching the email provided
+
+    const leave_duration = await Leaves.aggregate([
+      //{ $match: { user: id } },
+      {
+        $group: {
+          _id: "$user",
+          total: { $sum: "$leaveDuration" },
+        },
+      },
+      {
+        $addFields: {
+          remainingDays: {
+            $subtract: [20, "$total"],
+          },
+        },
+      },
+    ]);
+
+    if (leave_duration) {
+      return res.status(200).json(leave_duration);
+    } else {
+      return res.status(404).json("Could not get employee leave duration");
+    }
+  } catch (error) {
+    return res
+      .status(404)
+      .json({ error: "Error retrieving employee leave duration" });
   }
 }

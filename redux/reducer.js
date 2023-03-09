@@ -10,8 +10,8 @@ const initialState = {
     deleteId: null,
     email: undefined,
     employeeId: Cookies.get("employeeId"),
-    business: undefined,
-    job: undefined,
+    business: Cookies.get("business"),
+    job: Cookies.get("job"),
     leaveDuration: undefined,
   },
 };
@@ -50,6 +50,12 @@ export const ReducerSlice = createSlice({
     leaveDurationAction: (state, action) => {
       state.client.leaveDuration = action.payload;
     },
+    remaingleaveDaysAction: (state, action) => {
+      state.client.remainingDays = action.payload;
+    },
+    // leaveDurationAction: (state, action) => {
+    // state.client.leaveDuration = action.payload;
+    //},
   },
 });
 
@@ -63,5 +69,6 @@ export const {
   BusinessUnitAction,
   jobTitleAction,
   leaveDurationAction,
+  remaingleaveDaysAction,
 } = ReducerSlice.actions;
 export default ReducerSlice.reducer;

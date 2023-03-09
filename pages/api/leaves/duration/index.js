@@ -1,5 +1,5 @@
 import connectMongo from "@/database/connect";
-import { getPendingLeaves } from "@/database/controllers/leaves";
+import { getLeaveDuration } from "@/database/controllers/leaves";
 
 export default async function handler(req, res) {
   //catching error in the database
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   const { method } = req;
   switch (method) {
     case "GET":
-      getPendingLeaves(req, res);
+      getLeaveDuration(req, res);
       break;
 
     default:

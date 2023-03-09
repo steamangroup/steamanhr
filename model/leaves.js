@@ -30,6 +30,7 @@ const LeaveSchema = new Schema({
     type: String,
     default: "pending",
   },
+
   createdAt: {
     type: Date,
     default: () => Date.now(),
@@ -38,6 +39,14 @@ const LeaveSchema = new Schema({
   user: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: "Users",
+  },
+  leaveDuration: {
+    type: Number,
+    default: 0,
+  },
+  totalLeaveDays: {
+    type: Number,
+    default: 20,
   },
 
   //  extraInformation: String,

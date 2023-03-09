@@ -186,7 +186,7 @@ LeaveTable.Row = function ({
           bg: "#e0f1ea",
           cursor: "pointer",
         },
-        "&:nth-child(even)": {
+        "&:nth-of-type(even)": {
           bg: "#eef7f3",
         },
       }}
@@ -212,10 +212,10 @@ LeaveTable.Row = function ({
           color="white"
           borderRadius={10}
           bgColor={`${
-            leaveStatus === "approve"
-              ? "#5DBB63"
+            leaveStatus === "approved"
+              ? "green.500"
               : leaveStatus === "pending"
-              ? "#ff6100"
+              ? "yellow.500"
               : "red.500"
           }`}
           px={1}
