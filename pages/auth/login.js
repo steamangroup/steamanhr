@@ -21,6 +21,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 const BASE_URL = "http://localhost:3000/";
+const NETLIFY_URL = "https://steamanhr.netlify.app/";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ export default function Login() {
         position: "top-right",
       });
     } else {
-      await fetch(`${BASE_URL}api/auth/login`, {
+      await fetch(`${NETLIFY_URL}api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
