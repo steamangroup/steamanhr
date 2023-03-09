@@ -64,27 +64,9 @@ export default function Register() {
         position: "top-right",
       });
     } else {
-      //let { email, password, confirmPassword } = userData;
-      //const model = {
-      //email: email,
-      //password: password,
-      //confirmPassword: confirmPassword,
-      //};
-      //addMutation.mutate(model);
-      //if (addMutation.isError) return <div>Error.......</div>;
-      //if (addMutation.isLoading) return <div>Loading.....</div>;
-      //if (addMutation.isSuccess) return;
-      //toast({
-      //title: "Success",
-      //description: "Account created successfully",
-      //status: "success",
-      //duration: 1200,
-      //isClosable: true,
-      //position: "top-right",
-      //});
-
       await fetch(`${NETLIFY_URL}api/auth/register`, {
         method: "POST",
+        mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
         },
