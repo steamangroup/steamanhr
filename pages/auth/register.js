@@ -66,7 +66,7 @@ export default function Register() {
     } else {
       await fetch(`${NETLIFY_URL}api/auth/register`, {
         method: "POST",
-        mode: "no-cors",
+        // mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
         },
