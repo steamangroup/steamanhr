@@ -23,6 +23,22 @@ export default function EmployeeProfile() {
   const userId = useSelector((state) => state.app.client.userId);
   console.log(`This emp ${userId}`);
 
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      const { email } = data;
+      getEmployeeData(email)
+        .then((infor) => {
+          console.log("Data");
+          setEmpInfor(infor);
+          console.log(infor);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [email]);
+
   const { isLoading, isError, data, error } = useQuery(["users", userId], () =>
     getUser(userId)
   );
@@ -31,18 +47,6 @@ export default function EmployeeProfile() {
   if (isError) return <div>Erorr............</div>;
   console.log(data);
   let username = `${data.firstname} ${data.lastname}`;
-  useEffect(() => {
-    console.log(data);
-    getEmployeeData(data.email)
-      .then((infor) => {
-        console.log("Data");
-        setEmpInfor(infor);
-        console.log(infor);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [data.email]);
   const email = data.email;
 
   const {

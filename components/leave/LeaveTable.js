@@ -126,7 +126,7 @@ LeaveTable.Row = function ({
   //executing action using dispatch
   const dispatch = useDispatch();
 
-  const viewLeaveRecord = () => {
+  const ViewLeaveRecord = () => {
     //updating value of the state
     dispatch(toggleChangeAction(_id));
     router.push("/employees/view");
@@ -146,7 +146,7 @@ LeaveTable.Row = function ({
     }
   };
 
-  const onDelete = () => {
+  const OnDelete = () => {
     //if form is not visible execute delete action
     //if (!visible) {
     dispatch(deleteAction(_id));
@@ -155,7 +155,7 @@ LeaveTable.Row = function ({
     //}
   };
   //Delete function
-  const handleDelete = async (e) => {
+  const HandleDelete = async (e) => {
     e.preventDefault();
     //console.log("delete");
     if (deleteId) {
@@ -247,7 +247,7 @@ LeaveTable.Row = function ({
           />
         </Tooltip>
 
-        <DeleteModal deletehandler={handleDelete} onDelete={onDelete} />
+        <DeleteModal deletehandler={HandleDelete} onDelete={OnDelete} />
       </Flex>
     </Flex>
   );

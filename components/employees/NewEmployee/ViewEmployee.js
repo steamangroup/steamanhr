@@ -25,6 +25,22 @@ export default function DashboardPage() {
   const [empInfor, setEmpInfor] = useState({});
   const userId = useSelector((state) => state.app.client.userId);
   console.log(`This emp ${userId}`);
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      const { email } = data;
+      getEmployeeData(email)
+        .then((infor) => {
+          console.log("Data");
+          setEmpInfor(infor);
+          console.log(infor);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [email]);
+  const email = data.email;
 
   const { isLoading, isError, data, error } = useQuery(["users", userId], () =>
     getUser(userId)
@@ -34,19 +50,6 @@ export default function DashboardPage() {
   if (isError) return <div>Erorr............</div>;
   console.log(data);
   let username = `${data.firstname} ${data.lastname}`;
-  useEffect(() => {
-    console.log(data);
-    getEmployeeData(data.email)
-      .then((infor) => {
-        console.log("Data");
-        setEmpInfor(infor);
-        console.log(infor);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [data.email]);
-  const email = data.email;
 
   const {
     title,
@@ -307,8 +310,8 @@ export default function DashboardPage() {
           <option value="Senior high school">Senior High School</option>
           <option value="Technical">Technical/ Vocational</option>
           <option value="Diploma">Diploma</option>
-          <option value="Bachelor degree">Bachelor's Degree</option>
-          <option value="Master degree">Master's Degree/ Postgraduate</option>
+          <option value="Bachelor degree">Bachelors Degree</option>
+          <option value="Master degree">Masters Degree/ Postgraduate</option>
           <option value="Other">Other</option>
         </Select>
       </FormControl>

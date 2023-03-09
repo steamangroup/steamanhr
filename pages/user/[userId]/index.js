@@ -76,7 +76,7 @@ export default function DashboardPage() {
       console.log("No data available");
     }
     //return () => console.log("Completed useEffect cycle..");
-  }, [user_email]);
+  }, [data, user_email, dispatch]);
 
   useEffect(() => {
     Cookies.set("userId", userId ? userId : undefined);
@@ -93,7 +93,7 @@ export default function DashboardPage() {
       console.log(businessUnit);
       console.log(jobTitle);
     }
-  }, [empData]);
+  }, [empData, business, job, userId, dispatch]);
 
   useEffect(() => {
     if (userId) {
@@ -195,7 +195,7 @@ export default function DashboardPage() {
       });
     }
     * */
-  }, []);
+  }, [userId]);
 
   const { isLoading, isError, data } = useQuery(["users", userId], () =>
     getUser(userId)

@@ -327,8 +327,8 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
             <option value="Senior high school">Senior High School</option>
             <option value="Technical">Technical/ Vocational</option>
             <option value="Diploma">Diploma</option>
-            <option value="Bachelor degree">Bachelor's Degree</option>
-            <option value="Master degree">Master's Degree/ Postgraduate</option>
+            <option value="Bachelor degree">Bachelors Degree</option>
+            <option value="Master degree">Masters Degree/ Postgraduate</option>
             <option value="Other">Other</option>
           </Select>
         </FormControl>

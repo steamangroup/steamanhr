@@ -135,7 +135,7 @@ EmployeeTable.Row = function ({
   //executing action using dispatch
   const dispatch = useDispatch();
 
-  const viewEmployeeRecord = () => {
+  const ViewEmployeeRecord = () => {
     //updating value of the state
     dispatch(toggleChangeAction(_id));
     router.push("employees/view");
@@ -155,7 +155,7 @@ EmployeeTable.Row = function ({
     }
   };
 
-  const onDelete = () => {
+  const OnDelete = () => {
     //if form is not visible execute delete action
     //if (!visible) {
     dispatch(deleteAction(_id));
@@ -165,7 +165,7 @@ EmployeeTable.Row = function ({
   };
 
   //Delete function
-  const handleDelete = async (e) => {
+  const HandleDelete = async (e) => {
     e.preventDefault();
     //console.log("delete");
     if (deleteId) {
@@ -250,7 +250,7 @@ EmployeeTable.Row = function ({
       </Box>
       <Flex flex={1} gap={5}>
         <Tooltip label="View record">
-          <ExternalLinkIcon onClick={viewEmployeeRecord} />
+          <ExternalLinkIcon onClick={ViewEmployeeRecord} />
         </Tooltip>
         <Tooltip label="update record">
           <EditIcon
@@ -260,7 +260,7 @@ EmployeeTable.Row = function ({
           />
         </Tooltip>
 
-        <DeleteModal deletehandler={handleDelete} onDelete={onDelete} />
+        <DeleteModal deletehandler={HandleDelete} onDelete={OnDelete} />
       </Flex>
     </Flex>
   );
