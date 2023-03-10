@@ -39,21 +39,16 @@ export default function SideBar() {
 
   if (isLoading)
     return (
-      <Layout>
-        <Center mt={200}>
-          <Spinner size="md" color="teal.300" />;
-        </Center>
-        ;
-      </Layout>
+      <Center margin="auto">
+        <Spinner size="md" color="teal.300" />;
+      </Center>
     );
 
   if (isError)
     return (
-      <Layout>
-        <Center mt={200}>
-          <Spinner size="md" color="red.300" />;
-        </Center>
-      </Layout>
+      <Center margin="auto">
+        <Spinner size="md" color="red.300" />;
+      </Center>
     );
 
   let { role, _id } = data;
