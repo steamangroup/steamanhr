@@ -20,6 +20,7 @@ import Link from "next/link";
 import React from "react";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
+import Layout from "..";
 import Logo from "./Logo";
 
 export default function SideBar() {
@@ -36,15 +37,23 @@ export default function SideBar() {
     () => getUser(userId)
   );
 
-  if (isLoading) return;
-  <Center mt={200}>
-    <Spinner size="md" color="teal.300" />;
-  </Center>;
+  if (isLoading)
+    return (
+      <Layout>
+        <Center mt={200}>
+          <Spinner size="md" color="teal.300" />;
+        </Center>
+        ;
+      </Layout>
+    );
+
   if (isError)
     return (
-      <Center mt={200}>
-        <Spinner size="md" color="red.300" />;
-      </Center>
+      <Layout>
+        <Center mt={200}>
+          <Spinner size="md" color="red.300" />;
+        </Center>
+      </Layout>
     );
 
   let { role, _id } = data;

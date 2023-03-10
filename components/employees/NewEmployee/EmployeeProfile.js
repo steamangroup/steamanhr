@@ -37,7 +37,7 @@ export default function EmployeeProfile() {
           console.log(error);
         });
     }
-  }, [email]);
+  }, []);
 
   const { isLoading, isError, data, error } = useQuery(["users", userId], () =>
     getUser(userId)
