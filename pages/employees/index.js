@@ -21,7 +21,7 @@ export default function EmployeePage() {
   if (isError) return <div>Got Error {error}</div>;
   console.log(data);
   return (
-    <Layout pageTabs={menu} navHeading="Employees">
+    <Layout navHeading="Employees">
       <EmployeeTable>
         {data.map((employeeData, i) => (
           <EmployeeTable.Row
