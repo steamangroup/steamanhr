@@ -125,6 +125,7 @@ UserAccountTable.Row = function ({ firstName, lastName, workEmail, role }) {
       </Box>
 
       <Flex flex={2} gap={5}>
+        {/****
         <Tooltip label="View record">
           <ExternalLinkIcon onClick={viewEmployeeRecord} />
         </Tooltip>
@@ -135,6 +136,7 @@ UserAccountTable.Row = function ({ firstName, lastName, workEmail, role }) {
             cursor="pointer"
           />
         </Tooltip>
+        * */}
         {/*****
         <DeleteModal deletehandler={handleDelete} onDelete={onDelete} />
       ** */}
