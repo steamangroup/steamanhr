@@ -9,6 +9,7 @@ import {
   useToast,
   Textarea,
   CircularProgress,
+  HStack,
 } from "@chakra-ui/react";
 import { useQueryClient, useMutation, useQuery } from "react-query";
 
@@ -176,30 +177,34 @@ function AddLeaveForm({ formData, setFormData }) {
           >
             <option value="annual">Annual Leave</option>
             <option value="casual">Casual Leave</option>
-            <option value="martenity">Maternity Leave</option>
+            <option value="martenity" disabled={true}>
+              Maternity Leave
+            </option>
             <option value="other">Other</option>
           </Select>
         </FormControl>
-        <FormControl>
-          <FormLabel>Leave Start date</FormLabel>
-          <Input
-            size="sm"
-            type="date"
-            isrequired="true"
-            name="startDate"
-            onChange={setFormData}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Leave End date</FormLabel>
-          <Input
-            size="sm"
-            type="date"
-            isrequired="true"
-            name="endDate"
-            onChange={setFormData}
-          />
-        </FormControl>
+        <HStack spacing={5}>
+          <FormControl>
+            <FormLabel>Leave Start date</FormLabel>
+            <Input
+              size="sm"
+              type="date"
+              isrequired="true"
+              name="startDate"
+              onChange={setFormData}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Leave End date</FormLabel>
+            <Input
+              size="sm"
+              type="date"
+              isrequired="true"
+              name="endDate"
+              onChange={setFormData}
+            />
+          </FormControl>
+        </HStack>
         <FormControl>
           <FormLabel>Leave Reason</FormLabel>
           <Textarea
