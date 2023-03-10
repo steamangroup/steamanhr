@@ -1,12 +1,4 @@
-import {
-  Flex,
-  VStack,
-  Box,
-  Text,
-  useToast,
-  Avatar,
-  Tooltip,
-} from "@chakra-ui/react";
+import { Flex, VStack, Box, Text, Avatar } from "@chakra-ui/react";
 
 import { useQuery, useQueryClient } from "react-query";
 
@@ -50,7 +42,7 @@ UserAccountTable.Heading = function () {
           First name
         </Text>
       </Box>
-      <Box flex={0.7}>
+      <Box flex={0.5}>
         <Text fontSize={14} fontWeight="400" textAlign="center">
           Last name
         </Text>
@@ -63,12 +55,6 @@ UserAccountTable.Heading = function () {
       <Box flex={1}>
         <Text fontSize={14} fontWeight="400" textAlign="center">
           Role
-        </Text>
-      </Box>
-
-      <Box flex={0.7}>
-        <Text fontSize={14} fontWeight="400" textAlign="center">
-          Actions
         </Text>
       </Box>
     </Flex>
@@ -120,27 +106,11 @@ UserAccountTable.Row = function ({ firstName, lastName, workEmail, role }) {
         <Text>{workEmail}</Text>
       </Box>
 
-      <Box flex={2} whiteSpace="nowrap" fontSize={13} textAlign="center">
+      <Box flex={2.5} whiteSpace="nowrap" fontSize={13} textAlign="center">
         <Text>{role}</Text>
       </Box>
 
-      <Flex flex={2} gap={5}>
-        {/****
-        <Tooltip label="View record">
-          <ExternalLinkIcon onClick={viewEmployeeRecord} />
-        </Tooltip>
-        <Tooltip label="update record">
-          <EditIcon
-            onClick={OpenUpdateForm}
-            color="blue.500"
-            cursor="pointer"
-          />
-        </Tooltip>
-        * */}
-        {/*****
-        <DeleteModal deletehandler={handleDelete} onDelete={onDelete} />
-      ** */}
-      </Flex>
+      <Flex flex={2} gap={5}></Flex>
     </Flex>
   );
 };

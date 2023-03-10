@@ -32,7 +32,7 @@ export default function UsersPage() {
         {data.map((userData, i) => (
           <UserAccountTable.Row
             key={i}
-            //id={userData._id}
+            id={userData._id}
             firstName={userData.firstname}
             lastName={userData.lastname}
             workEmail={userData.email}
