@@ -26,5 +26,20 @@ export default function UsersPage() {
   if (isError) return <div>Got Error {error}</div>;
   console.log("Hii User account data");
   console.log(data);
-  return <Layout navHeading="Asset Management"></Layout>;
+  return (
+    <Layout navHeading="Users">
+      <UserAccountTable>
+        {data.map((userData, i) => (
+          <UserAccountTable.Row
+            key={i}
+            //id={userData._id}
+            firstName={userData.firstname}
+            lastName={userData.lastname}
+            workEmail={userData.email}
+            role={userData.role}
+          />
+        ))}
+      </UserAccountTable>
+    </Layout>
+  );
 }
