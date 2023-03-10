@@ -24,7 +24,7 @@ export default function EmployeeLeavePage() {
             // console.log(element);
             const { leaveType, leaveStatus, startDate, endDate, user } =
               element;
-            setLeaveStatus(leaveStatus);
+            // setLeaveStatus(leaveStatus);
 
             setUser(user);
 
