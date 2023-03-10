@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from "react-query";
 
 import { useRouter } from "next/router";
 import { EditIcon, ExternalLinkIcon } from "@chakra-ui/icons";
+import Link from "next/link";
 
 export default function UserAccountTable({ children }) {
   return (
@@ -63,54 +64,54 @@ UserAccountTable.Heading = function () {
 
 UserAccountTable.Row = function ({ firstName, lastName, workEmail, role }) {
   return (
-    <Flex
-      sx={{
-        p: "0.75rem",
-        w: "100%",
-        gap: "0.625rem",
-        borderTopWidth: "1px",
-        fontSize: "0.875rem",
-        bg: "#fbfdfd",
-        //
-        _hover: {
-          bg: "#e0f1ea",
+    <Link href="/account/[id]" as={`/account/${id}`}>
+      <Flex
+        sx={{
+          p: "0.75rem",
+          w: "100%",
+          gap: "0.625rem",
+          borderTopWidth: "1px",
+          fontSize: "0.875rem",
+          bg: "#fbfdfd",
+          //
+          _hover: {
+            bg: "#e0f1ea",
 
-          cursor: "pointer",
-        },
-        "&:nth-of-type(even)": {
-          bg: "#eef7f3",
-        },
-      }}
-    >
-      <Flex>
-        <Avatar
-          size="sm"
-          name={`${firstName} ${lastName}`}
-          bg="lightgray"
-          color="black"
-          // src='https://via.placeholder.com/200'
-        />
+            cursor: "pointer",
+          },
+          "&:nth-of-type(even)": {
+            bg: "#eef7f3",
+          },
+        }}
+      >
+        <Flex>
+          <Avatar
+            size="sm"
+            name={`${firstName} ${lastName}`}
+            bg="lightgray"
+            color="black"
+            // src='https://via.placeholder.com/200'
+          />
+        </Flex>
+
+        <Flex flex={2}>
+          <Text whiteSpace="nowrap" fontSize={14}>
+            {firstName}
+          </Text>
+        </Flex>
+        <Flex flex={2}>
+          <Text whiteSpace="nowrap" fontSize={14}>
+            {lastName}
+          </Text>
+        </Flex>
+        <Box fontSize={13} flex={2}>
+          <Text>{workEmail}</Text>
+        </Box>
+
+        <Box flex={2.5} whiteSpace="nowrap" fontSize={13} textAlign="center">
+          <Text>{role}</Text>
+        </Box>
       </Flex>
-
-      <Flex flex={2}>
-        <Text whiteSpace="nowrap" fontSize={14}>
-          {firstName}
-        </Text>
-      </Flex>
-      <Flex flex={2}>
-        <Text whiteSpace="nowrap" fontSize={14}>
-          {lastName}
-        </Text>
-      </Flex>
-      <Box fontSize={13} flex={2}>
-        <Text>{workEmail}</Text>
-      </Box>
-
-      <Box flex={2.5} whiteSpace="nowrap" fontSize={13} textAlign="center">
-        <Text>{role}</Text>
-      </Box>
-
-      <Flex flex={2} gap={5}></Flex>
-    </Flex>
+    </Link>
   );
 };
