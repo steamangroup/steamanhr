@@ -1,21 +1,7 @@
 import React, { Fragment, useEffect, useReducer } from "react";
-import {
-  Stack,
-  FormControl,
-  FormLabel,
-  Input,
-  Select,
-  HStack,
-  Radio,
-  RadioGroup,
-  VStack,
-  ButtonGroup,
-  Button,
-} from "@chakra-ui/react";
+
 import AddEmployeeForm from "./AddEmployee";
 import UpdateEmployeeForm from "./UpdateEmployee";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleChangeAction } from "../../../redux/reducer";
 
 const formReducer = (state, event) => {
   return {

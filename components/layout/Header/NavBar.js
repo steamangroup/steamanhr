@@ -23,6 +23,7 @@ import {
   useDisclosure,
   useToast,
   Badge,
+  Spinner,
 } from "@chakra-ui/react";
 import { ChevronDownIcon, BellIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
@@ -41,8 +42,8 @@ export default function NavBar({ heading }) {
   const { isLoading, isError, data, error } = useQuery(["users", userId], () =>
     getUser(userId)
   );
-  if (isLoading) return <div>Loading...........</div>;
-  if (isError) return <div>Erorr............</div>;
+  if (isLoading) return <Spinner color="teal.300" size="md" />;
+  if (isError) return <Spinner color="red.300" size="md" />;
   console.log(data);
 
   return (
@@ -155,7 +156,7 @@ export default function NavBar({ heading }) {
                 router.push(`/leaves/${data._id}`);
               }}
             >
-              My Leave
+              My Leaves
             </MenuItem>
           </MenuList>
         </Menu>

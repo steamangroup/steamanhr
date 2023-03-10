@@ -6,17 +6,14 @@ import {
   FormLabel,
   Input,
   Select,
-  HStack,
-  Radio,
-  RadioGroup,
-  ButtonGroup,
-  Button,
-  useToast,
+  Spinner,
+  CircularProgress,
 } from "@chakra-ui/react";
 import { getEmployeeData, getUser } from "@/lib/helper/user";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import Layout from "@/components/layout";
 
 export default function EmployeeProfile() {
   const [empInfor, setEmpInfor] = useState({});
@@ -27,8 +24,18 @@ export default function EmployeeProfile() {
     getUser(userId)
   );
 
-  if (isLoading) return <div>Loading...........</div>;
-  if (isError) return <div>Erorr............</div>;
+  if (isLoading)
+    return (
+      <Layout navHeading="Profile Page">
+        <CircularProgress isIndeterminate color="green.300" />
+      </Layout>
+    );
+  if (isError)
+    return (
+      <Layout navHeading="Profile Page">
+        <CircularProgress isIndeterminate color="green.300" />
+      </Layout>
+    );
   console.log(data);
   let username = `${data.firstname} ${data.lastname}`;
   useEffect(() => {

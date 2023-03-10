@@ -16,16 +16,7 @@ export default function ProfileEmployee() {
 
   return (
     <Layout navHeading="Employee Profile">
-      {userId ? (
-        <EmployeeProfile
-          // formData={formData}
-          //setFormData={setFormData}
-          userId={userId}
-        />
-      ) : (
-        <div></div>
-      )}
-      ;
+      {userId ? <EmployeeProfile userId={userId} /> : <div></div>};
     </Layout>
   );
 }

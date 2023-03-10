@@ -5,23 +5,16 @@ import {
   FormLabel,
   Input,
   Select,
-  HStack,
-  Radio,
-  RadioGroup,
-  VStack,
-  ButtonGroup,
   Button,
   useToast,
 } from "@chakra-ui/react";
-import { useQueryClient, useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { addEmployee } from "@/lib/helper/employee";
 import { useRouter } from "next/router";
 import { userMenu } from "@/components/config/navigation";
 import Layout from "@/components/layout";
 import { useSelector } from "react-redux";
 import { getUser } from "@/lib/helper/user";
-import { roles } from "@/utils/constants";
-import Axios from "axios";
 
 function AddEmployeeForm({ formData, setFormData }) {
   const toast = useToast();

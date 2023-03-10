@@ -2,15 +2,10 @@ import { userMenu } from "@/components/config/navigation";
 import Layout from "@/components/layout";
 import LeaveTable from "@/components/leave/LeaveTable";
 import { getLeaves } from "@/lib/helper/leave";
-import { getUser } from "@/lib/helper/user";
-import { leaveDurationAction } from "@/redux/reducer";
 import { CircularProgress } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
-import UsersPage from "../account";
-
-//const tab = [];
 
 export default function LeavePage() {
   const [element, setElement] = useState({});
@@ -20,9 +15,6 @@ export default function LeavePage() {
   //const dispatch = useDispatch();
   //const []
   const empId = useSelector((state) => state.app.client.employeeId);
-
-  // const duration = useSelector((state) => state.app.client.leaveDuration);
-  //console.log(`This is the duration ${duration}`);
 
   useEffect(() => {
     if (data) {
@@ -71,7 +63,7 @@ export default function LeavePage() {
         </LeaveTable>
       </Layout>
     );
-  if (isError) return <div>Got Error {error}</div>;
+  if (isError) return <CircularProgress isIndeterminate color="red.300" />;
 
   return (
     <Layout navHeading="Leave">

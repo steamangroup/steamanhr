@@ -8,9 +8,7 @@ import { useSelector } from "react-redux";
 
 export default function EmployeeLeavePage() {
   const userId = useSelector((state) => state.app.client.userId);
-  const [leaveType, setLeaveType] = useState();
-  const [leaveStatus, setLeaveStatus] = useState();
-  const [leaveDays, setLeaveDays] = useState();
+
   // const [endDate, setEndDate] = useState([]);
   const [name, setName] = useState();
   const [user, setUser] = useState();
@@ -54,22 +52,6 @@ export default function EmployeeLeavePage() {
       </Layout>
     );
   if (isError) return <div>Got Error {error}</div>;
-
-  function getLeaveDuration(date1, date2) {
-    let start = new Date(date1);
-    let end = new Date(date2);
-    //console.log("Leave information here ooooo");
-    //console.log(date1, date2);
-    //console.log(start);
-    //console.log(end);
-    let diff = Math.abs(end - start);
-    let days = diff / (1000 * 3600 * 24);
-
-    const duration = `${days} days`;
-    // console.log("This is the duration of the employee");
-    //console.log(duration);
-    return duration;
-  }
 
   return (
     <Layout navHeading="Leaves">

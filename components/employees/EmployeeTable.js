@@ -4,18 +4,14 @@ import {
   VStack,
   Box,
   Text,
-  Badge,
-  Button,
-  useDisclosure,
   useToast,
-  Image,
   Tooltip,
   CircularProgress,
   Avatar,
 } from "@chakra-ui/react";
 
 import { useQuery, useQueryClient } from "react-query";
-import { deleteEmployee, getEmployees, getUsers } from "@/lib/helper/employee";
+import { deleteEmployee, getEmployees } from "@/lib/helper/employee";
 import { useDispatch, useSelector } from "react-redux";
 import {
   toggleChangeAction,

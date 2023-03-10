@@ -95,8 +95,6 @@ UserAccountTable.Row = function ({ firstName, lastName, workEmail, role }) {
           color="black"
           // src='https://via.placeholder.com/200'
         />
-        {/** <Image src={profilePicture || "#"} borderRadius="full" boxSize="30px" />
-        <Text>{_id}</Text>*/}
       </Flex>
 
       <Flex flex={2}>
@@ -118,7 +116,6 @@ UserAccountTable.Row = function ({ firstName, lastName, workEmail, role }) {
       </Box>
 
       <Flex flex={2} gap={5}>
-        {/*****
         <Tooltip label="View record">
           <ExternalLinkIcon onClick={viewEmployeeRecord} />
         </Tooltip>
@@ -131,7 +128,6 @@ UserAccountTable.Row = function ({ firstName, lastName, workEmail, role }) {
         </Tooltip>
 
         <DeleteModal deletehandler={handleDelete} onDelete={onDelete} />
-        * */}
       </Flex>
     </Flex>
   );

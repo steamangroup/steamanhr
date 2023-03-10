@@ -5,14 +5,8 @@ import {
   FormLabel,
   Input,
   Select,
-  HStack,
-  Radio,
-  RadioGroup,
-  VStack,
-  ButtonGroup,
   Button,
   useToast,
-  Text,
 } from "@chakra-ui/react";
 import {
   getEmployee,
@@ -38,7 +32,7 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
     (newData) => updateEmployee(formId, newData),
     {
       onSuccess: async (data) => {
-        //updating and retwuning new updated employee data
+        //updating and retuning new updated employee data
         //queryClient.setQueryData("users", (old) => [data]);
         queryClient.prefetchQuery("employees", getEmployees);
         router.push("/employees");

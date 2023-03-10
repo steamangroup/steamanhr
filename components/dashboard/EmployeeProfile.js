@@ -10,9 +10,6 @@ export default function EmployeeProfile({
     <HStack
       spacing="1.25rem"
       sx={{
-        // borderWidth: '1px',
-        // borderRadius: '0.375rem',
-        // p: '0.75rem',
         alignItems: "stretch",
       }}
     >

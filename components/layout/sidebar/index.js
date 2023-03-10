@@ -1,6 +1,4 @@
-import { hrMenu, userMenu } from "@/components/config/navigation";
 import { getUser } from "@/lib/helper/user";
-import { roles } from "@/utils/constants";
 import {
   CalendarIcon,
   ChatIcon,
@@ -9,7 +7,15 @@ import {
   HamburgerIcon,
   InfoOutlineIcon,
 } from "@chakra-ui/icons";
-import { VStack, Box, Button, Text, HStack } from "@chakra-ui/react";
+import {
+  VStack,
+  Box,
+  Button,
+  Text,
+  HStack,
+  Spinner,
+  Center,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 import { useQuery } from "react-query";
@@ -29,11 +35,20 @@ export default function SideBar() {
     ["users", userId],
     () => getUser(userId)
   );
-  if (isLoading) return <div>loading.......</div>;
-  if (isError) return <div>Error.......</div>;
+
+  if (isLoading) return;
+  <Center mt={200}>
+    <Spinner size="md" color="teal.300" />;
+  </Center>;
+  if (isError)
+    return (
+      <Center mt={200}>
+        <Spinner size="md" color="red.300" />;
+      </Center>
+    );
 
   let { role, _id } = data;
-  console.log("Mine role");
+  console.log("Current user role");
   console.log(role);
   return (
     <VStack spacing={5} position="fixed">
