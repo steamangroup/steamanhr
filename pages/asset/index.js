@@ -1,9 +1,9 @@
 import Layout from "@/components/layout";
-import React from "react";
+import { Center, Text } from "@chakra-ui/react";
 
-export default function notification() {
+export default function AssetPage() {
   return (
-    <Layout navHeading="Notification">
+    <Layout navHeading="Asset Management">
       <Center>
         <Text>Page under development</Text>
       </Center>

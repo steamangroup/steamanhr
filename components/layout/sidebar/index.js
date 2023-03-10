@@ -172,7 +172,7 @@ export default function SideBar() {
                 fontWeight="500"
                 color="white"
                 cursor="default"
-                href="/account"
+                href="/asset"
               >
                 Assets
               </Text>
