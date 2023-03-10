@@ -1,8 +1,17 @@
-import { Flex, VStack, Box, Text, useToast, Avatar } from "@chakra-ui/react";
+import {
+  Flex,
+  VStack,
+  Box,
+  Text,
+  useToast,
+  Avatar,
+  Tooltip,
+} from "@chakra-ui/react";
 
 import { useQuery, useQueryClient } from "react-query";
 
 import { useRouter } from "next/router";
+import { EditIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 
 export default function UserAccountTable({ children }) {
   return (
@@ -126,8 +135,9 @@ UserAccountTable.Row = function ({ firstName, lastName, workEmail, role }) {
             cursor="pointer"
           />
         </Tooltip>
-
+        {/*****
         <DeleteModal deletehandler={handleDelete} onDelete={onDelete} />
+      ** */}
       </Flex>
     </Flex>
   );
