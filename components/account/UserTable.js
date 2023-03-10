@@ -62,7 +62,7 @@ UserAccountTable.Heading = function () {
   );
 };
 
-UserAccountTable.Row = function ({ firstName, lastName, workEmail, role }) {
+UserAccountTable.Row = function ({ firstName, lastName, workEmail, role, id }) {
   return (
     <Link href="/account/[id]" as={`/account/${id}`}>
       <Flex
