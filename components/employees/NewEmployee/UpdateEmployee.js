@@ -97,9 +97,9 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
 
     await updateMutation.mutate(updated_data);
   };
-  const menu = userMenu.employees.tabs;
+
   return (
-    <Layout pageTabs={menu} navHeading="Employee Update Form">
+    <Layout navHeading="Employee Update Form">
       <Stack>
         <FormControl>
           <FormLabel>Full Name</FormLabel>

@@ -30,7 +30,7 @@ export default function EmployeeTable({ children }) {
   );
 
   if (isLoading) return <CircularProgress isIndeterminate color="green.300" />;
-  if (isError) return <div>Got error</div>;
+  if (isError) return <CircularProgress isIndeterminate color="red.300" />;
 
   return (
     <Box mt="0.5rem">

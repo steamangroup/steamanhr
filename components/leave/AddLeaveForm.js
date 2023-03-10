@@ -12,9 +12,9 @@ import {
 import { useQueryClient, useMutation, useQuery } from "react-query";
 
 import { useRouter } from "next/router";
-import { userMenu } from "@/components/config/navigation";
+
 import Layout from "@/components/layout";
-import { roles } from "@/utils/constants";
+
 import { addLeave, getLeavePeriod } from "@/lib/helper/leave";
 import { getUser } from "@/lib/helper/user";
 import { useSelector } from "react-redux";
@@ -74,10 +74,12 @@ function AddLeaveForm({ formData, setFormData }) {
     data: durationData,
   } = useQuery("leaves", getLeavePeriod);
 
-  if (isLoading) return <div>Loading.......</div>;
-  if (isLoading) return <div>Loading.......</div>;
-  if (durationLoading) return <div>Loading.......</div>;
-  if (durationError) return <div>Error......</div>;
+  if (isLoading) return <CircularProgress isIndeterminate color="green.300" />;
+  if (isError) return <CircularProgress isIndeterminate color="red.300" />;
+  if (durationLoading)
+    return <CircularProgress isIndeterminate color="green.300" />;
+  if (durationError)
+    return <CircularProgress isIndeterminate color="red.300" />;
 
   let { role, _id } = data;
 

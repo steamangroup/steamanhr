@@ -1,7 +1,3 @@
-import { userMenu } from "@/components/config/navigation";
-import EmployeeProfile from "@/components/dashboard/EmployeeProfile";
-import Layout from "@/components/layout";
-import LeaveOverView from "@/components/leave/LeaveOverView";
 import {
   Stack,
   VStack,
@@ -35,17 +31,20 @@ export default function DashboardPage() {
   console.log(data);
   let username = `${data.firstname} ${data.lastname}`;
   useEffect(() => {
-    console.log(data);
-    getEmployeeData(data.email)
-      .then((infor) => {
-        console.log("Data");
-        setEmpInfor(infor);
-        console.log(infor);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [data.email]);
+    if (data) {
+      const { email } = data;
+      console.log(data);
+      getEmployeeData(data.email)
+        .then((infor) => {
+          console.log("Data");
+          setEmpInfor(infor);
+          console.log(infor);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [email]);
   const email = data.email;
 
   const {
@@ -83,7 +82,7 @@ export default function DashboardPage() {
   console.log(email);
   console.log("This is the information ");
   console.log(empInfor);
-  const menu = userMenu.dashboard.tabs;
+
   return (
     <Stack>
       <FormControl>

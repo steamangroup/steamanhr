@@ -1,4 +1,3 @@
-import { userMenu } from "@/components/config/navigation";
 import {
   Stack,
   VStack,
@@ -43,17 +42,20 @@ export default function EmployeeProfile() {
   console.log(data);
   let username = `${data.firstname} ${data.lastname}`;
   useEffect(() => {
-    console.log(data);
-    getEmployeeData(data.email)
-      .then((infor) => {
-        console.log("Data");
-        setEmpInfor(infor);
-        console.log(infor);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [data.email]);
+    if (data) {
+      console.log(data);
+      const { email } = data;
+      getEmployeeData(email)
+        .then((infor) => {
+          console.log("Data");
+          setEmpInfor(infor);
+          console.log(infor);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [email]);
   const email = data.email;
 
   const {
