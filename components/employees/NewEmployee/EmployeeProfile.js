@@ -23,24 +23,6 @@ export default function EmployeeProfile() {
   const userId = useSelector((state) => state.app.client.userId);
   console.log(`This emp ${userId}`);
 
-  const { isLoading, isError, data, error } = useQuery(["users", userId], () =>
-    getUser(userId)
-  );
-
-  if (isLoading)
-    return (
-      <Layout navHeading="Profile Page">
-        <CircularProgress isIndeterminate color="green.300" />
-      </Layout>
-    );
-  if (isError)
-    return (
-      <Layout navHeading="Profile Page">
-        <CircularProgress isIndeterminate color="green.300" />
-      </Layout>
-    );
-  console.log(data);
-  let username = `${data.firstname} ${data.lastname}`;
   useEffect(() => {
     if (data) {
       console.log(data);
@@ -55,7 +37,17 @@ export default function EmployeeProfile() {
           console.log(error);
         });
     }
-  }, [email]);
+  }, [data]);
+
+  const { isLoading, isError, data, error } = useQuery(["users", userId], () =>
+    getUser(userId)
+  );
+
+  if (isLoading) return <CircularProgress isIndeterminate color="green.300" />;
+  if (isError) return <CircularProgress isIndeterminate color="green.300" />;
+  console.log(data);
+  let username = `${data.firstname} ${data.lastname}`;
+
   const email = data.email;
 
   const {
@@ -116,7 +108,7 @@ export default function EmployeeProfile() {
               <Input
                 size="sm"
                 type="text"
-                defaultValue={username}
+                defaultValue={data.firstname}
                 name="fullName"
                 //onChange={setFormData}
               />
@@ -126,7 +118,7 @@ export default function EmployeeProfile() {
               <Input
                 size="sm"
                 type="text"
-                defaultValue={username}
+                defaultValue={data.lastname}
                 name="fullName"
                 //onChange={setFormData}
               />
