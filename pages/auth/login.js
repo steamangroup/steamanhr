@@ -63,6 +63,7 @@ export default function Login() {
       })
         .then((response) => {
           console.log(response.headers);
+          console.log(response);
           if (response.status === 200) {
             toast({
               title: "Success",
@@ -89,15 +90,17 @@ export default function Login() {
           }
         })
         .then((data) => {
-          const { email, id } = data;
-          dispatch(userAction(id));
-
-          if (email == undefined /***&& isAuth*/) {
-            router.push("/auth/login");
-          } else {
+          if (data) {
             console.log(data);
+            const { email, id } = data;
+            dispatch(userAction(id));
+            if (email == undefined /***&& isAuth*/) {
+              router.push("/auth/login");
+            } else {
+              console.log(data);
 
-            router.push(`/user/${[email]}`);
+              router.push(`/user/${[email]}`);
+            }
           }
 
           //alert("Sucess");
