@@ -1,4 +1,3 @@
-import { userMenu } from "@/components/config/navigation";
 import Layout from "@/components/layout";
 import LeaveTable from "@/components/leave/LeaveTable";
 import { getLeaves } from "@/lib/helper/leave";

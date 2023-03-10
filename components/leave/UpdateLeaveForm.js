@@ -22,7 +22,6 @@ import {
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useRouter } from "next/router";
 import Layout from "@/components/layout";
-import { userMenu } from "@/components/config/navigation";
 import { getLeave, getLeaves, updateLeave } from "@/lib/helper/leave";
 import UpdateEmployeeForm from "../employees/NewEmployee/UpdateEmployee";
 import { roles } from "@/utils/constants";
@@ -111,9 +110,9 @@ function UpdateLeaveForm({ formId, formData, setFormData }) {
 
     await updateMutation.mutate(updated_data);
   };
-  const menu = userMenu.employees.tabs;
+
   return (
-    <Layout pageTabs={menu} navHeading="Leave  Update Form">
+    <Layout navHeading="Leave  Update Form">
       <Stack>
         <FormControl>
           <FormLabel>Leave Type</FormLabel>

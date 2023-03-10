@@ -1,4 +1,3 @@
-import { userMenu } from "@/components/config/navigation";
 import EmployeeProfile from "@/components/dashboard/EmployeeProfile";
 import Layout from "@/components/layout";
 import LeaveOverView from "@/components/leave/LeaveOverView";

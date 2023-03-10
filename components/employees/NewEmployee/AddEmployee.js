@@ -7,11 +7,12 @@ import {
   Select,
   Button,
   useToast,
+  Spinner,
 } from "@chakra-ui/react";
 import { useMutation, useQuery } from "react-query";
 import { addEmployee } from "@/lib/helper/employee";
 import { useRouter } from "next/router";
-import { userMenu } from "@/components/config/navigation";
+
 import Layout from "@/components/layout";
 import { useSelector } from "react-redux";
 import { getUser } from "@/lib/helper/user";
@@ -55,8 +56,8 @@ function AddEmployeeForm({ formData, setFormData }) {
   const { isLoading, isError, data, error } = useQuery(["users", userId], () =>
     getUser(userId)
   );
-  if (isLoading) return <div>Loading...........</div>;
-  if (isError) return <div>Erorr............</div>;
+  if (isLoading) return <Spinner color="green.500" />;
+  if (isError) return <CircularProgress isIndeterminate color="red.300" />;
   const { role } = data;
   console.log(role);
 
@@ -141,8 +142,9 @@ function AddEmployeeForm({ formData, setFormData }) {
 
     //adding new user ot db
     addMutation.mutate(model);
-    if (addMutation.isLoading) return <div>Loading......</div>;
-    if (addMutation.isError) return <div>Error........</div>;
+    if (addMutation.isLoading)
+      return <CircularProgress isIndeterminate color="green.300" />;
+    if (addMutation.isError) return <Spinner color="red.500" />;
     if (addMutation.isSuccess)
       return toast({
         title: "Success",
@@ -159,7 +161,7 @@ function AddEmployeeForm({ formData, setFormData }) {
       router.push("/employees");
     }
   };
-  const menu = userMenu.employees.tabs;
+
   return (
     <Layout navHeading="Employee Information Form">
       <Stack>

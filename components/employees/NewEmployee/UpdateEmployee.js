@@ -7,6 +7,7 @@ import {
   Select,
   Button,
   useToast,
+  Spinner,
 } from "@chakra-ui/react";
 import {
   getEmployee,
@@ -16,7 +17,6 @@ import {
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useRouter } from "next/router";
 import Layout from "@/components/layout";
-import { userMenu } from "@/components/config/navigation";
 
 function UpdateEmployeeForm({ formId, formData, setFormData }) {
   const toast = useToast();
@@ -40,8 +40,8 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
     }
   );
   //console.log(formId);
-  if (isLoading) return <div>Loading....</div>;
-  if (isError) return <div>Error</div>;
+  if (isLoading) return <Spinner color="green.500" />;
+  if (isError) return <Spinner color="red.500" />;
   const {
     title,
     jobTitle,
