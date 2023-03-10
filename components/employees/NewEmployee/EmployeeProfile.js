@@ -117,15 +117,6 @@ export default function EmployeeProfile() {
       </FormControl>
 
       <FormControl>
-        <FormLabel>Upload profile picture (Max.size:5MB)</FormLabel>
-        <Input
-          type="file"
-          name="profilePicture"
-          //onChange={setFormData}
-        />
-      </FormControl>
-
-      <FormControl>
         <FormLabel>Work Email Address</FormLabel>
         <Input
           size="sm"
