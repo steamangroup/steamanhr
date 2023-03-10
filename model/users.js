@@ -46,7 +46,7 @@ userSchema.pre("save", async function (next) {
       if (
         this.email === "admin@steamangroup.com" ||
         this.email === "py.bediako@steamangroup.com" ||
-        this.email === "manager@steamangroup.com"
+        this.email === "eunice.owusu@steamangroup.com"
       ) {
         this.role = roles.admin;
       }
