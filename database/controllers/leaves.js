@@ -183,7 +183,16 @@ export async function getLeaveDuration(req, res) {
       {
         $group: {
           _id: "$user",
-          total: { $sum: "$leaveDuration" },
+          // total: { $sum: "$leaveDuration" },
+          total: {
+            $sum: {
+              $cond: [
+                { $eq: ["$leaveStatus", "approved"] },
+                "$leaveDuration",
+                0,
+              ],
+            },
+          },
         },
       },
       {
