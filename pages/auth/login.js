@@ -54,7 +54,7 @@ export default function Login() {
     } else {
       await fetch(`${NETLIFY_URL}api/auth/login`, {
         method: "POST",
-        // mode: "no-cors",
+        mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
         },
@@ -84,8 +84,8 @@ export default function Login() {
               isClosable: true,
               position: "top-right",
             });
-            const json = response.json();
-            return json;
+            // const json = response.json();
+            //return json;
           }
         })
         .then((data) => {
