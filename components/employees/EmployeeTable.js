@@ -94,7 +94,7 @@ EmployeeTable.Heading = function () {
       </Box>
       <Box flex={5.5}>
         <Text fontSize={14} fontWeight="400">
-          Business Unit
+          Department
         </Text>
       </Box>
       <Box flex={2}>
@@ -109,7 +109,7 @@ EmployeeTable.Heading = function () {
 EmployeeTable.Row = function ({
   profilePicture,
   fullName,
-  businessUnit,
+  department,
   employmentType,
   workEmail,
   contactNumber,
@@ -242,7 +242,7 @@ EmployeeTable.Row = function ({
         <Text>{contactNumber}</Text>
       </Box>
       <Box flex={3} whiteSpace="nowrap" fontSize={14}>
-        <Text>{businessUnit}</Text>
+        <Text>{department}</Text>
       </Box>
       <Flex flex={1} gap={5}>
         <Tooltip label="View record">

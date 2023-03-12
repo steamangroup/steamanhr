@@ -6,7 +6,7 @@ const LeaveSchema = new Schema({
   leaveType: {
     type: String,
     required: true,
-    default: "annual",
+    default: "other",
   },
 
   startDate: {
@@ -49,7 +49,26 @@ const LeaveSchema = new Schema({
     default: 20,
   },
 
-  //  extraInformation: String,
+  lineManagerName: {
+    type: Number,
+    default: null,
+  },
+  leaveDenialDate: {
+    type: Date,
+    default: null,
+  },
+  leaveApprovalDate: {
+    type: Date,
+    default: null,
+  },
+  leaveApprovalReason: {
+    type: String,
+    default: null,
+  },
+  leaveApprovalReason: {
+    type: String,
+    default: null,
+  },
 });
 
 const Leaves = models.Leaves || model("Leaves", LeaveSchema);

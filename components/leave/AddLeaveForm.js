@@ -10,6 +10,10 @@ import {
   Textarea,
   CircularProgress,
   HStack,
+  Alert,
+  AlertTitle,
+  AlertDescription,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { useQueryClient, useMutation, useQuery } from "react-query";
 
@@ -76,12 +80,39 @@ function AddLeaveForm({ formData, setFormData }) {
     data: durationData,
   } = useQuery("leaves", getLeavePeriod);
 
-  if (isLoading) return <CircularProgress isIndeterminate color="green.300" />;
-  if (isError) return <CircularProgress isIndeterminate color="red.300" />;
+  if (isLoading) return;
+  <Alert status="success">
+    <AlertIcon />
+    <AlertTitle>Fetching Data.......</AlertTitle>
+    <AlertDescription>Just a few seconds</AlertDescription>
+  </Alert>;
+
+  if (isError) return;
+  <Alert status="error">
+    <AlertIcon />
+    <AlertTitle>Fetch failed</AlertTitle>
+    <AlertDescription>Error while fetching data</AlertDescription>
+  </Alert>;
+
   if (durationLoading)
-    return <CircularProgress isIndeterminate color="green.300" />;
+    return (
+      <Alert status="success">
+        <AlertIcon />
+        <AlertTitle>Fetching Data.......</AlertTitle>
+        <AlertDescription>Just a few seconds</AlertDescription>
+      </Alert>
+    );
+
   if (durationError)
-    return <CircularProgress isIndeterminate color="red.300" />;
+    return (
+      <Alert status="error">
+        <AlertIcon />
+        <AlertTitle>Fetch failed</AlertTitle>
+        <AlertDescription>
+          Error while fetching your leave duration
+        </AlertDescription>
+      </Alert>
+    );
 
   let { role, _id } = data;
 
@@ -129,6 +160,7 @@ function AddLeaveForm({ formData, setFormData }) {
     console.log(startDate);
     console.log(endDate);
     console.log(leaveReason);
+    console.log(leaveReason);
 
     // console.log("This is the duration of the leave");
     const leaveDuration = getLeaveDuration(endDate, startDate);
@@ -143,6 +175,13 @@ function AddLeaveForm({ formData, setFormData }) {
       leaveStatus: leaveStatus ?? "pending",
       user: userId,
       leaveDuration: leaveDuration,
+      lineManagerName: null,
+      leaveApprovalDate: null,
+      leaveApprovalReason: null,
+      leaveDenialDate: null,
+      leaveApprovalReason: null,
+
+      // leaveExplanation: leaveExplanation,
     };
 
     //adding new user ot db
@@ -164,9 +203,38 @@ function AddLeaveForm({ formData, setFormData }) {
 
   return (
     <Layout navHeading="Leave Form">
-      <Stack>
+      <Stack spacing={7} w={900} m="auto">
+        <HStack spacing={10}>
+          <FormControl>
+            <FormLabel color="teal.700">Leave Start date</FormLabel>
+            <Input
+              size="sm"
+              type="date"
+              isrequired="true"
+              name="startDate"
+              onChange={setFormData}
+              h={10}
+              borderRadius={10}
+              border="0.1rem solid teal"
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel color="teal.700">Leave End date</FormLabel>
+            <Input
+              size="sm"
+              type="date"
+              isrequired="true"
+              name="endDate"
+              onChange={setFormData}
+              h={10}
+              borderRadius={10}
+              border="0.1rem solid teal"
+            />
+          </FormControl>
+        </HStack>
+
         <FormControl>
-          <FormLabel>Leave Type</FormLabel>
+          <FormLabel color="teal.700">Reason for Time off</FormLabel>
           <Select
             size="sm"
             name="leaveType"
@@ -174,39 +242,22 @@ function AddLeaveForm({ formData, setFormData }) {
             isrequired="true"
             //defaultChecked="annual"
             placeholder="Select option"
+            h={10}
+            borderRadius={10}
+            border="0.1rem solid teal"
+            color="teal.800"
           >
-            <option value="annual">Annual Leave</option>
-            <option value="casual">Casual Leave</option>
-            <option value="martenity" disabled={true}>
-              Maternity Leave
-            </option>
+            <option value="health">Health</option>
+            <option value="vacation">Vacation</option>
+            <option value="bereavement">Bereavement</option>
+            <option value="study">Study</option>
+            <option value="career">Career responsibilities</option>
+            <option value="emergency">Emergency</option>
             <option value="other">Other</option>
           </Select>
         </FormControl>
-        <HStack spacing={5}>
-          <FormControl>
-            <FormLabel>Leave Start date</FormLabel>
-            <Input
-              size="sm"
-              type="date"
-              isrequired="true"
-              name="startDate"
-              onChange={setFormData}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Leave End date</FormLabel>
-            <Input
-              size="sm"
-              type="date"
-              isrequired="true"
-              name="endDate"
-              onChange={setFormData}
-            />
-          </FormControl>
-        </HStack>
         <FormControl>
-          <FormLabel>Leave Reason</FormLabel>
+          <FormLabel color="teal.700">Explanation</FormLabel>
           <Textarea
             size="sm"
             type="text"
@@ -214,10 +265,14 @@ function AddLeaveForm({ formData, setFormData }) {
             isrequired="true"
             onChange={setFormData}
             cols={4}
+            h={10}
+            borderRadius={10}
+            border="0.1rem solid teal"
+            color="teal.800"
           />
         </FormControl>
         <FormControl>
-          <FormLabel>handing Over Notes</FormLabel>
+          <FormLabel color="teal.700">Handing Over Notes</FormLabel>
           <Textarea
             size="sm"
             type="text"
@@ -225,17 +280,24 @@ function AddLeaveForm({ formData, setFormData }) {
             isrequired="true"
             onChange={setFormData}
             cols={4}
+            h={10}
+            borderRadius={10}
+            border="0.1rem solid teal"
           />
         </FormControl>
 
         <FormControl>
-          <FormLabel>Leave Status</FormLabel>
+          <FormLabel color="teal.700">Leave Status</FormLabel>
           <Select
             size="sm"
             type="text"
             name="leaveStatus"
             isrequire="true"
             onChange={setFormData}
+            h={10}
+            borderRadius={10}
+            border="0.1rem solid teal"
+            color="teal.800"
             // defaultValue="pending"
             //placeholder="Pending"
           >
@@ -267,6 +329,9 @@ function AddLeaveForm({ formData, setFormData }) {
             color="white"
             _hover={{
               bg: "red.600",
+            }}
+            onClick={() => {
+              router.back();
             }}
           >
             Exit

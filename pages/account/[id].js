@@ -1,6 +1,10 @@
 import Layout from "@/components/layout";
 import { getUser } from "@/lib/helper/user";
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Avatar,
   Box,
   Flex,
@@ -21,8 +25,22 @@ export default function UsersPage() {
     getUser(id)
   );
 
-  if (isLoading) return <div>Loading.......</div>;
-  if (isError) return <div>Error..........</div>;
+  if (isLoading)
+    return (
+      <Alert status="success">
+        <AlertIcon />
+        <AlertTitle>Fetching user data.......</AlertTitle>
+        <AlertDescription>Just a few sconds</AlertDescription>
+      </Alert>
+    );
+  if (isError)
+    return (
+      <Alert status="error">
+        <AlertIcon />
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>Could not fetch user data</AlertDescription>
+      </Alert>
+    );
   console.log("this is my data");
   console.log(data);
   const { firstname, lastname, role, email } = data;

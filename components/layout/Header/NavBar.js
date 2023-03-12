@@ -24,6 +24,10 @@ import {
   useToast,
   Badge,
   Spinner,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
 import { ChevronDownIcon, BellIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
@@ -42,8 +46,24 @@ export default function NavBar({ heading }) {
   const { isLoading, isError, data, error } = useQuery(["users", userId], () =>
     getUser(userId)
   );
-  if (isLoading) return <Spinner color="teal.300" size="md" />;
-  if (isError) return <Spinner color="red.300" size="md" />;
+  if (isLoading)
+    return (
+      <Alert status="success">
+        <AlertIcon />
+        <AlertTitle>Fetching Data.......</AlertTitle>
+        <AlertDescription>Just a few sconds</AlertDescription>
+      </Alert>
+    );
+  if (isError)
+    return (
+      <Alert status="error">
+        <AlertIcon />
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>
+          There was an error processing your request
+        </AlertDescription>
+      </Alert>
+    );
   console.log(data);
 
   return (

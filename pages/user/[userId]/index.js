@@ -1,7 +1,14 @@
 import EmployeeProfile from "@/components/dashboard/EmployeeProfile";
 import Layout from "@/components/layout";
 import LeaveOverView from "@/components/leave/LeaveOverView";
-import { Spinner, VStack } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Spinner,
+  VStack,
+} from "@chakra-ui/react";
 import { getEmployeeData, getUser } from "@/lib/helper/user";
 import { useQuery, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,13 +31,12 @@ import {
 import axios from "axios";
 
 export default function DashboardPage() {
-  /****
   const pending = "http://localhost:3000/api/leaves/status/pending/";
   const approved = "http://localhost:3000/api/leaves/status/approved/";
   const rejected = "http://localhost:3000/api/leaves/status/rejected/";
   const remaining = "http://localhost:3000/api/leaves/duration";
-  * */
 
+  /***
   const PENDING_API_URL =
     "https://steamanhr.netlify.app/api/leaves/status/pending/";
   const APPROVED_API_URL =
@@ -40,6 +46,7 @@ export default function DashboardPage() {
   const REMAINING_DURATION_API_URL =
     "https://steamanhr.netlify.app/api/leaves/duration";
 
+    * */
   const dispatch = useDispatch();
   const [empData, setEmpData] = useState();
   const [pendingLeave, setPendingLeave] = useState(0);
@@ -64,7 +71,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
+      // console.log(data);
       const { email } = data;
       console.log(email);
       dispatch(userEmail(email));
@@ -74,7 +81,7 @@ export default function DashboardPage() {
           .then((infor) => {
             console.log("Data in from the employee data");
             setEmpData(infor);
-            console.log(infor);
+            // console.log(infor);
           })
           .catch((e) => {
             console.log(`Error fetching data with ${e}`);
@@ -108,7 +115,7 @@ export default function DashboardPage() {
   useEffect(() => {
     if (userId) {
       axios
-        .get(`${PENDING_API_URL}${userId}`, {
+        .get(`${pending}${userId}`, {
           responseType: "json",
         })
         .then(function (res) {
@@ -127,7 +134,7 @@ export default function DashboardPage() {
     //approved api fetch
     if (userId) {
       axios
-        .get(`${APPROVED_API_URL}/${userId}`, {
+        .get(`${approved}/${userId}`, {
           responseType: "json",
         })
         .then(function (res) {
@@ -144,7 +151,7 @@ export default function DashboardPage() {
         });
       //rejected api fetch
       axios
-        .get(`${REJECTED_API_URL}/${userId}`, {
+        .get(`${rejected}/${userId}`, {
           responseType: "json",
         })
         .then(function (res) {
@@ -166,7 +173,7 @@ export default function DashboardPage() {
   //Remaining Leaves days fetch
   useEffect(() => {
     axios
-      .get(`${REMAINING_DURATION_API_URL}`, {
+      .get(`${remaining}`, {
         responseType: "json",
       })
       .then(function (res) {
@@ -191,8 +198,22 @@ export default function DashboardPage() {
     getUser(userId)
   );
 
-  if (isLoading) return <Spinner color="teal.300" size="lg" />;
-  if (isError) return <Spinner color="teal.300" size="lg" />;
+  if (isLoading)
+    return (
+      <Alert status="success">
+        <AlertIcon />
+        <AlertTitle>Fetching Data.......</AlertTitle>
+        <AlertDescription>Just a few sconds</AlertDescription>
+      </Alert>
+    );
+  if (isError)
+    return (
+      <Alert status="error">
+        <AlertIcon />
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>Failed to fetch user data</AlertDescription>
+      </Alert>
+    );
 
   let username = `${data.firstname} ${data.lastname}`;
   console.log("Testing place");

@@ -1,7 +1,13 @@
 import Layout from "@/components/layout";
 import LeaveTable from "@/components/leave/LeaveTable";
 import { getLeaves } from "@/lib/helper/leave";
-import { CircularProgress } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  CircularProgress,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
@@ -62,7 +68,14 @@ export default function LeavePage() {
         </LeaveTable>
       </Layout>
     );
-  if (isError) return <CircularProgress isIndeterminate color="red.300" />;
+  if (isError) return;
+  <Layout navHeading="Leaves">
+    <Alert status="error">
+      <AlertIcon />
+      <AlertTitle>Erorr </AlertTitle>
+      <AlertDescription>Failed to process request</AlertDescription>
+    </Alert>
+  </Layout>;
 
   return (
     <Layout navHeading="Leave">
@@ -74,7 +87,6 @@ export default function LeavePage() {
             _id={leaveData._id}
             employee={`${leaveData.user.firstname} ${leaveData.user.lastname} `}
             leaveType={leaveData.leaveType}
-            //leaveTypeColor=""
             leaveStatus={leaveData.leaveStatus}
             startDate={leaveData.startDate}
             endDate={leaveData.endDate}

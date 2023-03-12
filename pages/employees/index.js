@@ -1,7 +1,14 @@
 import EmployeeTable from "@/components/employees/EmployeeTable";
 import Layout from "@/components/layout";
 import { getEmployees } from "@/lib/helper/employee";
-import { CircularProgress } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Center,
+  CircularProgress,
+} from "@chakra-ui/react";
 import { useQuery } from "react-query";
 
 export default function EmployeePage() {
@@ -18,8 +25,20 @@ export default function EmployeePage() {
         </EmployeeTable>
       </Layout>
     );
-  if (isError) return <div>Got Error {error}</div>;
-  console.log(data);
+  if (isError)
+    return (
+      <Layout navHeading="Employees">
+        <Alert status="error">
+          <AlertIcon />
+          <AlertTitle>Error fetching data</AlertTitle>
+          <AlertDescription>
+            There was error processing your request due to unstable internet
+            connection
+          </AlertDescription>
+        </Alert>
+      </Layout>
+    );
+  /// console.log(data);
   return (
     <Layout navHeading="Employees">
       <EmployeeTable>
@@ -27,14 +46,17 @@ export default function EmployeePage() {
           <EmployeeTable.Row
             key={i}
             _id={employeeData._id}
-            profilePicture={employeeData.profilePicture}
-            fullName={employeeData.fullName}
+            //profilePicture={employeeData.profilePicture}
+            // fullName={employeeData.fullName}
+            fullName={`${employeeData.firstName}${employeeData.lastName}`}
+            firstName={employeeData.firstName}
+            lastName={employeeData.lastName}
             employmentType={employeeData.employmentType}
             employmentStatus={employeeData.employmentStatus}
             workEmail={employeeData.workEmail}
             contactNumber={employeeData.contactNumber}
             employmentStatusColor={employeeData.employmentStatusColor}
-            businessUnit={employeeData.businessUnit}
+            department={employeeData.department}
           />
         ))}
       </EmployeeTable>

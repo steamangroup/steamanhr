@@ -8,6 +8,16 @@ import {
   Button,
   useToast,
   Spinner,
+  HStack,
+  Flex,
+  Box,
+  Avatar,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  Textarea,
+  Text,
 } from "@chakra-ui/react";
 import { useMutation, useQuery } from "react-query";
 import { addEmployee } from "@/lib/helper/employee";
@@ -56,8 +66,22 @@ function AddEmployeeForm({ formData, setFormData }) {
   const { isLoading, isError, data, error } = useQuery(["users", userId], () =>
     getUser(userId)
   );
-  if (isLoading) return <Spinner color="green.500" />;
-  if (isError) return <CircularProgress isIndeterminate color="red.300" />;
+  if (isLoading)
+    return (
+      <Alert status="success">
+        <AlertIcon />
+        <AlertTitle>Loading Employee Form</AlertTitle>
+        <AlertDescription>Just a few seconds</AlertDescription>
+      </Alert>
+    );
+  if (isError)
+    return (
+      <Alert status="error">
+        <AlertIcon />
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>Could not load employee form</AlertDescription>
+      </Alert>
+    );
   const { role } = data;
   console.log(role);
 
@@ -73,8 +97,9 @@ function AddEmployeeForm({ formData, setFormData }) {
     let {
       title,
       jobTitle,
-      fullName,
-      businessUnit,
+      firstName,
+      lastName,
+      otherName,
       employmentType,
       workEmail,
       department,
@@ -100,25 +125,28 @@ function AddEmployeeForm({ formData, setFormData }) {
       accountNumber,
       healthCondition,
       onMedication,
+      employmentEndDate,
     } = formData;
     console.log("Employee Data here");
     console.log(formData);
-    console.log(employmentType);
-    console.log(businessUnit);
+    console.log(employmentEndDate);
+    console.log(department);
     console.log(educationalLevel);
 
     const model = {
-      title: title ?? "Other",
+      title: title,
       jobTitle: jobTitle,
-      fullName: fullName,
+      firstName: firstName,
+      lastName: lastName,
+      otherName: otherName,
       nationalIDNumber: nationalIDNumber,
-      businessUnit: businessUnit,
       employmentType: employmentType,
       workEmail: workEmail,
       department: department,
       officeLocation: officeLocation,
       employmentStatus: employmentStatus ?? "active",
       employmentStartDate: employmentStartDate,
+      employmentEndDate: employmentEndDate,
       dateOfBirth: dateOfBirth,
       gender: gender ?? "male",
       maritalStatus: maritalStatus ?? "single",
@@ -143,8 +171,21 @@ function AddEmployeeForm({ formData, setFormData }) {
     //adding new user ot db
     addMutation.mutate(model);
     if (addMutation.isLoading)
-      return <CircularProgress isIndeterminate color="green.300" />;
-    if (addMutation.isError) return <Spinner color="red.500" />;
+      return (
+        <Alert status="success">
+          <AlertIcon />
+          <AlertTitle>Saving employee data</AlertTitle>
+          <AlertDescription>Few seconds more</AlertDescription>
+        </Alert>
+      );
+    if (addMutation.isError)
+      return (
+        <Alert status="error">
+          <AlertIcon />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>while saving employee data</AlertDescription>
+        </Alert>
+      );
     if (addMutation.isSuccess)
       return toast({
         title: "Success",
@@ -164,34 +205,446 @@ function AddEmployeeForm({ formData, setFormData }) {
 
   return (
     <Layout navHeading="Employee Information Form">
-      <Stack>
-        <FormControl>
-          <FormLabel>Full Name</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="fullName"
-            onChange={setFormData}
-            isrequired="true"
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Title</FormLabel>
-          <Select
-            size="sm"
-            name=" title"
-            onChange={setFormData}
-            isrequired="true"
-            defaultValue="mr."
-          >
-            <option value="mr.">Mr.</option>
-            <option value="mrs.">Mrs.</option>
-            <option value="dr.">Dr.</option>
-            <option value="other">Other</option>
-          </Select>
-        </FormControl>
-
-        {/******        <FormControl>
+      <Flex>
+        <Box mr={70}>
+          <Avatar name="" size="2xl" bg="lightgray" color="black" />
+        </Box>
+        <Stack w={800} m="auto" spacing={5}>
+          <Box w={200}>
+            <Text
+              fontSize={16}
+              fontWeight="400"
+              mb={12}
+              boxShadow="rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;"
+              borderRadius={20}
+              textAlign="center"
+              bg="#0b665c"
+              color="white"
+              p={1}
+            >
+              Personal Information
+            </Text>
+          </Box>
+          <HStack spacing={10}>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                First Name
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="firstName"
+                onChange={setFormData}
+                isrequired="true"
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Last Name
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="lastName"
+                onChange={setFormData}
+                isrequired="true"
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Other Name
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="otherName"
+                onChange={setFormData}
+                isrequired="true"
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+          </HStack>
+          <HStack spacing={10}>
+            {" "}
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Gender
+              </FormLabel>
+              <Select
+                size="sm"
+                name="gender"
+                onChange={setFormData}
+                isrequired="true"
+                //defaultValue="male"
+                placeholder="select gender"
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              >
+                <option value="male">male</option>
+                <option value="female">female</option>
+                <option value="other">Other</option>
+              </Select>
+            </FormControl>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Marital Status
+              </FormLabel>
+              <Select
+                size="sm"
+                name="maritalStatus"
+                onChange={setFormData}
+                isrequired="true"
+                //defaultValue="single"
+                h={10}
+                borderRadius={10}
+                placeholder="select status"
+                color="teal.700"
+              >
+                <option value="single">Single</option>
+                <option value="married">Married</option>
+                <option value="divorced">Divorced</option>
+              </Select>
+            </FormControl>
+          </HStack>
+          <HStack spacing={10}>
+            {" "}
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Contact Number
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="contactNumber"
+                onChange={setFormData}
+                isrequired="true"
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Place of residence
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="placeOfResidence"
+                onChange={setFormData}
+                isrequired="true"
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+          </HStack>
+          <HStack spacing={10}>
+            {" "}
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Title
+              </FormLabel>
+              <Select
+                size="sm"
+                name=" title"
+                onChange={setFormData}
+                isrequired="true"
+                // defaultValue="mr."
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+                placeholder="select option"
+              >
+                <option value="mr.">Mr.</option>
+                <option value="mrs.">Mrs.</option>
+                <option value="dr.">Dr.</option>
+                <option value="other">Other</option>
+              </Select>
+            </FormControl>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Date of Birth
+              </FormLabel>
+              <Input
+                size="sm"
+                type="date"
+                //defaultValue="Date of Birth"
+                name="dateOfBirth"
+                isrequired="true"
+                onChange={setFormData}
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+          </HStack>
+          <HStack spacing={10}>
+            {" "}
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Highest Educational Level
+              </FormLabel>
+              <Select
+                size="sm"
+                //defaultValue=""
+                name="educationalLevel"
+                onChange={setFormData}
+                isrequired="true"
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              >
+                <option value="O level">O Level</option>
+                <option value="Junior high school">Junior High School</option>
+                <option value="Senior high school">Senior High School</option>
+                <option value="Technical">Technical/ Vocational</option>
+                <option value="Diploma">Diploma</option>
+                <option value="Bachelor degree">Bachelors Degree</option>
+                <option value="Master degree">
+                  Masters Degree/ Postgraduate
+                </option>
+                <option value="Other">Other</option>
+              </Select>
+            </FormControl>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                TIN
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="tin"
+                onChange={setFormData}
+                isrequired="true"
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+          </HStack>
+          <HStack spacing={10}>
+            {" "}
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                SNNIT
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="snnit"
+                isrequired="true"
+                onChange={setFormData}
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                National ldentification Number
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="nationalIDNumber"
+                onChange={setFormData}
+                isrequired="true"
+                placeholder="GHA-0001-0202"
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+          </HStack>
+          <HStack spacing={10}>
+            {" "}
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Number of Dependent(s)
+              </FormLabel>
+              <Input
+                size="sm"
+                type="number"
+                name="numberOfDependents"
+                onChange={setFormData}
+                isrequired="true"
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Next of Kin (Name)
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="nextOfKinNumber"
+                isrequired="true"
+                onChange={setFormData}
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+          </HStack>
+          <HStack spacing={10}>
+            {" "}
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Next of Kin (Phone)
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="emergencyContactName"
+                isrequired="true"
+                onChange={setFormData}
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Emergency Contact's Name
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="emergencyContactNumber"
+                isrequired="true"
+                onChange={setFormData}
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+          </HStack>
+          <HStack spacing={10}>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Emergency Contact's Number
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                isrequired="true"
+                onChange={setFormData}
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Bank Name
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="employeeBankName"
+                isrequired="true"
+                onChange={setFormData}
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+          </HStack>
+          <HStack spacing={10}>
+            {" "}
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Account Holder
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="accountHolder"
+                isrequired="true"
+                onChange={setFormData}
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Account Number
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="accountNumber"
+                isrequired="true"
+                onChange={setFormData}
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+          </HStack>
+          <Box w={200}>
+            <Text
+              fontSize={16}
+              fontWeight="400"
+              mb={10}
+              boxShadow="rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;"
+              borderRadius={20}
+              textAlign="center"
+              mt={20}
+              bg="#0b665c"
+              color="white"
+              p={1}
+            >
+              Work Information
+            </Text>
+          </Box>
+          <HStack spacing={10}>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Work Email Address
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="workEmail"
+                onChange={setFormData}
+                isrequired="true"
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Employment Start date
+              </FormLabel>
+              <Input
+                size="sm"
+                type="date"
+                isrequired="true"
+                name="employmentStartDate"
+                onChange={setFormData}
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+          </HStack>
+          {/******        <FormControl>
           <FormLabel>Upload profile picture (Max.size:5MB)</FormLabel>
           <Input
             type="file"
@@ -203,369 +656,185 @@ function AddEmployeeForm({ formData, setFormData }) {
           />
         </FormControl>
 *** */}
-
-        <FormControl>
-          <FormLabel>Work Email Address</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="workEmail"
-            onChange={setFormData}
-            isrequired="true"
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Employment Type</FormLabel>
-          <Select
-            size="sm"
-            name="employmentType"
-            isrequired="true"
-            placeholder="select employement type"
-            onChange={setFormData}
-            //defaultValue="Full time"
-          >
-            <option value="Full time">Full time</option>
-            <option value="Part time">Part time</option>
-            <option value="Contract">Contract</option>
-            <option value="NSS">NSS</option>
-            <option value="Intern">Internship</option>
-          </Select>
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Business Unit</FormLabel>
-          <Select
-            size="sm"
-            isrequired="true"
-            name="businessUnit"
-            onChange={setFormData}
-            //defaultValue="E-commerce"
-            placeholder="select business unit"
-          >
-            <option value="E-clinicals">E-Clinical</option>
-            <option value="E-commerce">E-commerce</option>
-            <option value="The heights bar"> Bar and Lounge</option>
-            <option value="The heights appartment">Heights Appartment</option>
-            <option value="Heights trasacco">Heights-Trasacco</option>
-            <option value="Steaman village">Steaman Village</option>
-            <option value="Finance unit">Account Unit</option>
-            <option value="IT Solutions">IT Solutions</option>
-            <option value="Steaman Xpress">Steaman Xpress</option>
-          </Select>
-        </FormControl>
-        <FormControl>
-          <FormLabel>Department</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="department"
-            onChange={setFormData}
-            isrequired="true"
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Job Title</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="jobTitle"
-            onChange={setFormData}
-            isrequired="true"
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Office Location</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            isrequired="true"
-            name="officeLocation"
-            onChange={setFormData}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Employment Status</FormLabel>
-          <Select
-            size="sm"
-            name="employmentStatus"
-            onChange={setFormData}
-            isrequired="true"
-            defaultValue="active"
-            //placeholder="select employement status"
-          >
-            <option value="active">Active</option>
-            <option value="joining">Joining</option>
-          </Select>
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Employment Start date</FormLabel>
-          <Input
-            size="sm"
-            type="date"
-            isrequired="true"
-            name="employmentStartDate"
-            onChange={setFormData}
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Date of Birth</FormLabel>
-          <Input
-            size="sm"
-            type="date"
-            //defaultValue="Date of Birth"
-            name="dateOfBirth"
-            isrequired="true"
-            onChange={setFormData}
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Gender</FormLabel>
-          <Select
-            size="sm"
-            name="gender"
-            onChange={setFormData}
-            isrequired="true"
-            //defaultValue="male"
-            placeholder="select gender"
-          >
-            <option value="male">male</option>
-            <option value="female">female</option>
-            <option value="other">Other</option>
-          </Select>
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Marital Status</FormLabel>
-          <Select
-            size="sm"
-            name="maritalStatus"
-            onChange={setFormData}
-            isrequired="true"
-            defaultValue="single"
-          >
-            <option value="single">Single</option>
-            <option value="married">Married</option>
-            <option value="divorced">Divorced</option>
-          </Select>
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Contact Number</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="contactNumber"
-            onChange={setFormData}
-            isrequired="true"
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Place of residence</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="placeOfResidence"
-            onChange={setFormData}
-            isrequired="true"
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Highest Educational Level</FormLabel>
-          <Select
-            size="sm"
-            //defaultValue=""
-            name="educationalLevel"
-            onChange={setFormData}
-            isrequired="true"
-          >
-            <option value="O level">O Level</option>
-            <option value="Junior high school">Junior High School</option>
-            <option value="Senior high school">Senior High School</option>
-            <option value="Technical">Technical/ Vocational</option>
-            <option value="Diploma">Diploma</option>
-            <option value="Bachelor degree">Bachelor's Degree</option>
-            <option value="Master degree">Master's Degree/ Postgraduate</option>
-            <option value="Other">Other</option>
-          </Select>
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>SNNIT</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="snnit"
-            isrequired="true"
-            onChange={setFormData}
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>National ldentification Number (Ghana Card)</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="nationalIDNumber"
-            onChange={setFormData}
-            isrequired="true"
-            placeholder="GHA-0001-0202"
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>TIN</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="tin"
-            onChange={setFormData}
-            isrequired="true"
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Number of Dependent(s)</FormLabel>
-          <Input
-            size="sm"
-            type="number"
-            name="numberOfDependents"
-            onChange={setFormData}
-            isrequired="true"
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Next of Kin (Name)</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="nextOfKinNumber"
-            isrequired="true"
-            onChange={setFormData}
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Next of Kin (Phone)</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="emergencyContactName"
-            isrequired="true"
-            onChange={setFormData}
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Emergency Contact's Name</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="emergencyContactNumber"
-            isrequired="true"
-            onChange={setFormData}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Emergency Contact's Number</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            isrequired="true"
-            onChange={setFormData}
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Bank Name</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="employeeBankName"
-            isrequired="true"
-            onChange={setFormData}
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Account Holder</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="accountHolder"
-            isrequired="true"
-            onChange={setFormData}
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Account Number</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="accountNumber"
-            isrequired="true"
-            onChange={setFormData}
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Health Condtion</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            name="healthCondition"
-            isrequired="true"
-            onChange={setFormData}
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Medication</FormLabel>
-          <Select
-            size="sm"
-            type="text"
-            //defaultValue={onMedication}
-            name="onMedication"
-            isrequire="true"
-            onChange={setFormData}
-          >
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-            <option value="other">Other</option>
-          </Select>
-        </FormControl>
-
-        <Stack direction="row" spacing={4} flex="end">
-          <Button
-            bg="green.600"
-            _hover={{
-              bg: "green.600",
-            }}
-            color="white"
-            onClick={handleAddEmployee}
-          >
-            Save
-          </Button>
-          <Button
-            bg="red.600"
-            _hover={{
-              bg: "red.600",
-            }}
-            color="white"
-            onClick={() => {
-              router.push("/user/[username]");
-            }}
-          >
-            Exit
-          </Button>
+          <HStack spacing={10}>
+            {" "}
+            <FormControl color="tela.700" fontWeight="400">
+              <FormLabel color="teal.700" fontWeight="400">
+                Department
+              </FormLabel>
+              <Select
+                size="sm"
+                isrequired="true"
+                name="department"
+                onChange={setFormData}
+                h={10}
+                borderRadius={10}
+                placeholder="select a department"
+                color="teal.700"
+              >
+                <option value="E-clinicals">E-Clinical</option>
+                <option value="E-commerce">E-commerce</option>
+                <option value="The heights bar"> Bar and Lounge</option>
+                <option value="The heights appartment">
+                  Heights Appartment
+                </option>
+                <option value="Heights trasacco">Heights-Trasacco</option>
+                <option value="Steaman village">Steaman Village</option>
+                <option value="Finance unit">Account Unit</option>
+                <option value="IT Solutions">IT Solutions</option>
+                <option value="Steaman Xpress">Steaman Xpress</option>
+              </Select>
+            </FormControl>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Job Title
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                name="jobTitle"
+                onChange={setFormData}
+                isrequired="true"
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+          </HStack>
+          <HStack spacing={10}>
+            <FormControl>
+              <FormLabel color="teal.700" fontWeight="400">
+                Office Location
+              </FormLabel>
+              <Input
+                size="sm"
+                type="text"
+                isrequired="true"
+                name="officeLocation"
+                onChange={setFormData}
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              />
+            </FormControl>
+            <FormControl color="teal.700" fontWeight="400">
+              <FormLabel>Employment Status</FormLabel>
+              <Select
+                size="sm"
+                name="employmentStatus"
+                onChange={setFormData}
+                isrequired="true"
+                defaultValue="active"
+                //placeholder="select employement status"
+                h={10}
+                borderRadius={10}
+                color="teal.700"
+              >
+                <option value="active">Active</option>
+                <option value="joining">Joining</option>
+              </Select>
+            </FormControl>
+          </HStack>{" "}
+          <FormControl>
+            <FormLabel color="teal.700" fontWeight="400">
+              Employment Type
+            </FormLabel>
+            <Select
+              size="sm"
+              name="employmentType"
+              isrequired="true"
+              placeholder="select employement type"
+              onChange={setFormData}
+              h={10}
+              borderRadius={10}
+              //defaultValue="Full time"
+              color="teal.700"
+            >
+              <option value="Full time">Full time</option>
+              <option value="Part time">Part time</option>
+              <option value="Contract">Contract</option>
+              <option value="NSS">NSS</option>
+              <option value="Intern">Internship</option>
+            </Select>
+          </FormControl>
+          <Box w={200}>
+            <Text
+              fontSize={16}
+              fontWeight="400"
+              mb={10}
+              boxShadow="rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;"
+              borderRadius={20}
+              textAlign="center"
+              mt={20}
+              bg="#0b665c"
+              color="white"
+              p={1}
+            >
+              Medical Information
+            </Text>
+          </Box>
+          <FormControl>
+            <FormLabel color="teal.700" fontWeight="400">
+              Health Condtion ( Kindly specify if any )
+            </FormLabel>
+            <Textarea
+              size="sm"
+              type="text"
+              name="healthCondition"
+              isrequired="true"
+              onChange={setFormData}
+              h={10}
+              borderRadius={10}
+              cols={4}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel color="teal.700" fontWeight="400">
+              Medication
+            </FormLabel>
+            <Select
+              size="sm"
+              type="text"
+              //defaultValue={onMedication}
+              name="onMedication"
+              isrequire="true"
+              onChange={setFormData}
+              h={10}
+              borderRadius={10}
+              placeholder="select option"
+              color="teal.700"
+            >
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="other">Other</option>
+            </Select>
+          </FormControl>
+          <Stack direction="row" spacing={4} flex="end">
+            <Button
+              bg="green.600"
+              _hover={{
+                bg: "green.600",
+              }}
+              color="white"
+              onClick={handleAddEmployee}
+            >
+              Save
+            </Button>
+            <Button
+              bg="red.600"
+              _hover={{
+                bg: "red.600",
+              }}
+              color="white"
+              onClick={() => {
+                router.push("/user/[username]");
+              }}
+            >
+              Exit
+            </Button>
+          </Stack>
         </Stack>
-      </Stack>
+      </Flex>
     </Layout>
   );
 }

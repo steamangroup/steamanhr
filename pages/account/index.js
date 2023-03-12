@@ -4,7 +4,13 @@ import UserAccountTable from "@/components/account/UserTable";
 import Layout from "@/components/layout";
 import { getUsers } from "@/lib/helper/user";
 //import { getUsers } from "@/database/controllers/users";
-import { CircularProgress } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  CircularProgress,
+} from "@chakra-ui/react";
 import { useQuery } from "react-query";
 
 export default function UsersPage() {
@@ -23,7 +29,18 @@ export default function UsersPage() {
         </UserAccountTable>
       </Layout>
     );
-  if (isError) return <div>Got Error {error}</div>;
+  if (isError)
+    return (
+      <Layout navHeading="Users">
+        <Alert status="error">
+          <AlertIcon />
+          <AlertTitle>Error fetching data</AlertTitle>
+          <AlertDescription>
+            There was error processing your request
+          </AlertDescription>
+        </Alert>
+      </Layout>
+    );
   console.log("Hii User account data");
   console.log(data);
   return (

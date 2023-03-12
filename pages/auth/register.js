@@ -64,7 +64,7 @@ export default function Register() {
         position: "top-right",
       });
     } else {
-      await fetch(`${NETLIFY_URL}api/auth/register`, {
+      await fetch(`${BASE_URL}api/auth/register`, {
         method: "POST",
         // mode: "no-cors",
         headers: {

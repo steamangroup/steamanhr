@@ -4,7 +4,7 @@ export default function EmployeeProfile({
   fullName,
   jobTitle,
   workEmail,
-  businessUnit,
+  department,
 }) {
   return (
     <HStack
@@ -27,7 +27,7 @@ export default function EmployeeProfile({
           {jobTitle}
         </Text>
         <Text fontSize="0.9375rem" color="gray">
-          {businessUnit}
+          {department}
         </Text>
         <Text fontSize="0.9375rem" mt="0.5rem !important">
           {workEmail}

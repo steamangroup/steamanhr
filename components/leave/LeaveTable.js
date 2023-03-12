@@ -69,7 +69,7 @@ LeaveTable.Heading = function () {
       </Box>
       <Box flex={2}>
         <Text fontSize={15} fontWeight="400">
-          Leave Type
+          Leave Reason
         </Text>
       </Box>
       <Box flex={2}>
@@ -231,8 +231,8 @@ LeaveTable.Row = function ({
       <Flex flex={1} textAlign="center">
         <Text>{endDate}</Text>
       </Flex>
-      <Flex flex={0.8} textAlign="center">
-        <Text>{leaveDuration}</Text>
+      <Flex flex={0.8}>
+        <Text textAlign="center">{leaveDuration}</Text>
       </Flex>
 
       <Flex flex={1} gap={5} justifyContent="center">

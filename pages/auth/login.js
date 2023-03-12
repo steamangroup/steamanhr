@@ -52,7 +52,7 @@ export default function Login() {
         position: "top-right",
       });
     } else {
-      await fetch(`${NETLIFY_URL}api/auth/login`, {
+      await fetch(`${BASE_URL}api/auth/login`, {
         method: "POST",
         // mode: "no-cors",
         headers: {

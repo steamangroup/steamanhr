@@ -11,8 +11,9 @@ const EmployeeSchema = new Schema({
   },
 
   jobTitle: String,
-  fullName: String,
-  businessUnit: String,
+  firstName: String,
+  lastName: String,
+  otherName: String,
   employmentType: String,
   workEmail: {
     type: String,
@@ -25,6 +26,10 @@ const EmployeeSchema = new Schema({
   officeLocation: String,
   employmentStatus: String,
   employmentStartDate: String,
+  employmentEndDate: {
+    type: String,
+    default: null,
+  },
   dateOfBirth: String,
   gender: String,
   maritalStatus: String,

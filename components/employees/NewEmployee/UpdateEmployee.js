@@ -45,9 +45,9 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
   const {
     title,
     jobTitle,
-    fullName,
+    firstName,
+    lastName,
     nationalIDNumber,
-    businessUnit,
     employmentType,
     workEmail,
     department,
@@ -75,14 +75,12 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
     onMedication,
   } = data;
 
-  const exitHandler = () => {
-    console.log("Clicked me");
-  };
-
+  console.log("Give us attentio herre wai ");
   const handleUpdateEmployeeData = async (e) => {
     e.preventDefault();
     //overiding the data value with our form data
     let updated_data = Object.assign({}, data, formData);
+    console.log("This is the update employee form");
     console.log(updated_data);
 
     toast({
@@ -93,21 +91,31 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
       isClosable: true,
       position: "top-right",
     });
-    router.push("/employees");
 
     await updateMutation.mutate(updated_data);
+    router.push("/employees");
   };
 
   return (
     <Layout navHeading="Employee Update Form">
       <Stack>
         <FormControl>
-          <FormLabel>Full Name</FormLabel>
+          <FormLabel>First Name</FormLabel>
           <Input
             size="sm"
             type="text"
-            defaultValue={fullName}
-            name="fullName"
+            defaultValue={firstName}
+            name="firstName"
+            onChange={setFormData}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Last Name</FormLabel>
+          <Input
+            size="sm"
+            type="text"
+            defaultValue={lastName}
+            name="lastName"
             onChange={setFormData}
           />
         </FormControl>
@@ -125,11 +133,6 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
             <option value="ms.">Ms.</option>
             <option value="dr.">Dr.</option>
           </Select>
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Upload profile picture (Max.size:5MB)</FormLabel>
-          <Input type="file" name="profilePicture" onChange={setFormData} />
         </FormControl>
 
         <FormControl>
@@ -160,35 +163,27 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
         </FormControl>
 
         <FormControl>
-          <FormLabel>Business Unit</FormLabel>
+          <FormLabel>Department</FormLabel>
           <Select
             size="sm"
-            defaultValue={businessUnit}
-            name="businessUnit"
-            onChange={setFormData}
-            placeholder={businessUnit}
-          >
-            <option value="E-clinicals">E-Clinicals</option>
-            <option value="E-commerce">E-commerce</option>
-            <option value="The heights bar">The Heights Bar</option>
-            <option value="The heights appartment">
-              The Heights Appartment
-            </option>
-            <option value="Heights trasacco">Steaman Heights-Trasacco</option>
-            <option value="Steaman village">Steaman Village</option>
-            <option value="Finance unit">Finance Unit</option>
-            <option value="IT Solutions">Steaman IT Solutions</option>
-          </Select>
-        </FormControl>
-        <FormControl>
-          <FormLabel>Department</FormLabel>
-          <Input
-            size="sm"
-            type="text"
-            defaultValue={department}
+            isrequired="true"
             name="department"
             onChange={setFormData}
-          />
+            h={10}
+            borderRadius={10}
+            placeholder={department}
+            defaultValue={department}
+          >
+            <option value="E-clinicals">E-Clinical</option>
+            <option value="E-commerce">E-commerce</option>
+            <option value="The heights bar"> Bar and Lounge</option>
+            <option value="The heights appartment">Heights Appartment</option>
+            <option value="Heights trasacco">Heights-Trasacco</option>
+            <option value="Steaman village">Steaman Village</option>
+            <option value="Finance unit">Account Unit</option>
+            <option value="IT Solutions">IT Solutions</option>
+            <option value="Steaman Xpress">Steaman Xpress</option>
+          </Select>
         </FormControl>
 
         <FormControl>
@@ -483,10 +478,19 @@ function UpdateEmployeeForm({ formId, formData, setFormData }) {
         </FormControl>
 
         <Stack direction="row" spacing={4} flex="end">
-          <Button colorScheme="yellow" onClick={handleUpdateEmployeeData}>
+          <Button
+            colorScheme="yellow"
+            color="white"
+            onClick={handleUpdateEmployeeData}
+          >
             Update
           </Button>
-          <Button colorScheme="red" onClick={exitHandler}>
+          <Button
+            colorScheme="red"
+            onClick={() => {
+              router.back();
+            }}
+          >
             Exit
           </Button>
         </Stack>

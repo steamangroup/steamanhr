@@ -66,6 +66,7 @@ export async function loginUser(req, res) {
 }
 
 //get all users
+
 export async function getUsers(req, res) {
   try {
     //accessing data of mongo db
@@ -79,6 +80,8 @@ export async function getUsers(req, res) {
   }
 }
 //get: http://localhost:3000/api/auth/id
+
+
 export async function getUser(req, res) {
   try {
     //getting user id

@@ -7,7 +7,7 @@ export default function EmployeeAction() {
   const router = useRouter();
 
   const OpenForm = () => {
-    console.log(visible);
+    // console.log(visible);
     router.push("employees/add");
   };
 

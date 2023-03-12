@@ -1,9 +1,15 @@
 import Layout from "@/components/layout";
 import LeaveTable from "@/components/leave/LeaveTable";
 import { getEmployeeLeaves } from "@/lib/helper/leave";
-import { CircularProgress } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  CircularProgress,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 
 export default function EmployeeLeavePage() {
@@ -12,6 +18,7 @@ export default function EmployeeLeavePage() {
   // const [endDate, setEndDate] = useState([]);
   const [name, setName] = useState();
   const [user, setUser] = useState();
+  const queryClient = useQueryClient();
 
   console.log(userId);
 
@@ -42,6 +49,9 @@ export default function EmployeeLeavePage() {
   const { isLoading, isError, data, error } = useQuery(["leaves", userId], () =>
     getEmployeeLeaves(userId)
   );
+  queryClient.prefetchQuery(["leaves", userId], () =>
+    getEmployeeLeaves(userId)
+  );
 
   if (isLoading)
     return (
@@ -51,7 +61,14 @@ export default function EmployeeLeavePage() {
         </LeaveTable>
       </Layout>
     );
-  if (isError) return <div>Got Error {error}</div>;
+  if (isError) return;
+  <Layout navHeading="Leaves">
+    <Alert status="error">
+      <AlertIcon />
+      <AlertTitle>Erorr </AlertTitle>
+      <AlertDescription>Failed to process request</AlertDescription>
+    </Alert>
+  </Layout>;
 
   return (
     <Layout navHeading="Leaves">
